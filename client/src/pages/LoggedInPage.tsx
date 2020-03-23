@@ -11,44 +11,44 @@ import ApiResponse from "../apis/ApiResponse";
 import { Router, withRouter } from "react-router-dom";
 
 interface IRegisterPageState {
-  goBack: boolean;
+    goBack: boolean;
 }
-class RegisterPage extends Component {
-  state: Readonly<IRegisterPageState> = {
-    goBack: false
-  };
-  handleGoBackButtonClick = () => {
-    this.setState({ goBack: true });
-  };
+class RegisterPage extends Component<{}, IRegisterPageState> {
+    state: Readonly<IRegisterPageState> = {
+        goBack: false
+    };
+    handleGoBackButtonClick = () => {
+        this.setState({ goBack: true });
+    };
 
-  renderGoBack = () => {
-    if (this.state.goBack) {
-      return <Redirect to="/"></Redirect>;
+    renderGoBack = () => {
+        if (this.state.goBack) {
+            return <Redirect to="/"></Redirect>;
+        }
+    };
+
+    render() {
+        return (
+            <div className={styles.containerParent}>
+                <Grid container spacing={2} className={styles.container}>
+                    <Grid item xs={12}>
+                        <h1 className={styles.headers}>Authorized</h1>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {this.renderGoBack()}
+                        <Button
+                            className={styles.buttonLink}
+                            variant="outlined"
+                            color="primary"
+                            onClick={this.handleGoBackButtonClick}
+                        >
+                            Log out
+                        </Button>
+                    </Grid>
+                </Grid>
+            </div>
+        );
     }
-  };
-
-  render() {
-    return (
-      <div className={styles.containerParent}>
-        <Grid container spacing={2} className={styles.container}>
-          <Grid item xs={12}>
-            <h1 className={styles.headers}>Authorized</h1>
-          </Grid>
-          <Grid item xs={12}>
-            {this.renderGoBack()}
-            <Button
-              className={styles.buttonLink}
-              variant="outlined"
-              color="primary"
-              onClick={this.handleGoBackButtonClick}
-            >
-              Log out
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
 }
 
 export default RegisterPage;

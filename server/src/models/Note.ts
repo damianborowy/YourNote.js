@@ -20,4 +20,5 @@ const NoteShema = new Schema({
     sharedTo: { type: [String], required: true }
 });
 
-export default moongose.model<INote>("Note", NoteShema);
+const NoteModel = moongose.model<INote>("Notes", NoteShema);
+export default NoteModel;

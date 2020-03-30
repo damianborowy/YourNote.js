@@ -1,37 +1,43 @@
 .containerParent {
-  background-image: url("/images/bg2.jpg");
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100%;
+    background-image: url("/images/bg2.jpg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
 }
+
 .container {
-  text-align: center;
-  min-height: 100%;
+    text-align: center;
+    min-height: 100%;
 }
+
 form {
-  width: 70%;
+    width: 70%;
 }
+
 .button {
-  width: 70%;
-  background-color: rgba(245, 245, 245, 0.8) !important;
+    width: 70%;
+    background-color: rgba(245, 245, 245, 0.8) !important;
 }
+
 .textField {
-  width: 70%;
-  background-color: rgba(245, 245, 245, 0.8);
-  border-radius: 5px;
+    width: 70%;
+    background-color: rgba(245, 245, 245, 0.8);
+    border-radius: 5px;
 }
+
 .headers {
-  margin: 0;
-  color: white;
-  font-size: 7rem;
-  font-family: "Kristi";
-  font-weight: 100;
+    margin: 0;
+    color: white;
+    font-size: 7rem;
+    font-family: "Kristi";
+    font-weight: 100;
 }
+
 .buttonLink {
-  width: 70%;
-  color: whitesmoke !important;
-  border: unset !important;
+    width: 70%;
+    color: whitesmoke !important;
+    border: unset !important;
 }

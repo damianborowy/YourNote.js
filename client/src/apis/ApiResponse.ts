@@ -1,10 +1,7 @@
 export default class ApiResponse {
     public success: boolean;
-    public message: string;
 
-    constructor(success: number, message: string) {
-        this.message = message;
-
+    constructor(success: number, public payload: any = null) {
         if (success.toString().startsWith("2")) this.success = true;
         else this.success = false;
     }

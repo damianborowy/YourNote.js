@@ -67,12 +67,12 @@ class LoginPage extends Component<{}, ILoginPageState> {
 
     renderLoggedCorectly = () => {
         if (this.state.loggedIn) {
-            return <Redirect to="/loggedIn"></Redirect>;
+            return <Redirect to="/notes"></Redirect>;
         } else if (this.state.res) {
             return (
                 <Alert severity="error">
                     <AlertTitle>Incorrect credentials</AlertTitle>
-                    {this.state.res.message}
+                    {this.state.res.payload}
                 </Alert>
             );
         }

@@ -13,4 +13,5 @@ body {
 
 div .MuiGrid-spacing-xs-2 {
     margin: unset;
+    width: 100%;
 }

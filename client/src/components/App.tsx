@@ -2,7 +2,7 @@ import React from "react";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { HashRouter, Route, BrowserRouter } from "react-router-dom";
-import LoggedInPage from "../pages/NotesPage";
+import NotesPage from "../pages/NotesPage";
 
 class App extends React.Component {
     render() {
@@ -10,7 +10,7 @@ class App extends React.Component {
             <BrowserRouter>
                 <Route exact path="/" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
-                <Route path="/loggedIn" component={LoggedInPage} />
+                <Route path="/notes" component={NotesPage} />
             </BrowserRouter>
         );
     }

@@ -84,7 +84,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                 return (
                     <Alert severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        {this.state.regSucc.message}
+                        {this.state.regSucc.payload}
                     </Alert>
                 );
             }

@@ -1,0 +1,27 @@
+.containerParent {
+    background-image: url("/images/bg2.jpg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+.container {
+    text-align: center;
+    min-height: 100%;
+}
+
+.fab {
+    position: fixed !important;
+    bottom: 25px;
+    right: 25px;
+}
+
+@media (min-width: 768px) {
+    .fab {
+        bottom: 10%;
+        right: 10%;
+    }
+}

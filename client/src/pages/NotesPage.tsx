@@ -6,39 +6,38 @@ import Grid from "@material-ui/core/Grid";
 import { isTokenPresent, removeToken } from "../utils/TokenHandler";
 
 interface INotesPage {
-    goBack: boolean;
+    logOut: boolean;
 }
 class NotesPage extends Component<{}, INotesPage> {
     state: Readonly<INotesPage> = {
-        goBack: false
+        logOut: false
     };
 
     componentDidMount() {
-        this.setState({ goBack: !isTokenPresent() });
+        this.setState({ logOut: !isTokenPresent() });
     }
 
     handleLogOutButtonClick = () => {
         removeToken();
-        this.setState({ goBack: !isTokenPresent() });
+        this.setState({ logOut: !isTokenPresent() });
     };
 
-    renderGoBack = () => {
-        if (this.state.goBack) {
+    renderLogOut = () => {
+        if (this.state.logOut) {
             return <Redirect to="/"></Redirect>;
         }
     };
 
     render() {
         return (
-            <div className={styles.containerParent}>
+            <div>
                 <Grid container spacing={2} className={styles.container}>
                     <Grid item xs={12}>
                         <h1 className={styles.headers}>Authorized</h1>
                     </Grid>
                     <Grid item xs={12}>
-                        {this.renderGoBack()}
+                        {this.renderLogOut()}
                         <Button
-                            className={styles.buttonLink}
                             variant="outlined"
                             color="primary"
                             onClick={this.handleLogOutButtonClick}

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import {NextFunction, Request, Response} from "express";
 import jwt from "jsonwebtoken";
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +16,9 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
         jwt.verify(token, secret);
         next();
     } catch {
-        res.send("Couldn't verify the authentication token.");
+        return res
+            .status(400)
+            .send("Couldn't verify the authentication token.");
     }
 };
 

@@ -24,13 +24,10 @@ export default class NoteService implements ICrudRepository<INote> {
         return this.deleteNote(id);
     }
 
-    //#region privateMethods
-
     private async getAllUserNotes(id: Types.ObjectId): Promise<INote[]> {
-        let idString = id.toHexString.toString();
+        let idString = id.toString();
 
         let userNotes = await Note.find({
-            sharedTo: idString,
             ownerId: idString
         });
 
@@ -44,9 +41,14 @@ export default class NoteService implements ICrudRepository<INote> {
     }
 
     private async updateNote(note: INote): Promise<INote> {
-        let updatedNote = await Note.update({ _id: note._id }, note);
+        await Note.updateOne({ _id: note._id }, note);
 
-        return updatedNote;
+        const result = await Note.findOne({ _id: note._id });
+
+        if (!result)
+            throw new Error("Couldn't find note with the given noteId");
+
+        return result;
     }
 
     private async deleteNote(id: Types.ObjectId): Promise<boolean> {
@@ -58,6 +60,4 @@ export default class NoteService implements ICrudRepository<INote> {
 
         return result;
     }
-
-    //#endregion
 }

@@ -13,12 +13,11 @@ export interface INote extends Document {
 const NoteShema = new Schema({
     title: { type: String, required: false },
     content: { type: String, required: false },
-    color: { type: Number, required: true },
+    color: { type: Number, required: true, default: 0 },
     tags: { type: String, required: false },
-    date: { type: Date, required: true },
+    date: { type: Date, required: true, default: Date.now() },
     ownerId: { type: String, required: true },
-    sharedTo: { type: [String], required: true }
+    sharedTo: { type: [String], required: false }
 });
 
-const NoteModel = moongose.model<INote>("Notes", NoteShema);
-export default NoteModel;
+export default moongose.model<INote>("Notes", NoteShema);

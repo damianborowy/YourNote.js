@@ -9,6 +9,6 @@ router.use(auth);
 router.get("/", noteController.read);
 router.post("/", noteController.create);
 router.put("/", noteController.update);
-router.delete("/", noteController.delete);
+router.delete("/:noteId", noteController.delete);
 
 export default router;

@@ -8,9 +8,9 @@ import Container from "@material-ui/core/Container";
 import { Grid } from "@material-ui/core";
 import userApi from "../apis/UserAPI";
 import Alert from "@material-ui/lab/Alert";
-
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import ApiResponse from "../apis/ApiResponse";
+import { isTokenPresent } from "../utils/TokenHandler";
 
 interface ILoginPageState {
     email: string;
@@ -30,6 +30,10 @@ class LoginPage extends Component<{}, ILoginPageState> {
         res: null!
     };
 
+    componentDidMount() {
+        this.setState({ loggedIn: isTokenPresent() });
+    }
+
     handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ email: event.target.value });
     };
@@ -43,7 +47,7 @@ class LoginPage extends Component<{}, ILoginPageState> {
 
         const response = await userApi.login(email, password);
         this.setState({ res: response });
-        //if (response.success || localStorage.getItem("jwt")) {
+
         if (response.success) {
             this.setState({ loggedIn: true });
         } else {
@@ -55,9 +59,6 @@ class LoginPage extends Component<{}, ILoginPageState> {
         this.setState({ redirect: true });
     };
 
-    renderErrorr = () => {
-        return;
-    };
     renderRedirect = () => {
         if (this.state.redirect) {
             return <Redirect to="/register"></Redirect>;

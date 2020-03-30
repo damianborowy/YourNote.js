@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styles from "./RegisterPage.module.scss";
 import Grid from "@material-ui/core/Grid";
-import userApi from "../apis/UserAPI";
-import Alert from "@material-ui/lab/Alert";
-import AlertTitle from "@material-ui/lab/AlertTitle";
-import ApiResponse from "../apis/ApiResponse";
-import { Router, withRouter } from "react-router-dom";
+import { isTokenPresent, removeToken } from "../utils/TokenHandler";
 
-interface IRegisterPageState {
+interface INotesPage {
     goBack: boolean;
 }
-class RegisterPage extends Component<{}, IRegisterPageState> {
-    state: Readonly<IRegisterPageState> = {
+class NotesPage extends Component<{}, INotesPage> {
+    state: Readonly<INotesPage> = {
         goBack: false
     };
-    handleGoBackButtonClick = () => {
-        this.setState({ goBack: true });
+
+    componentDidMount() {
+        this.setState({ goBack: !isTokenPresent() });
+    }
+
+    handleLogOutButtonClick = () => {
+        removeToken();
+        this.setState({ goBack: !isTokenPresent() });
     };
 
     renderGoBack = () => {
@@ -40,7 +41,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             className={styles.buttonLink}
                             variant="outlined"
                             color="primary"
-                            onClick={this.handleGoBackButtonClick}
+                            onClick={this.handleLogOutButtonClick}
                         >
                             Log out
                         </Button>
@@ -51,4 +52,4 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
     }
 }
 
-export default RegisterPage;
+export default NotesPage;

@@ -24,7 +24,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.set("port", port);
 
 app.listen(port, () => {

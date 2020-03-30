@@ -1,8 +1,9 @@
 import ApiResponse from "./ApiResponse";
+import { saveToken } from "../utils/TokenHandler";
 
 const userApi = {
     async register(email: string, password: string) {
-        const response = await fetch("http://localhost:5000/users/register", {
+        const response = await fetch("http://localhost:5001/users/register", {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: {
@@ -19,7 +20,7 @@ const userApi = {
     },
 
     async login(email: string, password: string) {
-        const response = await fetch("http://localhost:5000/users/login", {
+        const response = await fetch("http://localhost:5001/users/login", {
             method: "POST",
             body: JSON.stringify({
                 email,
@@ -37,7 +38,7 @@ const userApi = {
 
         if (!token) return new ApiResponse(500, "Something went wrong");
 
-        localStorage.setItem("jwt", token);
+        saveToken(token);
 
         return new ApiResponse(response.status, "");
     }

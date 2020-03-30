@@ -5,6 +5,7 @@ import userApi from "../apis/UserAPI";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import ApiResponse from "../apis/ApiResponse";
+import { Grid, TextField, Button } from "@material-ui/core";
 
 interface IRegisterPageState {
     email: string;
@@ -21,22 +22,23 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
         goBack: false,
         regSucc: null!
     };
+
     handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ email: event.target.value });
     };
+
     handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
-            password: event.target.value,
-            isPasswordValid: this.validatePassword()
+            password: event.target.value
         });
     };
 
     handleConfirmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
-            confirmed: event.target.value,
-            isPasswordValid: this.validatePassword()
+            confirmed: event.target.value
         });
     };
+
     handleRegisterButtonClick = async () => {
         const { email, password } = this.state;
 

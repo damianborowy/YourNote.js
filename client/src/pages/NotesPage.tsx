@@ -4,30 +4,41 @@ import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import Grid from "@material-ui/core/Grid";
 import { isTokenPresent, removeToken } from "../utils/TokenHandler";
-import { Fab, Card, CardContent } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import Note from "../models/Note";
-import Paper from "@material-ui/core/Paper";
+import {
+    Fab,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Drawer,
+    Divider
+} from "@material-ui/core";
+import { Add, Menu, ChevronLeft } from "@material-ui/icons/";
+import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
+import Note from "../components/Note";
+import noteApi from "../apis/NoteAPI";
 
-interface INotesPage {
+interface INotesPageState {
     logOut: boolean;
-    notes: Note[];
+    notes: NoteModel[];
+    drawerOpen: boolean;
 }
 
-class NotesPage extends Component<{}, INotesPage> {
-    state: Readonly<INotesPage> = {
+class NotesPage extends Component<{}, INotesPageState> {
+    state: Readonly<INotesPageState> = {
         logOut: false,
-        notes: []
+        notes: new Array<NoteModel>(),
+        drawerOpen: false
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         const logOut = !isTokenPresent();
-
         this.setState({ logOut });
 
-        if (!logOut) {
-        }
+        if (logOut) return;
+
+        const result = await noteApi.read();
+        this.setState({ notes: result.payload });
     }
 
     handleLogOutButtonClick = () => {
@@ -41,32 +52,75 @@ class NotesPage extends Component<{}, INotesPage> {
         }
     };
 
+    onDrawerOpen = () => this.setState({ drawerOpen: true });
+    onDrawerClose = () => this.setState({ drawerOpen: false });
+
+    onFabClick = async () => {
+        const result = await noteApi.create();
+
+        if (!result) return; // TODO:: <Alert /> z błędem
+
+        this.setState({ notes: [...this.state.notes, result.payload] });
+    };
+
     render() {
         return (
-            <Container>
-                {this.renderLogOut()}
-                <Grid container spacing={2} className={styles.container}>
-                    {new Array(20).fill(0).map(i => {
-                        return (
-                            <Grid item xs={6} sm={4} md={3}>
-                                <Card variant="outlined">
-                                    <CardContent>Some text lala</CardContent>
-                                </Card>
-                            </Grid>
-                        );
-                    })}
-                </Grid>
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={this.handleLogOutButtonClick}
+            <>
+                <AppBar
+                    position="static"
+                    className={styles.bar}
+                    color="default"
                 >
-                    Log out
-                </Button>
-                <Fab color="primary" className={styles.fab}>
-                    <AddIcon />
-                </Fab>
-            </Container>
+                    <Toolbar>
+                        <IconButton edge="start" onClick={this.onDrawerOpen}>
+                            <Menu />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                <Drawer className={styles.drawer} open={this.state.drawerOpen}>
+                    <div className={styles.drawerHeader}>
+                        <IconButton onClick={this.onDrawerClose}>
+                            <ChevronLeft />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <Button
+                        variant="text"
+                        color="primary"
+                        onClick={this.handleLogOutButtonClick}
+                    >
+                        Log out
+                    </Button>
+                </Drawer>
+                <Container>
+                    {this.renderLogOut()}
+                    <Grid container spacing={2} className={styles.container}>
+                        {this.state.notes.length > 0
+                            ? this.state.notes.map(note => {
+                                return (
+                                    <Grid
+                                        item
+                                        xs={6}
+                                        sm={4}
+                                        md={3}
+                                        key={note._id}
+                                    >
+                                        <Note model={note} />
+                                    </Grid>
+                                );
+                              })
+                            : ""}
+                    </Grid>
+
+                    <Fab
+                        color="primary"
+                        className={styles.fab}
+                        onClick={this.onFabClick}
+                    >
+                        <Add />
+                    </Fab>
+                </Container>
+            </>
         );
     }
 }

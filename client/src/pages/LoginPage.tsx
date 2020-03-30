@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import history from "history";
 import { Redirect } from "react-router-dom";
 import styles from "./LoginPage.module.scss";
-import Container from "@material-ui/core/Container";
 import { Grid } from "@material-ui/core";
 import userApi from "../apis/UserAPI";
 import Alert from "@material-ui/lab/Alert";

@@ -1,7 +1,7 @@
 import React from "react";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
-import { HashRouter, Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import NotesPage from "../pages/NotesPage";
 
 class App extends React.Component {

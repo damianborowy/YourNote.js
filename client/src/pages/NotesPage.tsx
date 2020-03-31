@@ -78,11 +78,6 @@ class NotesPage extends Component<{}, INotesPageState> {
                     </Toolbar>
                 </AppBar>
                 <Drawer className={styles.drawer} open={this.state.drawerOpen}>
-                    <div className={styles.drawerHeader}>
-                        <IconButton onClick={this.onDrawerClose}>
-                            <ChevronLeft />
-                        </IconButton>
-                    </div>
                     <Divider />
                     <Button
                         variant="text"
@@ -94,24 +89,23 @@ class NotesPage extends Component<{}, INotesPageState> {
                 </Drawer>
                 <Container>
                     {this.renderLogOut()}
-                    <Grid container spacing={2} className={styles.container}>
+                    <Grid container spacing={1} className={styles.container}>
                         {this.state.notes.length > 0
                             ? this.state.notes.map(note => {
-                                return (
-                                    <Grid
-                                        item
-                                        xs={6}
-                                        sm={4}
-                                        md={3}
-                                        key={note._id}
-                                    >
-                                        <Note model={note} />
-                                    </Grid>
-                                );
+                                  return (
+                                      <Grid
+                                          item
+                                          xs={6}
+                                          sm={4}
+                                          md={3}
+                                          key={note._id}
+                                      >
+                                          <Note model={note} />
+                                      </Grid>
+                                  );
                               })
                             : ""}
                     </Grid>
-
                     <Fab
                         color="primary"
                         className={styles.fab}

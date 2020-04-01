@@ -12,7 +12,7 @@ import {
     Drawer,
     Divider
 } from "@material-ui/core";
-import { Add, Menu, ChevronLeft } from "@material-ui/icons/";
+import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import Note from "../components/Note";
@@ -38,8 +38,15 @@ class NotesPage extends Component<{}, INotesPageState> {
         if (logOut) return;
 
         const result = await noteApi.read();
+
         this.setState({ notes: result.payload });
     }
+
+    deleteNoteFromList = (oldNote: NoteModel) => {
+        const notes = this.state.notes.filter(note => note._id !== oldNote._id);
+
+        this.setState({ notes });
+    };
 
     handleLogOutButtonClick = () => {
         removeToken();
@@ -60,7 +67,10 @@ class NotesPage extends Component<{}, INotesPageState> {
 
         if (!result) return; // TODO:: <Alert /> z błędem
 
-        this.setState({ notes: [...this.state.notes, result.payload] });
+        const newNote = result.payload;
+        newNote.wasJustCreated = true;
+
+        this.setState({ notes: [...this.state.notes, newNote] });
     };
 
     render() {
@@ -90,21 +100,25 @@ class NotesPage extends Component<{}, INotesPageState> {
                 <Container>
                     {this.renderLogOut()}
                     <Grid container spacing={1} className={styles.container}>
-                        {this.state.notes.length > 0
-                            ? this.state.notes.map(note => {
-                                  return (
-                                      <Grid
-                                          item
-                                          xs={6}
-                                          sm={4}
-                                          md={3}
-                                          key={note._id}
-                                      >
-                                          <Note model={note} />
-                                      </Grid>
-                                  );
-                              })
-                            : ""}
+                        {this.state.notes.length > 0 &&
+                            this.state.notes.map(note => {
+                                return (
+                                    <Grid
+                                        item
+                                        xs={6}
+                                        sm={4}
+                                        md={3}
+                                        key={note._id}
+                                    >
+                                        <Note
+                                            model={note}
+                                            deleteNoteFromList={
+                                                this.deleteNoteFromList
+                                            }
+                                        />
+                                    </Grid>
+                                );
+                            })}
                     </Grid>
                     <Fab
                         color="primary"

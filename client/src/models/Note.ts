@@ -7,6 +7,7 @@ export default class Note {
         public ownerId?: string,
         public date?: Date,
         public tags?: string,
-        public sharedTo?: string[]
+        public sharedTo?: string[],
+        public wasJustCreated?: boolean
     ) {}
 }

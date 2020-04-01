@@ -37,7 +37,16 @@ const noteApi = {
         return new ApiResponse(200, result);
     },
 
-    async delete(noteId: string) {}
+    async delete(noteId: string) {
+        const result = await fetch(`http://localhost:5001/notes/${noteId}`, {
+            method: "DELETE",
+            headers: insertTokenAndHeaders()
+        }).then(res => res.text());
+
+        if (!result) return new ApiResponse(400);
+
+        return new ApiResponse(200, result);
+    }
 };
 
 export default noteApi;

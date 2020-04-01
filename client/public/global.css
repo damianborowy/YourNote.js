@@ -20,3 +20,7 @@ div .MuiGrid-spacing-xs-2 {
 div .MuiInput-underline:before {
     content: unset !important;
 }
+
+div .MuiInput-underline:after {
+    content: unset !important;
+}

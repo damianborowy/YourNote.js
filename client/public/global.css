@@ -16,3 +16,7 @@ div .MuiGrid-spacing-xs-2 {
     margin: unset;
     width: 100%;
 }
+
+div .MuiInput-underline:before {
+    content: unset !important;
+}

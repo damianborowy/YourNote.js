@@ -11,7 +11,8 @@ import {
     Button,
     TextField,
     Hidden,
-    IconButton
+    IconButton,
+    Input
 } from "@material-ui/core";
 import NoteModel from "../models/Note";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -93,11 +94,14 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                             <ArrowBack />
                         </IconButton>
                     </Hidden>
-                    <TextField
+                    <Input
                         value={title}
                         placeholder="Title"
                         className={styles.dialogTitleText}
                         onChange={handleTitleChange}
+                        classes={{
+                            input: styles.dialogTitleText
+                        }}
                         fullWidth
                     />
                 </DialogTitle>

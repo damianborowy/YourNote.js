@@ -1,5 +1,5 @@
 import express from "express";
-import noteController from "../controllers/noteController";
+import noteController from "../controllers/NoteController";
 import auth from "../middlewares/Authentication";
 
 var router = express.Router();

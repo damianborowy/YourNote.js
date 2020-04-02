@@ -14,11 +14,11 @@ import {
     IconButton,
     Input
 } from "@material-ui/core";
-import NoteModel from "../models/Note";
+import NoteModel from "../../models/Note";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import clsx from "clsx";
-import noteApi from "../apis/NoteAPI";
+import noteApi from "../../apis/NoteAPI";
 import { ArrowBack } from "@material-ui/icons";
 
 interface INoteProps {
@@ -88,9 +88,9 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                 </CardContent>
             </Card>
             <Dialog fullWidth open={open} fullScreen={fullScreen}>
-                <DialogTitle className={color}>
+                <DialogTitle className={clsx(color, styles.dialogTitle)}>
                     <Hidden smUp>
-                        <IconButton onClick={closeDialog}>
+                        <IconButton className={styles.back} onClick={closeDialog}>
                             <ArrowBack />
                         </IconButton>
                     </Hidden>

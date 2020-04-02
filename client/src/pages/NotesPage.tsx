@@ -9,13 +9,12 @@ import {
     AppBar,
     Toolbar,
     IconButton,
-    Drawer,
-    Divider
+    SwipeableDrawer
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
-import Note from "../components/Note";
+import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
 
 interface INotesPageState {
@@ -87,16 +86,23 @@ class NotesPage extends Component<{}, INotesPageState> {
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Drawer className={styles.drawer} open={this.state.drawerOpen}>
-                    <Divider />
-                    <Button
-                        variant="text"
-                        color="primary"
-                        onClick={this.handleLogOutButtonClick}
-                    >
-                        Log out
-                    </Button>
-                </Drawer>
+                <SwipeableDrawer
+                    classes={{ paper: styles.drawer }}
+                    open={this.state.drawerOpen}
+                    onClose={this.onDrawerClose}
+                    onOpen={this.onDrawerOpen}
+                >
+                    <div className={styles.drawerBottom}>
+                        <Button
+                            variant="text"
+                            color="primary"
+                            onClick={this.handleLogOutButtonClick}
+                            className={styles.drawerButton}
+                        >
+                            Log out
+                        </Button>
+                    </div>
+                </SwipeableDrawer>
                 <Container>
                     {this.renderLogOut()}
                     <Grid container spacing={1} className={styles.container}>

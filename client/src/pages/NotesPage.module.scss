@@ -31,10 +31,15 @@
 
 .drawer {
     width: 240px;
+    padding: 20px;
+    display: flex;
+    box-sizing: border-box;
 }
 
-.drawerHeader {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+.drawerBottom {
+    margin-top: auto;
+}
+
+.drawerButton {
+    width: 100%;
 }

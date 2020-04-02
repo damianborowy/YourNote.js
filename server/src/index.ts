@@ -5,7 +5,6 @@ import mongoose, { mongo } from "mongoose";
 import dotenv from "dotenv";
 import bearerToken from "express-bearer-token";
 
-import indexRouter from "./routes/index";
 import usersRouter from "./routes/Users";
 import notesRouter from "./routes/Notes";
 
@@ -20,7 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bearerToken());
 // ? app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 

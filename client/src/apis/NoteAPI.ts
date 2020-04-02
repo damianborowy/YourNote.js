@@ -2,7 +2,11 @@ import ApiResponse from "./ApiResponse";
 import Note from "../models/Note";
 import { insertTokenAndHeaders } from "../utils/TokenHandler";
 
-const serverUrl = "http://localhost:5001";
+const env = process.env.NODE_ENV || "development";
+const serverUrl =
+    env === "development"
+        ? "http://localhost:5001"
+        : "https://yournote-server.herokuapp.com";
 
 const noteApi = {
     async create(note?: Note) {

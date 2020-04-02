@@ -2,9 +2,11 @@ import ApiResponse from "./ApiResponse";
 import Note from "../models/Note";
 import { insertTokenAndHeaders } from "../utils/TokenHandler";
 
+const serverUrl = "http://localhost:5001";
+
 const noteApi = {
     async create(note?: Note) {
-        const result = await fetch("http://localhost:5001/notes", {
+        const result = await fetch(`${serverUrl}/notes`, {
             method: "POST",
             headers: insertTokenAndHeaders(),
             body: JSON.stringify(note)
@@ -16,7 +18,7 @@ const noteApi = {
     },
 
     async read() {
-        const result = await fetch("http://localhost:5001/notes", {
+        const result = await fetch(`${serverUrl}/notes`, {
             headers: insertTokenAndHeaders()
         }).then(res => res.json());
 
@@ -26,7 +28,7 @@ const noteApi = {
     },
 
     async update(note: Note) {
-        const result = await fetch("http://localhost:5001/notes", {
+        const result = await fetch(`${serverUrl}/notes`, {
             method: "PUT",
             headers: insertTokenAndHeaders(),
             body: JSON.stringify(note)
@@ -38,7 +40,7 @@ const noteApi = {
     },
 
     async delete(noteId: string) {
-        const result = await fetch(`http://localhost:5001/notes/${noteId}`, {
+        const result = await fetch(`${serverUrl}/notes/${noteId}`, {
             method: "DELETE",
             headers: insertTokenAndHeaders()
         }).then(res => res.text());

@@ -1,9 +1,11 @@
 import ApiResponse from "./ApiResponse";
 import { saveToken } from "../utils/TokenHandler";
 
+const serverUrl = "http://localhost:5001";
+
 const userApi = {
     async register(email: string, password: string) {
-        const response = await fetch("http://localhost:5001/users/register", {
+        const response = await fetch(`${serverUrl}/users/register`, {
             method: "POST",
             body: JSON.stringify({ email, password }),
             headers: {
@@ -20,7 +22,7 @@ const userApi = {
     },
 
     async login(email: string, password: string) {
-        const response = await fetch("http://localhost:5001/users/login", {
+        const response = await fetch(`${serverUrl}/users/login`, {
             method: "POST",
             body: JSON.stringify({
                 email,

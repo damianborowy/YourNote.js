@@ -3,10 +3,10 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon"
+        "start": "ts-node src/index.ts"
     },
     "engines": {
-        "yarn": "1.12.1"
+        "yarn": "1.21.1"
     },
     "dependencies": {
         "@types/bcryptjs": "^2.4.2",

@@ -19,7 +19,13 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import noteApi from "../../apis/NoteAPI";
-import { ArrowBack, Close, MoreHoriz } from "@material-ui/icons";
+import {
+    ArrowBack,
+    Close,
+    MoreVert,
+    Delete,
+    Palette
+} from "@material-ui/icons";
 
 interface INoteProps {
     model: NoteModel;
@@ -102,9 +108,17 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                             >
                                 <ArrowBack />
                             </IconButton>
-                            <IconButton onClick={deleteNote}>
-                                <MoreHoriz className={styles.more} />
-                            </IconButton>
+                            <div className={styles.dialogTitleMenu}>
+                                <IconButton>
+                                    <Palette />
+                                </IconButton>
+                                <IconButton onClick={deleteNote}>
+                                    <Delete />
+                                </IconButton>
+                                <IconButton>
+                                    <MoreVert />
+                                </IconButton>
+                            </div>
                         </div>
                     </Hidden>
                     <div style={{ display: "flex" }}>
@@ -120,9 +134,15 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                         />
 
                         <Hidden xsDown>
-                            <div className={styles.dialogTitleMenu}>
+                            <div className={clsx(styles.dialogTitleMenu, styles.dialogTitleMenuDesktop}>
+                                <IconButton>
+                                    <Palette />
+                                </IconButton>
                                 <IconButton onClick={deleteNote}>
-                                    <MoreHoriz />
+                                    <Delete />
+                                </IconButton>
+                                <IconButton>
+                                    <MoreVert />
                                 </IconButton>
                                 <IconButton onClick={closeDialog}>
                                     <Close />

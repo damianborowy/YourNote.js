@@ -19,7 +19,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import noteApi from "../../apis/NoteAPI";
-import { ArrowBack } from "@material-ui/icons";
+import { ArrowBack, Close, MoreHoriz } from "@material-ui/icons";
 
 interface INoteProps {
     model: NoteModel;
@@ -87,25 +87,51 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                     <Typography>{content}</Typography>
                 </CardContent>
             </Card>
-            <Dialog fullWidth open={open} fullScreen={fullScreen}>
+            <Dialog
+                fullWidth
+                open={open}
+                fullScreen={fullScreen}
+                onClose={closeDialog}
+            >
                 <DialogTitle className={clsx(color, styles.dialogTitle)}>
                     <Hidden smUp>
-                        <IconButton className={styles.back} onClick={closeDialog}>
-                            <ArrowBack />
-                        </IconButton>
+                        <div style={{ display: "flex" }}>
+                            <IconButton
+                                className={styles.back}
+                                onClick={closeDialog}
+                            >
+                                <ArrowBack />
+                            </IconButton>
+                            <IconButton onClick={deleteNote}>
+                                <MoreHoriz className={styles.more} />
+                            </IconButton>
+                        </div>
                     </Hidden>
-                    <Input
-                        value={title}
-                        placeholder="Title"
-                        className={styles.dialogTitleText}
-                        onChange={handleTitleChange}
-                        classes={{
-                            input: styles.dialogTitleText
-                        }}
-                        fullWidth
-                    />
+                    <div style={{ display: "flex" }}>
+                        <Input
+                            value={title}
+                            placeholder="Title"
+                            className={styles.dialogTitleText}
+                            onChange={handleTitleChange}
+                            classes={{
+                                input: styles.dialogTitleText
+                            }}
+                            fullWidth
+                        />
+
+                        <Hidden xsDown>
+                            <div className={styles.dialogTitleMenu}>
+                                <IconButton onClick={deleteNote}>
+                                    <MoreHoriz />
+                                </IconButton>
+                                <IconButton onClick={closeDialog}>
+                                    <Close />
+                                </IconButton>
+                            </div>
+                        </Hidden>
+                    </div>
                 </DialogTitle>
-                <DialogContent className={color}>
+                <DialogContent className={clsx(color, styles.dialogContent)}>
                     <TextField
                         multiline
                         rowsMax={20}
@@ -115,16 +141,6 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                         fullWidth
                     />
                 </DialogContent>
-                <Hidden xsDown>
-                    <DialogActions className={color}>
-                        <Button color="default" onClick={deleteNote}>
-                            Delete
-                        </Button>
-                        <Button color="primary" onClick={closeDialog}>
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Hidden>
             </Dialog>
         </>
     );

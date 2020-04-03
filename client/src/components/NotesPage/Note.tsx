@@ -134,7 +134,12 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                         />
 
                         <Hidden xsDown>
-                            <div className={clsx(styles.dialogTitleMenu, styles.dialogTitleMenuDesktop}>
+                            <div
+                                className={clsx(
+                                    styles.dialogTitleMenu,
+                                    styles.dialogTitleMenuDesktop
+                                )}
+                            >
                                 <IconButton>
                                     <Palette />
                                 </IconButton>

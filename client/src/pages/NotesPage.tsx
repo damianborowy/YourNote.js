@@ -3,19 +3,25 @@ import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import Grid from "@material-ui/core/Grid";
-import { isTokenPresent, removeToken } from "../utils/TokenHandler";
+import {
+    isTokenPresent,
+    removeToken,
+    extractToken
+} from "../utils/TokenHandler";
 import {
     Fab,
     AppBar,
     Toolbar,
     IconButton,
-    SwipeableDrawer
+    SwipeableDrawer,
+    Typography
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
+import jwt from "jsonwebtoken";
 
 interface INotesPageState {
     logOut: boolean;
@@ -58,6 +64,18 @@ class NotesPage extends Component<{}, INotesPageState> {
         }
     };
 
+    getEmailFromToken = () => {
+        const decodedToken = jwt.decode(extractToken());
+
+        if (!decodedToken || typeof decodedToken !== "object") return "";
+
+        const email: string = decodedToken.email;
+
+        if (!email) return "";
+
+        return email;
+    };
+
     onDrawerOpen = () => this.setState({ drawerOpen: true });
     onDrawerClose = () => this.setState({ drawerOpen: false });
 
@@ -93,8 +111,11 @@ class NotesPage extends Component<{}, INotesPageState> {
                     onOpen={this.onDrawerOpen}
                 >
                     <div className={styles.drawerBottom}>
+                        <Typography>
+                            Hello {this.getEmailFromToken()}!
+                        </Typography>
                         <Button
-                            variant="text"
+                            variant="outlined"
                             color="primary"
                             onClick={this.handleLogOutButtonClick}
                             className={styles.drawerButton}

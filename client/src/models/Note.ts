@@ -8,6 +8,7 @@ export default class Note {
         public date?: Date,
         public tags?: string,
         public sharedTo?: string[],
+        public isPublic?: boolean,
         public wasJustCreated?: boolean
     ) {}
 }

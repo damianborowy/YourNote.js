@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { Route, BrowserRouter } from "react-router-dom";
 import NotesPage from "../pages/NotesPage";
+import SharedNotePage from "../pages/SharedNotePage";
 
 class App extends React.Component {
     render() {
@@ -10,7 +11,11 @@ class App extends React.Component {
             <BrowserRouter>
                 <Route exact path="/" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
-                <Route path="/notes" component={NotesPage} />
+                <Route exact path="/notes" component={NotesPage} />
+                <Route
+                    path="/notes/public/:noteId"
+                    component={SharedNotePage}
+                />
             </BrowserRouter>
         );
     }

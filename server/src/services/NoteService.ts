@@ -4,12 +4,13 @@ import ICrudRepository from "./interfaces/ICrudRepository";
 import { Types } from "mongoose";
 
 export default class NoteService implements ICrudRepository<INote> {
-    async read(id?: Types.ObjectId | undefined): Promise<INote[]> {
-        if (id) {
-            return this.getAllUserNotes(id);
-        } else {
-            throw new Error("Note Read Error");
-        }
+    async read(id?: string | undefined): Promise<INote[]> {
+        if (id) return this.getAllUserNotes(id);
+        else throw new Error("Note Read Error");
+    }
+
+    async readNote(id: string): Promise<INote> {
+        return this.getNote(id);
     }
 
     async create(obj: INote): Promise<INote> {
@@ -20,18 +21,22 @@ export default class NoteService implements ICrudRepository<INote> {
         return this.updateNote(obj);
     }
 
-    async delete(id: Types.ObjectId): Promise<boolean> {
+    async delete(id: string): Promise<boolean> {
         return this.deleteNote(id);
     }
 
-    private async getAllUserNotes(id: Types.ObjectId): Promise<INote[]> {
-        let idString = id.toString();
-
-        let userNotes = await Note.find({
-            ownerId: idString
-        });
+    private async getAllUserNotes(id: string): Promise<INote[]> {
+        const userNotes = await Note.find({ ownerId: id });
 
         return userNotes;
+    }
+
+    private async getNote(id: string): Promise<INote> {
+        const note = await Note.findOne({ _id: id });
+
+        if (!note) throw new Error("Couldn't find note with the given noteId");
+
+        return note;
     }
 
     private async createNote(note: INote): Promise<INote> {
@@ -51,10 +56,10 @@ export default class NoteService implements ICrudRepository<INote> {
         return result;
     }
 
-    private async deleteNote(id: Types.ObjectId): Promise<boolean> {
+    private async deleteNote(id: string): Promise<boolean> {
         let result = false;
 
-        await Note.deleteOne({ _id: id }, err => {
+        await Note.deleteOne({ _id: id }, (err) => {
             if (!err) result = true;
         });
 

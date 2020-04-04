@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import NoteService from "../services/NoteService";
 import jwt from "jsonwebtoken";
-import Note from "../models/Note";
+import Note, { INote } from "../models/Note";
 import mongoose from "mongoose";
 
+const ObjectId = mongoose.mongo.ObjectId;
 const noteService = new NoteService();
 
 const noteController = {
@@ -50,13 +51,25 @@ const noteController = {
     },
 
     async delete(req: Request, res: Response) {
-        const result = await noteService.delete(
-            new mongoose.mongo.ObjectId(req.params.noteId)
-        );
+        const noteId = req.params.noteId;
+        const result = await noteService.delete(noteId);
 
         result
             ? res.status(200).send("Successfully deleted note.")
             : res.status(400).send("Bad request");
+    },
+
+    async guestRead(req: Request, res: Response) {
+        const noteId = req.params.noteId;
+
+        try {
+            const note = await noteService.readNote(noteId);
+
+            if (note.isPublic) res.status(200).send(note);
+            else res.status(401).send("You don't have access to this note");
+        } catch (e) {
+            res.status(400).send(e);
+        }
     }
 };
 

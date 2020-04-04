@@ -95,6 +95,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
         if (this.state.password === this.state.confirmed) {
             return true;
         }
+
         return false;
     };
 
@@ -106,7 +107,6 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                     <Grid item xs={12}>
                         <h1 className={styles.headers}>Your Note</h1>
                     </Grid>
-
                     <Grid item xs={12}>
                         <TextField
                             className={styles.textField}
@@ -139,7 +139,6 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             required
                         ></TextField>
                     </Grid>
-
                     <Grid item xs={12}>
                         <TextField
                             type="password"
@@ -157,7 +156,6 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             onChange={this.handleConfirmChange}
                         ></TextField>
                     </Grid>
-
                     <Grid item xs={12}>
                         <Button
                             variant="contained"

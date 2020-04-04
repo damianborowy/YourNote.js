@@ -48,7 +48,9 @@ class NotesPage extends Component<{}, INotesPageState> {
     }
 
     deleteNoteFromList = (oldNote: NoteModel) => {
-        const notes = this.state.notes.filter(note => note._id !== oldNote._id);
+        const notes = this.state.notes.filter(
+            (note) => note._id !== oldNote._id
+        );
 
         this.setState({ notes });
     };
@@ -82,7 +84,7 @@ class NotesPage extends Component<{}, INotesPageState> {
     onFabClick = async () => {
         const result = await noteApi.create();
 
-        if (!result) return; // TODO:: <Alert /> z błędem
+        if (!result) return; // TODO:: <Alert /> containing error info
 
         const newNote = result.payload;
         newNote.wasJustCreated = true;
@@ -90,6 +92,7 @@ class NotesPage extends Component<{}, INotesPageState> {
         this.setState({ notes: [...this.state.notes, newNote] });
     };
 
+    // TODO:: Refactor component, move appbar, drawer and container to separate components
     render() {
         return (
             <>
@@ -128,7 +131,7 @@ class NotesPage extends Component<{}, INotesPageState> {
                     {this.renderLogOut()}
                     <Grid container spacing={1} className={styles.container}>
                         {this.state.notes.length > 0 &&
-                            this.state.notes.map(note => {
+                            this.state.notes.map((note) => {
                                 return (
                                     <Grid
                                         item

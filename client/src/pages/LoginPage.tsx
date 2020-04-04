@@ -85,7 +85,6 @@ class LoginPage extends Component<{}, ILoginPageState> {
 
                         <h1 className={styles.headers}>Your Note</h1>
                     </Grid>
-
                     <Grid item xs={12}>
                         <TextField
                             className={styles.textField}
@@ -106,7 +105,6 @@ class LoginPage extends Component<{}, ILoginPageState> {
                             onChange={this.handlePasswordChange}
                         ></TextField>
                     </Grid>
-
                     <Grid item xs={12}>
                         <Button
                             variant="contained"

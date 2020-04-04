@@ -8,6 +8,7 @@ export interface INote extends Document {
     date: Date;
     ownerId: string;
     sharedTo: string[];
+    isPublic: boolean;
 }
 
 const NoteShema = new Schema({
@@ -17,7 +18,8 @@ const NoteShema = new Schema({
     tags: { type: String, required: false },
     date: { type: Date, required: true, default: Date.now() },
     ownerId: { type: String, required: true },
-    sharedTo: { type: [String], required: false }
+    sharedTo: { type: [String], required: false },
+    isPublic: { type: Boolean, required: true, default: false }
 });
 
 export default moongose.model<INote>("Notes", NoteShema);

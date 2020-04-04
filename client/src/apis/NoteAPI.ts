@@ -31,6 +31,16 @@ const noteApi = {
         return new ApiResponse(200, result);
     },
 
+    async readPublicNote(noteId: string) {
+        const result = await fetch(
+            `${serverUrl}/notes/public/${noteId}`
+        ).then((res) => res.json());
+
+        if (!result) return new ApiResponse(400);
+
+        return new ApiResponse(200, result);
+    },
+
     async update(note: Note) {
         const result = await fetch(`${serverUrl}/notes`, {
             method: "PUT",

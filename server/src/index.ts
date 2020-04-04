@@ -42,5 +42,5 @@ app.listen(port, () => {
             useCreateIndex: true
         })
         .then(() => console.log("Successfully connected to database."))
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
 });

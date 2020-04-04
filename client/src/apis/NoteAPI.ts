@@ -14,7 +14,7 @@ const noteApi = {
             method: "POST",
             headers: insertTokenAndHeaders(),
             body: JSON.stringify(note)
-        }).then(res => res.json());
+        }).then((res) => res.json());
 
         if (!result) return new ApiResponse(400);
 
@@ -24,7 +24,7 @@ const noteApi = {
     async read() {
         const result = await fetch(`${serverUrl}/notes`, {
             headers: insertTokenAndHeaders()
-        }).then(res => res.json());
+        }).then((res) => res.json());
 
         if (!result) return new ApiResponse(400);
 
@@ -36,7 +36,7 @@ const noteApi = {
             method: "PUT",
             headers: insertTokenAndHeaders(),
             body: JSON.stringify(note)
-        }).then(res => res.json());
+        }).then((res) => res.json());
 
         if (!result) return new ApiResponse(400);
 
@@ -47,7 +47,7 @@ const noteApi = {
         const result = await fetch(`${serverUrl}/notes/${noteId}`, {
             method: "DELETE",
             headers: insertTokenAndHeaders()
-        }).then(res => res.text());
+        }).then((res) => res.text());
 
         if (!result) return new ApiResponse(400);
 

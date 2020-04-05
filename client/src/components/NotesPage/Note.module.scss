@@ -1,8 +1,7 @@
 div .card {
     cursor: pointer;
     background-color: lightgray;
-    max-height: 300px;
-    min-height: 100px;
+    height: 150px;
 }
 
 div .color {
@@ -43,6 +42,14 @@ div .dialogTitleMenuDesktop {
 .share {
     padding-right: 10px;
 }
+
 .links {
     padding-right: 10px;
+}
+
+div .sharingCheckedTypography {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 12px;
 }

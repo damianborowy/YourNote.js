@@ -18,7 +18,8 @@ import {
     Switch,
     FormControl,
     FormControlLabel,
-    Link
+    Link,
+    Box
 } from "@material-ui/core";
 import NoteModel from "../../models/Note";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -96,9 +97,11 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
         handleClose();
         setSubDialogOpen(true);
     };
+
     const copyToClipboard = (myLink: string) => {
         setClipboard(myLink);
     };
+
     const subShareDialogClose = () => setSubDialogOpen(false);
 
     const updateNote = async () => await noteApi.update(note);
@@ -250,7 +253,6 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
             <Dialog
                 fullWidth
                 open={subDialogOpen}
-                fullScreen={fullScreen}
                 onClose={subShareDialogClose}
             >
                 <DialogTitle>Sharing by link</DialogTitle>
@@ -266,19 +268,30 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                         label="Allow public access"
                     />
                     {checkedB && (
-                        <Typography>
-                            <Link
-                                className={styles.links}
-                                href={clientUrl + note._id}
+                        <Box
+                            border={1}
+                            borderRadius="borderRadius"
+                            borderColor="grey.300"
+                            display="flex"
+                            alignItems="center"
+                            marginTop={1}
+                        >
+                            <Typography
+                                className={styles.sharingCheckedTypography}
                             >
-                                {clientUrl + note._id}
-                            </Link>
+                                <Link
+                                    className={styles.links}
+                                    href={clientUrl + note._id}
+                                >
+                                    {clientUrl + note._id}
+                                </Link>
+                            </Typography>
                             <CopyToClipboard text={clientUrl + note._id}>
                                 <IconButton>
                                     <FileCopy />
                                 </IconButton>
                             </CopyToClipboard>
-                        </Typography>
+                        </Box>
                     )}
                 </DialogContent>
                 <DialogActions>

@@ -4,19 +4,19 @@ import supertest from "supertest";
 const request = supertest(app);
 
 describe("Environmental variables", () => {
-    it("Check if MONGODB_CONNECTION_STRING is present", () => {
+    it("Check if MONGODB_CONNECTION_STRING is set", () => {
         const connectionString = process.env.MONGODB_CONNECTION_STRING;
 
         expect(connectionString).toBeDefined();
     });
 
-    it("Check if JWT_SECRET is present", () => {
+    it("Check if JWT_SECRET is set", () => {
         const secret = process.env.JWT_SECRET;
 
         expect(secret).toBeDefined();
     });
 
-    it("Check if TESTING_TOKEN is present", () => {
+    it("Check if TESTING_TOKEN is set", () => {
         const token = process.env.TESTING_TOKEN;
 
         expect(token).toBeDefined();
@@ -25,11 +25,20 @@ describe("Environmental variables", () => {
 
 describe("Testing endpoints", () => {
     describe("Testing without authentication token", () => {
-        it("GET the /notes endpoint without token and fail", async (done) => {
-            const result = await request.get("/notes");
+        it("GET the /notes endpoint without token and fail", () => {
+            return request.get("/notes").expect(401);
+        });
 
-            expect(result.status).toBe(401);
-            done();
+        it("POST the /notes endpoint without token and fail", () => {
+            return request.post("/notes").expect(401);
+        });
+
+        it("PUT the /notes endpoint without token and fail", () => {
+            return request.put("/notes").expect(401);
+        });
+
+        it("DELETE the /notes endpoint without token and fail", () => {
+            return request.delete("/notes").expect(401);
         });
     });
 

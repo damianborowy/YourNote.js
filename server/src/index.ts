@@ -1,26 +1,5 @@
-import express from "express";
-import logger from "morgan";
-import cors from "cors";
+import app from "./app";
 import mongoose, { mongo } from "mongoose";
-import dotenv from "dotenv";
-import bearerToken from "express-bearer-token";
-
-import usersRouter from "./routes/Users";
-import notesRouter from "./routes/Notes";
-
-// TODO:: enable dotenv.config() only in dev
-dotenv.config();
-const app = express();
-
-app.use(logger("dev"));
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bearerToken());
-// ? app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/users", usersRouter);
-app.use("/notes", notesRouter);
 
 const port = process.env.PORT || 5001;
 app.set("port", port);

@@ -3,7 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "ts-node src/index.ts"
+        "start": "ts-node src/index.ts",
+        "test": "jest",
+        "test:watch": "jest --watch"
     },
     "engines": {
         "yarn": "1.22.4"
@@ -26,11 +28,16 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.2",
         "morgan": "~1.9.1",
+        "ts-jest": "^25.3.1",
         "ts-node": "^8.6.2",
         "typescript": "^3.8.2"
     },
     "devDependencies": {
+        "@types/jest": "^25.2.1",
         "@types/node": "^13.7.6",
-        "nodemon": "^2.0.2"
+        "@types/supertest": "^2.0.8",
+        "jest": "^25.2.7",
+        "nodemon": "^2.0.2",
+        "supertest": "^4.0.2"
     }
 }

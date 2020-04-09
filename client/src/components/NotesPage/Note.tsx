@@ -34,7 +34,8 @@ import {
     Delete,
     Palette,
     Share,
-    FileCopy
+    FileCopy,
+    AddBox
 } from "@material-ui/icons";
 import CopyToClipboard from "react-copy-to-clipboard";
 
@@ -57,6 +58,7 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
     const note = { ...model },
         [open, setOpen] = React.useState(note.wasJustCreated || false),
         [subDialogOpen, setSubDialogOpen] = React.useState(false),
+        [shareToUserOpen, setShareToUserOpen] = React.useState(false),
         [checkedB, setCheckedB] = React.useState(note.isPublic || false),
         [title, setTitle] = React.useState(note.title),
         [content, setContent] = React.useState(note.content),
@@ -65,6 +67,7 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
         [subAnchorEl, setsubAnchorEl] = React.useState<null | HTMLElement>(
             null
         ),
+        [email, setEmail] = React.useState(""),
         color = note.color ? pickColorClass(note.color) : "",
         theme = useTheme(),
         fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
@@ -85,6 +88,9 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
         setAnchorEl(null);
     };
 
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    };
     const subHandleClick = (event: React.MouseEvent<HTMLLIElement>) => {
         setsubAnchorEl(event.currentTarget);
     };
@@ -96,6 +102,15 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
     const subShareDialogOpen = () => {
         handleClose();
         setSubDialogOpen(true);
+    };
+
+    const subShareToUserDialogOpen = () => {
+        handleClose();
+        setShareToUserOpen(true);
+    };
+
+    const subShareToUserDialogClose = () => {
+        setShareToUserOpen(false);
     };
 
     const copyToClipboard = (myLink: string) => {
@@ -126,6 +141,11 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
         setContent(content);
         note.content = content;
         updateNote();
+    };
+
+    const validateMail = () => {
+        var re = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
+        return re.test(email);
     };
 
     return (
@@ -202,7 +222,6 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                                 <IconButton onClick={handleClick}>
                                     <MoreVert />
                                 </IconButton>
-
                                 <IconButton onClick={closeDialog}>
                                     <Close />
                                 </IconButton>
@@ -244,12 +263,54 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                         <Share className={styles.share} />
                         By link
                     </MenuItem>
-                    <MenuItem onClick={subHandleClose}>
+                    <MenuItem onClick={subShareToUserDialogOpen}>
                         <Share className={styles.share} />
                         To specified user
                     </MenuItem>
                 </Menu>
             </Dialog>
+
+            <Dialog
+                fullWidth
+                open={shareToUserOpen}
+                onClose={subShareToUserDialogClose}
+            >
+                <DialogTitle>Sharing to specified user</DialogTitle>
+
+                <DialogContent>
+                    <Typography>Spierdalaj Damian</Typography>
+
+                    <TextField
+                        className={styles.textField}
+                        id="filled-basic"
+                        label="e-mail"
+                        variant="filled"
+                        onChange={handleEmailChange}
+                        type="email"
+                        error={!validateMail() && email.length !== 0}
+                        helperText={
+                            !validateMail() && email.length !== 0
+                                ? "Email address is invalid."
+                                : ""
+                        }
+                    ></TextField>
+                    <IconButton>
+                        <AddBox />
+                    </IconButton>
+                    <IconButton>
+                        <Delete />
+                    </IconButton>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={subShareToUserDialogClose} color="primary">
+                        Share
+                    </Button>
+                    <Button onClick={subShareToUserDialogClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             <Dialog
                 fullWidth
                 open={subDialogOpen}

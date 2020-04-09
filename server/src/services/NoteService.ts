@@ -1,11 +1,10 @@
 import Note, { INote } from "../models/Note";
 
 import ICrudRepository from "./interfaces/ICrudRepository";
-import { Types } from "mongoose";
 
 export default class NoteService implements ICrudRepository<INote> {
-    async read(id?: string | undefined): Promise<INote[]> {
-        if (id) return this.getAllUserNotes(id);
+    async read(email?: string | undefined): Promise<INote[]> {
+        if (email) return this.getAllUserNotes(email);
         else throw new Error("Note Read Error");
     }
 
@@ -25,10 +24,11 @@ export default class NoteService implements ICrudRepository<INote> {
         return this.deleteNote(id);
     }
 
-    private async getAllUserNotes(id: string): Promise<INote[]> {
-        const userNotes = await Note.find({ ownerId: id });
+    private async getAllUserNotes(email: string): Promise<INote[]> {
+        const userNotes = await Note.find({ owner: email });
+        const sharedNotes = await Note.find({ sharedTo: email });
 
-        return userNotes;
+        return [...userNotes, ...sharedNotes];
     }
 
     private async getNote(id: string): Promise<INote> {

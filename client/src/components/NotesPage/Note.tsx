@@ -50,7 +50,7 @@ interface INoteProps {
     deleteNoteFromList: (note: NoteModel) => void;
 }
 
-const pickColorClass = (colorNum: number): string => {
+const pickColorClass = (color: string): string => {
     return styles.color;
 };
 

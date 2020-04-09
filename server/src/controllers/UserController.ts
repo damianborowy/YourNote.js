@@ -47,6 +47,17 @@ const userController = {
         res.status(200).send(
             jwt.sign({ _id: user._id, email: user.email }, jwt_secret)
         );
+    },
+
+    async checkIfEmailExists(req: Request, res: Response) {
+        const user = await User.findOne({ email: req.params.email });
+
+        if (!user)
+            return res
+                .status(400)
+                .send("User with this e-mail address doesn't exist");
+
+        res.status(200).send(user.email);
     }
 };
 

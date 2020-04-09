@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import NoteService from "../services/NoteService";
 import jwt from "jsonwebtoken";
-import Note, { INote } from "../models/Note";
+import Note from "../models/Note";
 import mongoose from "mongoose";
 
 const ObjectId = mongoose.mongo.ObjectId;
@@ -11,10 +11,10 @@ const noteController = {
     async create(req: Request, res: Response) {
         const token = jwt.decode(req.token!);
         // @ts-ignore
-        const ownerId = token["_id"];
+        const owner = token["email"];
 
         const note = new Note({
-            ownerId,
+            owner,
             title: req.body.title,
             content: req.body.content,
             color: req.body.color
@@ -31,10 +31,10 @@ const noteController = {
     async read(req: Request, res: Response) {
         const token = jwt.decode(req.token!);
         // @ts-ignore
-        const ownerId = token["_id"];
+        const owner = token["email"];
 
         try {
-            const result = await noteService.read(ownerId);
+            const result = await noteService.read(owner);
             res.status(200).send(result);
         } catch (e) {
             res.status(400).send(e);

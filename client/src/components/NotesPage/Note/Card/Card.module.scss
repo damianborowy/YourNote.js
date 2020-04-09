@@ -1,0 +1,14 @@
+div .card {
+    cursor: pointer;
+    background-color: lightgray;
+    height: 150px;
+}
+
+div .color {
+    background-color: lightgray;
+}
+
+div .cardContent,
+div .cardContent:last-child {
+    padding: 8px;
+}

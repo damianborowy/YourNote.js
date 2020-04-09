@@ -6,8 +6,7 @@ import {
     DialogContent,
     IconButton,
     Button,
-    DialogActions,
-    Typography
+    DialogActions
 } from "@material-ui/core";
 import { AddBox, Delete } from "@material-ui/icons";
 import styles from "./UserShareDialog.module.scss";
@@ -37,7 +36,6 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
         >
             <DialogTitle>Share note to other users</DialogTitle>
             <DialogContent>
-                <Typography>Some text</Typography>
                 <TextField
                     className={styles.textField}
                     label="e-mail"
@@ -50,7 +48,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                             ? "Email address is invalid."
                             : ""
                     }
-                ></TextField>
+                />
                 <IconButton>
                     <AddBox />
                 </IconButton>

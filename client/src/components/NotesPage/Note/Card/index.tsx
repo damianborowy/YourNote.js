@@ -11,13 +11,12 @@ interface ICardProps {
     openDialog: () => void;
     title: string | undefined;
     content: string | undefined;
-    color: string;
 }
 
-const Card = ({ title, content, openDialog, color }: ICardProps) => {
+const Card = ({ title, content, openDialog }: ICardProps) => {
     return (
         <MaterialCard
-            className={clsx(styles.card, color)}
+            className={clsx(styles.card)}
             variant="outlined"
             onClick={openDialog}
         >

@@ -9,18 +9,11 @@ interface INoteProps {
     deleteNoteFromList: (note: NoteModel) => void;
 }
 
-const pickColorClass = (color: string): string => {
-    // TODO:: implement
-
-    return "foo";
-};
-
 const Note = ({ model, deleteNoteFromList }: INoteProps) => {
     const note = { ...model },
         [open, setOpen] = React.useState(note.wasJustCreated || false),
         [title, setTitle] = React.useState(note.title),
-        [content, setContent] = React.useState(note.content),
-        color = note.color ? pickColorClass(note.color) : "";
+        [content, setContent] = React.useState(note.content);
 
     const openDialog = () => setOpen(true);
     const closeDialog = () => setOpen(false);
@@ -45,14 +38,8 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
 
     return (
         <>
-            <Card
-                openDialog={openDialog}
-                title={title}
-                content={content}
-                color={color}
-            />
+            <Card openDialog={openDialog} title={title} content={content} />
             <NoteDialog
-                color={color}
                 open={open}
                 title={title}
                 content={content}

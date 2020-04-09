@@ -26,7 +26,6 @@ import LinkShareDialog from "./LinkShareDialog";
 import UserShareDialog from "./UserShareDialog";
 
 interface INoteDialogProps {
-    color: string;
     open: boolean;
     title: string | undefined;
     content: string | undefined;
@@ -99,7 +98,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                 fullScreen={fullScreen}
                 onClose={props.closeDialog}
             >
-                <DialogTitle className={clsx(props.color, styles.dialogTitle)}>
+                <DialogTitle className={clsx(styles.dialogTitle)}>
                     <Hidden smUp>
                         <div style={{ display: "flex" }}>
                             <IconButton
@@ -165,9 +164,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                         subAnchorEl={subAnchorEl}
                     />
                 </DialogTitle>
-                <DialogContent
-                    className={clsx(props.color, styles.dialogContent)}
-                >
+                <DialogContent className={clsx(styles.dialogContent)}>
                     <TextField
                         multiline
                         rowsMax={20}

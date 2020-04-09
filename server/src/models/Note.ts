@@ -6,7 +6,7 @@ export interface INote extends Document {
     color: number;
     tags: string;
     date: Date;
-    ownerId: string;
+    owner: string;
     sharedTo: string[];
     isPublic: boolean;
 }
@@ -14,10 +14,23 @@ export interface INote extends Document {
 const NoteShema = new Schema({
     title: { type: String, required: false },
     content: { type: String, required: false },
-    color: { type: Number, required: true, default: 0 },
+    color: {
+        type: String,
+        enum: [
+            "TRANSPARENT",
+            "BLUE",
+            "GREEN",
+            "RED",
+            "GRAY",
+            "YELLOW",
+            "ORANGE"
+        ],
+        required: true,
+        default: "TRANSPARENT"
+    },
     tags: { type: String, required: false },
     date: { type: Date, required: true, default: Date.now() },
-    ownerId: { type: String, required: true },
+    owner: { type: String, required: true },
     sharedTo: { type: [String], required: false },
     isPublic: { type: Boolean, required: true, default: false }
 });

@@ -10,10 +10,12 @@ import {
 } from "@material-ui/core";
 import { AddBox, Delete } from "@material-ui/icons";
 import styles from "./UserShareDialog.module.scss";
+import NoteModel from "../../../../../../models/Note";
 
 interface IUserShareDialogProps {
     subShareToUserDialogClose: () => void;
     subToUserDialogOpen: boolean;
+    note: NoteModel;
 }
 
 const UserShareDialog = (props: IUserShareDialogProps) => {
@@ -30,39 +32,30 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
 
     return (
         <Dialog
-            fullWidth
             open={props.subToUserDialogOpen}
             onClose={props.subShareToUserDialogClose}
         >
             <DialogTitle>Share note to other users</DialogTitle>
             <DialogContent>
-                <TextField
-                    className={styles.textField}
-                    label="e-mail"
-                    variant="filled"
-                    onChange={handleEmailChange}
-                    type="email"
-                    error={!validateMail() && email.length !== 0}
-                    helperText={
-                        !validateMail() && email.length !== 0
-                            ? "Email address is invalid."
-                            : ""
-                    }
-                />
-                <IconButton>
-                    <AddBox />
-                </IconButton>
-                <IconButton>
-                    <Delete />
-                </IconButton>
+                <div className={styles.flexRow}>
+                    <TextField
+                        label="e-mail"
+                        variant="filled"
+                        onChange={handleEmailChange}
+                        type="email"
+                        error={!validateMail() && email.length !== 0}
+                        helperText={
+                            !validateMail() && email.length !== 0
+                                ? "Email address is invalid."
+                                : ""
+                        }
+                    />
+                    <IconButton>
+                        <AddBox />
+                    </IconButton>
+                </div>
             </DialogContent>
             <DialogActions>
-                <Button
-                    onClick={props.subShareToUserDialogClose}
-                    color="primary"
-                >
-                    Share
-                </Button>
                 <Button
                     onClick={props.subShareToUserDialogClose}
                     color="primary"

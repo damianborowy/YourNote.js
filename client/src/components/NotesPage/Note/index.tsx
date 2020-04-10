@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NoteModel from "../../../models/Note";
 import noteApi from "../../../apis/NoteAPI";
 import Card from "./Card";
@@ -10,45 +10,32 @@ interface INoteProps {
 }
 
 const Note = ({ model, deleteNoteFromList }: INoteProps) => {
-    const note = { ...model },
-        [open, setOpen] = React.useState(note.wasJustCreated || false),
-        [title, setTitle] = React.useState(note.title),
-        [content, setContent] = React.useState(note.content);
+    const [note, setNote] = React.useState<NoteModel>(model),
+        [open, setOpen] = React.useState(note.wasJustCreated || false);
 
     const openDialog = () => setOpen(true);
+
     const closeDialog = () => setOpen(false);
 
-    const updateNote = async () => await noteApi.update(note);
+    const handleNoteChange = (note: NoteModel) => setNote(note);
 
-    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const title = event.target.value;
-        setTitle(title);
-        note.title = title;
-        updateNote();
-    };
+    useEffect(() => {
+        const updateNoteHelper = async () => {
+            await noteApi.update(note);
+        };
 
-    const handleContentChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const content = event.target.value;
-        setContent(content);
-        note.content = content;
-        updateNote();
-    };
+        updateNoteHelper();
+    }, [note]);
 
     return (
         <>
-            <Card openDialog={openDialog} title={title} content={content} />
+            <Card openDialog={openDialog} note={note} />
             <NoteDialog
                 open={open}
-                title={title}
-                content={content}
-                handleTitleChange={handleTitleChange}
-                handleContentChange={handleContentChange}
                 closeDialog={closeDialog}
                 note={note}
                 deleteNoteFromList={deleteNoteFromList}
-                updateNote={updateNote}
+                handleNoteChange={handleNoteChange}
             />
         </>
     );

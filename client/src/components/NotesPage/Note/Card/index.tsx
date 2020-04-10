@@ -6,14 +6,14 @@ import {
     Typography
 } from "@material-ui/core";
 import clsx from "clsx";
+import NoteModel from "../../../../models/Note";
 
 interface ICardProps {
     openDialog: () => void;
-    title: string | undefined;
-    content: string | undefined;
+    note: NoteModel;
 }
 
-const Card = ({ title, content, openDialog }: ICardProps) => {
+const Card = ({ note, openDialog }: ICardProps) => {
     return (
         <MaterialCard
             className={clsx(styles.card)}
@@ -28,9 +28,9 @@ const Card = ({ title, content, openDialog }: ICardProps) => {
                         fontWeight: "bold"
                     }}
                 >
-                    {title}
+                    {note.title}
                 </Typography>
-                <Typography>{content}</Typography>
+                <Typography>{note.content}</Typography>
             </CardContent>
         </MaterialCard>
     );

@@ -22,26 +22,18 @@ import styles from "./NoteDialog.module.scss";
 import Menu from "./Menu";
 import NoteModel from "../../../../models/Note";
 import noteApi from "../../../../apis/NoteAPI";
-import LinkShareDialog from "./LinkShareDialog";
-import UserShareDialog from "./UserShareDialog";
 
 interface INoteDialogProps {
     open: boolean;
-    title: string | undefined;
-    content: string | undefined;
-    handleTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleContentChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     closeDialog: () => void;
     note: NoteModel;
     deleteNoteFromList: (note: NoteModel) => void;
-    updateNote: () => void;
+    handleNoteChange: (note: NoteModel) => void;
 }
 
 const NoteDialog = (props: INoteDialogProps) => {
     const theme = useTheme(),
         fullScreen = useMediaQuery(theme.breakpoints.down("xs")),
-        [subDialogOpen, setSubDialogOpen] = React.useState(false),
-        [subToUserDialogOpen, setSubToUserDialogOpen] = React.useState(false),
         [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null),
         [subAnchorEl, setSubAnchorEl] = React.useState<null | HTMLElement>(
             null
@@ -49,14 +41,28 @@ const NoteDialog = (props: INoteDialogProps) => {
 
     const deleteNote = async () => {
         const { note } = props;
-
         if (!note._id) return;
 
         const result = await noteApi.delete(note._id);
-
         if (!result) return;
 
         props.deleteNoteFromList(note);
+    };
+
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newNote = { ...props.note };
+        newNote.title = event.target.value;
+
+        props.handleNoteChange(newNote);
+    };
+
+    const handleContentChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const newNote = { ...props.note };
+        newNote.content = event.target.value;
+
+        props.handleNoteChange(newNote);
     };
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
@@ -71,24 +77,6 @@ const NoteDialog = (props: INoteDialogProps) => {
         setSubAnchorEl(event.currentTarget);
 
     const subHandleClose = () => setSubAnchorEl(null);
-
-    const subShareDialogOpen = () => {
-        handleClose();
-        setSubDialogOpen(true);
-    };
-
-    const subShareDialogClose = () => {
-        setSubDialogOpen(false);
-    };
-
-    const subShareToUserDialogOpen = () => {
-        handleClose();
-        setSubToUserDialogOpen(true);
-    };
-
-    const subShareToUserDialogClose = () => {
-        setSubToUserDialogOpen(false);
-    };
 
     return (
         <>
@@ -122,16 +110,15 @@ const NoteDialog = (props: INoteDialogProps) => {
                     </Hidden>
                     <div style={{ display: "flex" }}>
                         <Input
-                            value={props.title}
+                            value={props.note.title}
                             placeholder="Title"
                             className={styles.dialogTitleText}
-                            onChange={props.handleTitleChange}
+                            onChange={handleTitleChange}
                             classes={{
                                 input: styles.dialogTitleText
                             }}
                             fullWidth
                         />
-
                         <Hidden xsDown>
                             <div
                                 className={clsx(
@@ -158,33 +145,23 @@ const NoteDialog = (props: INoteDialogProps) => {
                         subHandleClose={subHandleClose}
                         subHandleClick={subHandleClick}
                         handleClose={handleClose}
-                        subShareDialogOpen={subShareDialogOpen}
-                        subShareToUserDialogOpen={subShareToUserDialogOpen}
                         anchorEl={anchorEl}
                         subAnchorEl={subAnchorEl}
+                        note={props.note}
+                        handleNoteChange={props.handleNoteChange}
                     />
                 </DialogTitle>
                 <DialogContent className={clsx(styles.dialogContent)}>
                     <TextField
+                        fullWidth
                         multiline
                         rowsMax={20}
-                        value={props.content}
+                        value={props.note.content}
                         placeholder="Content"
-                        onChange={props.handleContentChange}
-                        fullWidth
+                        onChange={handleContentChange}
                     />
                 </DialogContent>
             </Dialog>
-            <LinkShareDialog
-                note={props.note}
-                updateNote={props.updateNote}
-                subDialogOpen={subDialogOpen}
-                subShareDialogClose={subShareDialogClose}
-            />
-            <UserShareDialog
-                subShareToUserDialogClose={subShareToUserDialogClose}
-                subToUserDialogOpen={subToUserDialogOpen}
-            />
         </>
     );
 };

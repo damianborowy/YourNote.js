@@ -14,7 +14,8 @@ import {
     Toolbar,
     IconButton,
     SwipeableDrawer,
-    Typography
+    Typography,
+    CircularProgress
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
@@ -84,7 +85,7 @@ class NotesPage extends Component<{}, INotesPageState> {
     onFabClick = async () => {
         const result = await noteApi.create();
 
-        if (!result) return; // TODO:: <Alert /> containing error info
+        if (!result) return;
 
         const newNote = result.payload;
         newNote.wasJustCreated = true;
@@ -129,7 +130,7 @@ class NotesPage extends Component<{}, INotesPageState> {
                 <Container>
                     {this.renderLogOut()}
                     <Grid container spacing={1} className={styles.container}>
-                        {this.state.notes.length > 0 &&
+                        {this.state.notes.length > 0 ? (
                             this.state.notes.map((note) => {
                                 return (
                                     <Grid
@@ -147,7 +148,12 @@ class NotesPage extends Component<{}, INotesPageState> {
                                         />
                                     </Grid>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <div className={styles.loader}>
+                                <CircularProgress size={60} />
+                            </div>
+                        )}
                     </Grid>
                     <Fab
                         color="primary"

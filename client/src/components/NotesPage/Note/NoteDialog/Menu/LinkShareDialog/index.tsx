@@ -14,8 +14,8 @@ import {
 } from "@material-ui/core";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { FileCopy } from "@material-ui/icons";
-import NoteModel from "../../../../../models/Note";
 import styles from "./LinkShareDialog.module.scss";
+import NoteModel from "../../../../../../models/Note";
 
 const env = process.env.NODE_ENV || "development";
 const clientUrl =
@@ -24,7 +24,7 @@ const clientUrl =
         : "https://yournote-client.herokuapp.com/notes/public/";
 
 interface ILinkShareDialogProps {
-    updateNote: () => void;
+    handleNoteChange: (note: NoteModel) => void;
     note: NoteModel;
     subDialogOpen: boolean;
     subShareDialogClose: () => void;
@@ -37,8 +37,11 @@ const LinkShareDialog = (props: ILinkShareDialogProps) => {
 
     const handleChange = () => {
         setCheckedB(!checkedB);
-        props.note.isPublic = !checkedB;
-        props.updateNote();
+
+        const newNote = { ...props.note };
+        newNote.isPublic = !checkedB;
+
+        props.handleNoteChange(newNote);
     };
 
     return (

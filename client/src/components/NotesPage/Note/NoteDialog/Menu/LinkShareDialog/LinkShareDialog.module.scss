@@ -1,8 +1,10 @@
-div .sharingCheckedTypography {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-left: 12px;
+div {
+    .sharingCheckedTypography {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-left: 12px;
+    }
 }
 
 .links {

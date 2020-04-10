@@ -49,7 +49,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                                 : ""
                         }
                     />
-                    <IconButton>
+                    <IconButton className={styles.iconButton}>
                         <AddBox />
                     </IconButton>
                 </div>

@@ -1,4 +1,10 @@
-.flexRow {
-    display: flex;
-    align-items: center;
+div {
+    .flexRow {
+        display: flex;
+        align-items: center;
+    }
+
+    .iconButton {
+        margin-left: 5px;
+    }
 }

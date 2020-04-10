@@ -26,14 +26,14 @@ import jwt from "jsonwebtoken";
 
 interface INotesPageState {
     logOut: boolean;
-    notes: NoteModel[];
+    notes: NoteModel[] | null;
     drawerOpen: boolean;
 }
 
 class NotesPage extends Component<{}, INotesPageState> {
     state: Readonly<INotesPageState> = {
         logOut: false,
-        notes: new Array<NoteModel>(),
+        notes: null,
         drawerOpen: false
     };
 
@@ -49,6 +49,8 @@ class NotesPage extends Component<{}, INotesPageState> {
     }
 
     deleteNoteFromList = (oldNote: NoteModel) => {
+        if (!this.state.notes) return;
+
         const notes = this.state.notes.filter(
             (note) => note._id !== oldNote._id
         );
@@ -127,7 +129,7 @@ class NotesPage extends Component<{}, INotesPageState> {
                 <Container>
                     {this.renderLogOut()}
                     <Grid container spacing={1} className={styles.container}>
-                        {this.state.notes.length > 0 ? (
+                        {this.state.notes ? (
                             this.state.notes.map((note) => {
                                 return (
                                     <Grid

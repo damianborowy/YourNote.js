@@ -88,7 +88,7 @@ const NoteDialog = (props: INoteDialogProps) => {
             >
                 <DialogTitle className={clsx(styles.dialogTitle)}>
                     <Hidden smUp>
-                        <div style={{ display: "flex" }}>
+                        <div className={styles.hiddenMobile}>
                             <IconButton
                                 className={styles.back}
                                 onClick={props.closeDialog}

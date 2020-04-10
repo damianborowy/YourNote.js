@@ -3,6 +3,7 @@ import NoteModel from "../../../models/Note";
 import noteApi from "../../../apis/NoteAPI";
 import Card from "./Card";
 import NoteDialog from "./NoteDialog";
+import "./Note.scss";
 
 interface INoteProps {
     model: NoteModel;

@@ -3,7 +3,8 @@ import styles from "./Card.module.scss";
 import {
     Card as MaterialCard,
     CardContent,
-    Typography
+    Typography,
+    useTheme
 } from "@material-ui/core";
 import clsx from "clsx";
 import NoteModel from "../../../../models/Note";
@@ -14,9 +15,15 @@ interface ICardProps {
 }
 
 const Card = ({ note, openDialog }: ICardProps) => {
+    const theme = useTheme();
+
     return (
         <MaterialCard
-            className={clsx(styles.card)}
+            className={clsx(
+                styles.card,
+                theme.palette.type || "light",
+                note.color?.toLowerCase()
+            )}
             variant="outlined"
             onClick={openDialog}
         >

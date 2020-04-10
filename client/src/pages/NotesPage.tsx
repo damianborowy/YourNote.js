@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
@@ -24,52 +24,43 @@ import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
 
-interface INotesPageState {
-    logOut: boolean;
-    notes: NoteModel[] | null;
-    drawerOpen: boolean;
-}
+const NotesPage = () => {
+    const [logOut, setLogOut] = useState(false),
+        [notes, setNotes] = useState<NoteModel[] | null>(null),
+        [drawerOpen, setDrawerOpen] = useState(false);
 
-class NotesPage extends Component<{}, INotesPageState> {
-    state: Readonly<INotesPageState> = {
-        logOut: false,
-        notes: null,
-        drawerOpen: false
+    useEffect(() => {
+        const fetchNotes = async () => {
+            const logOut = !isTokenPresent();
+            setLogOut(logOut);
+
+            if (logOut) return;
+
+            const result = await noteApi.read();
+            setNotes(result.payload);
+        };
+
+        fetchNotes();
+    }, []);
+
+    const deleteNoteFromList = (oldNote: NoteModel) => {
+        if (!notes) return;
+
+        const newNotes = notes.filter((note) => note._id !== oldNote._id);
+
+        setNotes(newNotes);
     };
 
-    async componentDidMount() {
-        const logOut = !isTokenPresent();
-        this.setState({ logOut });
-
-        if (logOut) return;
-
-        const result = await noteApi.read();
-
-        this.setState({ notes: result.payload });
-    }
-
-    deleteNoteFromList = (oldNote: NoteModel) => {
-        if (!this.state.notes) return;
-
-        const notes = this.state.notes.filter(
-            (note) => note._id !== oldNote._id
-        );
-
-        this.setState({ notes });
-    };
-
-    handleLogOutButtonClick = () => {
+    const handleLogOutButtonClick = () => {
         removeToken();
-        this.setState({ logOut: !isTokenPresent() });
+        setLogOut(!isTokenPresent());
     };
 
-    renderLogOut = () => {
-        if (this.state.logOut) {
-            return <Redirect to="/"></Redirect>;
-        }
+    const renderLogOut = () => {
+        if (logOut) return <Redirect to="/"></Redirect>;
     };
 
-    getEmailFromToken = () => {
+    const getEmailFromToken = () => {
         const decodedToken = jwt.decode(extractToken());
         if (!decodedToken || typeof decodedToken !== "object") return "";
 
@@ -78,10 +69,10 @@ class NotesPage extends Component<{}, INotesPageState> {
         return email ?? "";
     };
 
-    onDrawerOpen = () => this.setState({ drawerOpen: true });
-    onDrawerClose = () => this.setState({ drawerOpen: false });
+    const onDrawerOpen = () => setDrawerOpen(true);
+    const onDrawerClose = () => setDrawerOpen(false);
 
-    onFabClick = async () => {
+    const onFabClick = async () => {
         const result = await noteApi.create();
 
         if (!result) return;
@@ -89,48 +80,45 @@ class NotesPage extends Component<{}, INotesPageState> {
         const newNote = result.payload;
         newNote.wasJustCreated = true;
 
-        this.setState({ notes: [...this.state.notes, newNote] });
+        setNotes([...notes, newNote]);
     };
 
-    render() {
-        return (
-            <>
-                <AppBar
-                    position="static"
-                    className={styles.bar}
-                    color="default"
-                >
-                    <Toolbar>
-                        <IconButton edge="start" onClick={this.onDrawerOpen}>
-                            <Menu />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <SwipeableDrawer
-                    classes={{ paper: styles.drawer }}
-                    open={this.state.drawerOpen}
-                    onClose={this.onDrawerClose}
-                    onOpen={this.onDrawerOpen}
-                >
-                    <div className={styles.drawerBottom}>
-                        <Typography>
-                            Hello {this.getEmailFromToken()}!
-                        </Typography>
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={this.handleLogOutButtonClick}
-                            className={styles.drawerButton}
-                        >
-                            Log out
-                        </Button>
-                    </div>
-                </SwipeableDrawer>
+    return (
+        <div className={styles.app}>
+            <AppBar position="static" color="default">
+                <Toolbar>
+                    <IconButton edge="start" onClick={onDrawerOpen}>
+                        <Menu />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <SwipeableDrawer
+                classes={{ paper: styles.drawer }}
+                open={drawerOpen}
+                onClose={onDrawerClose}
+                onOpen={onDrawerOpen}
+            >
+                <div className={styles.drawerBottom}>
+                    <Typography>Hello {getEmailFromToken()}!</Typography>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={handleLogOutButtonClick}
+                        className={styles.drawerButton}
+                    >
+                        Log out
+                    </Button>
+                </div>
+            </SwipeableDrawer>
+            <div
+                style={{ backgroundColor: "#212121" }}
+                className={styles.container}
+            >
                 <Container>
-                    {this.renderLogOut()}
-                    <Grid container spacing={1} className={styles.container}>
-                        {this.state.notes ? (
-                            this.state.notes.map((note) => {
+                    {renderLogOut()}
+                    <Grid container spacing={1}>
+                        {notes ? (
+                            notes.map((note) => {
                                 return (
                                     <Grid
                                         item
@@ -142,7 +130,7 @@ class NotesPage extends Component<{}, INotesPageState> {
                                         <Note
                                             model={note}
                                             deleteNoteFromList={
-                                                this.deleteNoteFromList
+                                                deleteNoteFromList
                                             }
                                         />
                                     </Grid>
@@ -157,14 +145,14 @@ class NotesPage extends Component<{}, INotesPageState> {
                     <Fab
                         color="primary"
                         className={styles.fab}
-                        onClick={this.onFabClick}
+                        onClick={onFabClick}
                     >
                         <Add />
                     </Fab>
                 </Container>
-            </>
-        );
-    }
-}
+            </div>
+        </div>
+    );
+};
 
 export default NotesPage;

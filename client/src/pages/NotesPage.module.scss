@@ -1,19 +1,12 @@
-.bar {
-    margin-bottom: 15px;
-}
-
-.containerParent {
-    background-image: url("/images/bg2.jpg");
-    background-position: center;
-    background-size: cover;
+div .app {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100%;
+    flex-direction: column;
+    height: 100%;
 }
 
-.container {
-    min-height: 100%;
+div .container {
+    padding-top: 20px;
+    flex: 1;
 }
 
 .fab {

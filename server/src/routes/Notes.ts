@@ -2,7 +2,7 @@ import express from "express";
 import noteController from "../controllers/NoteController";
 import auth from "../middlewares/Authentication";
 
-var router = express.Router();
+const router = express.Router();
 
 router.get("/public/:noteId", noteController.guestRead);
 

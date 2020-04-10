@@ -69,14 +69,11 @@ class NotesPage extends Component<{}, INotesPageState> {
 
     getEmailFromToken = () => {
         const decodedToken = jwt.decode(extractToken());
-
         if (!decodedToken || typeof decodedToken !== "object") return "";
 
         const email: string = decodedToken.email;
 
-        if (!email) return "";
-
-        return email;
+        return email ?? "";
     };
 
     onDrawerOpen = () => this.setState({ drawerOpen: true });

@@ -21,9 +21,8 @@ interface IUserShareDialogProps {
 const UserShareDialog = (props: IUserShareDialogProps) => {
     const [email, setEmail] = React.useState("");
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) =>
         setEmail(event.target.value);
-    };
 
     const validateMail = () => {
         var re = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;

@@ -1,4 +1,4 @@
-import moongose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface INote extends Document {
     title: string;
@@ -11,7 +11,7 @@ export interface INote extends Document {
     isPublic: boolean;
 }
 
-const NoteShema = new Schema({
+const NoteSchema = new Schema({
     title: { type: String, required: false },
     content: { type: String, required: false },
     color: {
@@ -35,4 +35,4 @@ const NoteShema = new Schema({
     isPublic: { type: Boolean, required: true, default: false }
 });
 
-export default moongose.model<INote>("Notes", NoteShema);
+export default mongoose.model<INote>("Notes", NoteSchema);

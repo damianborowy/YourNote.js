@@ -16,7 +16,10 @@ import {
     SwipeableDrawer,
     Typography,
     CircularProgress,
-    useTheme
+    useTheme,
+    Divider,
+    Switch,
+    FormControlLabel
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
@@ -24,12 +27,14 @@ import Container from "@material-ui/core/Container";
 import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
+import { useStore } from "../utils/DarkModeProvider";
 
 const NotesPage = () => {
     const theme = useTheme(),
         [logOut, setLogOut] = useState(false),
         [notes, setNotes] = useState<NoteModel[] | null>(null),
-        [drawerOpen, setDrawerOpen] = useState(false);
+        [drawerOpen, setDrawerOpen] = useState(false),
+        { darkMode, setDarkMode } = useStore();
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -44,6 +49,8 @@ const NotesPage = () => {
 
         fetchNotes();
     }, []);
+
+    const toggleDarkMode = () => setDarkMode(!darkMode);
 
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
@@ -102,7 +109,22 @@ const NotesPage = () => {
                 onOpen={onDrawerOpen}
             >
                 <div className={styles.drawerBottom}>
-                    <Typography>Hello {getEmailFromToken()}!</Typography>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={darkMode}
+                                color="primary"
+                                onChange={toggleDarkMode}
+                            />
+                        }
+                        label="Toggle dark mode"
+                    />
+
+                    <Divider className={styles.divider} />
+                    <Typography>
+                        Logged in as: <br />
+                        {getEmailFromToken()}
+                    </Typography>
                     <Button
                         variant="outlined"
                         color="primary"

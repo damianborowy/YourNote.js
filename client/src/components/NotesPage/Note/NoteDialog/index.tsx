@@ -86,7 +86,13 @@ const NoteDialog = (props: INoteDialogProps) => {
                 fullScreen={fullScreen}
                 onClose={props.closeDialog}
             >
-                <DialogTitle className={clsx(styles.dialogTitle)}>
+                <DialogTitle
+                    className={clsx(
+                        styles.dialogTitle,
+                        theme.palette.type || "light",
+                        props.note.color?.toLowerCase()
+                    )}
+                >
                     <Hidden smUp>
                         <div className={styles.hiddenMobile}>
                             <IconButton
@@ -151,7 +157,13 @@ const NoteDialog = (props: INoteDialogProps) => {
                         handleNoteChange={props.handleNoteChange}
                     />
                 </DialogTitle>
-                <DialogContent className={clsx(styles.dialogContent)}>
+                <DialogContent
+                    className={clsx(
+                        styles.dialogContent,
+                        theme.palette.type || "light",
+                        props.note.color?.toLowerCase()
+                    )}
+                >
                     <TextField
                         fullWidth
                         multiline

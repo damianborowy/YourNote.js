@@ -15,7 +15,8 @@ import {
     IconButton,
     SwipeableDrawer,
     Typography,
-    CircularProgress
+    CircularProgress,
+    useTheme
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
@@ -25,7 +26,8 @@ import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
 
 const NotesPage = () => {
-    const [logOut, setLogOut] = useState(false),
+    const theme = useTheme(),
+        [logOut, setLogOut] = useState(false),
         [notes, setNotes] = useState<NoteModel[] | null>(null),
         [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -70,6 +72,7 @@ const NotesPage = () => {
     };
 
     const onDrawerOpen = () => setDrawerOpen(true);
+
     const onDrawerClose = () => setDrawerOpen(false);
 
     const onFabClick = async () => {
@@ -111,7 +114,7 @@ const NotesPage = () => {
                 </div>
             </SwipeableDrawer>
             <div
-                style={{ backgroundColor: "#212121" }}
+                style={{ backgroundColor: theme.palette.background.paper }}
                 className={styles.container}
             >
                 <Container>

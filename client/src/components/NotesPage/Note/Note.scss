@@ -1,73 +1,63 @@
 .light {
+    color: black;
+
     &.transparent {
         background-color: white;
-        color: black;
     }
 
     &.blue {
-        background-color: #83b9ff;
-        color: black;
+        background-color: #64c1ff;
     }
 
     &.green {
         background-color: #6abf69;
-        color: black;
     }
 
     &.red {
         background-color: #ff5131;
-        color: black;
     }
 
     &.gray {
         background-color: #a4a4a4;
-        color: black;
     }
 
     &.yellow {
         background-color: #ffff72;
-        color: black;
     }
 
     &.orange {
         background-color: #ffad42;
-        color: black;
     }
 }
 
 .dark {
+    color: white;
+
     &.transparent {
         background-color: #212121;
-        color: white;
     }
 
     &.blue {
-        background-color: #005ecb;
-        color: white;
+        background-color: #0064b7;
     }
 
     &.green {
         background-color: #00600f;
-        color: white;
     }
 
     &.red {
         background-color: #9b0000;
-        color: white;
     }
 
     &.gray {
         background-color: #494949;
-        color: white;
     }
 
     &.yellow {
-        background-color: #c8b900;
-        color: black;
+        background-color: #c79400;
     }
 
     &.orange {
         background-color: #bb4d00;
-        color: white;
     }
 }

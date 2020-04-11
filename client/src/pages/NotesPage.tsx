@@ -27,7 +27,7 @@ import Container from "@material-ui/core/Container";
 import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
-import { useStore } from "../utils/DarkModeProvider";
+import { useStore } from "../components/DarkModeProvider";
 
 const NotesPage = () => {
     const theme = useTheme(),

@@ -4,7 +4,7 @@ import RegisterPage from "../pages/RegisterPage";
 import { Route, BrowserRouter } from "react-router-dom";
 import SharedNotePage from "../pages/SharedNotePage";
 import NotesPage from "../pages/NotesPage";
-import { withThemeProvider } from "../utils/DarkModeProvider";
+import { withThemeProvider } from "./DarkModeProvider";
 
 const App = () => {
     return (

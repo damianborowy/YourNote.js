@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import useLocalStorage from "./useLocalStorage";
+import useLocalStorage from "../utils/useLocalStorage";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 

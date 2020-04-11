@@ -73,6 +73,7 @@ const Menu = (props: IMenuProps) => {
                 handleNoteChange={props.handleNoteChange}
             />
             <UserShareDialog
+                handleNoteChange={props.handleNoteChange}
                 subShareToUserDialogClose={subShareToUserDialogClose}
                 subToUserDialogOpen={subToUserDialogOpen}
                 note={props.note}

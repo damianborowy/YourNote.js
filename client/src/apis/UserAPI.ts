@@ -47,6 +47,19 @@ const userApi = {
         saveToken(token);
 
         return new ApiResponse(response.status, "");
+    },
+
+    async checkIfEmailExists(email: string) {
+        const response = await fetch(
+            `${serverUrl}/users/isValidEmail/${email}`
+        );
+        if (response.status > 300)
+            return new ApiResponse(response.status, await response.text());
+
+        return new ApiResponse(
+            response.status,
+            `Successfuly found email ${email}`
+        );
     }
 };
 

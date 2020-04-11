@@ -2,9 +2,14 @@ div {
     .flexRow {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 
     .iconButton {
         margin-left: 5px;
+    }
+
+    .alert {
+        margin-bottom: 30px;
     }
 }

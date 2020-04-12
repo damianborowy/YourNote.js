@@ -44,20 +44,21 @@ const PaletteMenu = (props: IPaletteMenuProps) => {
                 open={Boolean(props.anchorEl)}
                 onClose={props.handleClose}
             >
-                {colorTab.map(color => {
+                {colorTab.map((color) => {
                     return (
-                        <>
-                            <MenuItem onClick={() => handlePickColor(color)}>
-                                <Box
-                                    className={clsx(
-                                        styles.box,
-                                        theme.palette.type || "light",
-                                        color.toLowerCase()
-                                    )}
-                                ></Box>
-                                <Typography>{color}</Typography>
-                            </MenuItem>
-                        </>
+                        <MenuItem
+                            onClick={() => handlePickColor(color)}
+                            key={color}
+                        >
+                            <Box
+                                className={clsx(
+                                    styles.box,
+                                    theme.palette.type || "light",
+                                    color.toLowerCase()
+                                )}
+                            ></Box>
+                            <Typography>{color}</Typography>
+                        </MenuItem>
                     );
                 })}
             </MaterialMenu>

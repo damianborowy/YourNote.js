@@ -12,10 +12,10 @@ interface INotesGridProps {
 
 const NotesGrid = (props: INotesGridProps) => {
     const theme = useTheme();
-    console.log(theme);
+
     return (
         <>
-            {props.notes.length != 0 && (
+            {props.notes.length !== 0 && (
                 <div className={styles.container}>
                     <Typography
                         variant="h6"

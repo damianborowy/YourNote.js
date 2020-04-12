@@ -57,7 +57,7 @@ const NotesPage = () => {
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
 
-        const newNotes = notes.filter(note => note._id !== oldNote._id);
+        const newNotes = notes.filter((note) => note._id !== oldNote._id);
 
         setNotes(newNotes);
     };
@@ -143,23 +143,27 @@ const NotesPage = () => {
             >
                 <Container>
                     {renderLogOut()}
-                    {notes && (
+                    {notes ? (
                         <>
                             <NotesGrid
-                                notes={notes!.filter(
-                                    note => note.owner === getEmailFromToken()
+                                notes={notes.filter(
+                                    (note) => note.owner === getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="My notes"
                             />
                             <NotesGrid
-                                notes={notes!.filter(
-                                    note => note.owner !== getEmailFromToken()
+                                notes={notes.filter(
+                                    (note) => note.owner !== getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="Notes shared to me"
                             />
                         </>
+                    ) : (
+                        <div className={styles.loader}>
+                            <CircularProgress size={60} />
+                        </div>
                     )}
                     <Fab
                         color="primary"

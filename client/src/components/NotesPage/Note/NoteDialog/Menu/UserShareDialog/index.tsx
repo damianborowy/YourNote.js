@@ -60,7 +60,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
     };
     const handleRemoveUser = (emailToDel: string) => {
         const newNote = { ...props.note };
-        var index = newNote.sharedTo!.findIndex(email => {
+        var index = newNote.sharedTo!.findIndex((email) => {
             return emailToDel === email;
         });
         newNote.sharedTo!.splice(index, 1);
@@ -84,7 +84,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                     </Alert>
                 )}
 
-                {props.note.sharedTo!.map(email => {
+                {props.note.sharedTo!.map((email) => {
                     return (
                         <div className={styles.flexRow} key={email}>
                             <Typography>{email}</Typography>

@@ -9,12 +9,12 @@ import {
     DialogContent,
     Typography
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 
-interface ISharedNotesPageProps {}
-
-const SharedNotesPage = (props: ISharedNotesPageProps) => {
+const SharedNotesPage = () => {
     const { noteId } = useParams();
-    const [note, setNote] = useState<NoteModel>({});
+    const [note, setNote] = useState<null | NoteModel>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,12 +29,21 @@ const SharedNotesPage = (props: ISharedNotesPageProps) => {
     return (
         <div className={styles.container}>
             <Dialog fullWidth open>
-                <DialogTitle>{note.title}</DialogTitle>
-                <DialogContent>
-                    <Typography className={styles.typography}>
-                        {note.content}
-                    </Typography>
-                </DialogContent>
+                {note ? (
+                    <div>
+                        <DialogTitle>{note.title}</DialogTitle>
+                        <DialogContent>
+                            <Typography className={styles.typography}>
+                                {note.content}
+                            </Typography>
+                        </DialogContent>
+                    </div>
+                ) : (
+                    <Alert className={styles.alert} severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        You're trying to view a non-public or non-existing note
+                    </Alert>
+                )}
             </Dialog>
         </div>
     );

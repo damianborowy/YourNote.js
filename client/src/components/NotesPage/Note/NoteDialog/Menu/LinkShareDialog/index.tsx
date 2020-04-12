@@ -64,6 +64,7 @@ const LinkShareDialog = (props: ILinkShareDialogProps) => {
                 />
                 {checkedB && (
                     <Box
+                        className={styles.box}
                         border={1}
                         borderRadius="borderRadius"
                         borderColor="grey.300"

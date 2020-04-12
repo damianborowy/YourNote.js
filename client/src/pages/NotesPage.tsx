@@ -29,6 +29,7 @@ import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
 import { useStore } from "../components/DarkModeProvider";
 import { withThemeProvider } from "../components/DarkModeProvider";
+import NotesGrid from "../components/NotesPage/NotesGrid";
 
 const NotesPage = () => {
     const theme = useTheme(),
@@ -56,7 +57,7 @@ const NotesPage = () => {
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
 
-        const newNotes = notes.filter((note) => note._id !== oldNote._id);
+        const newNotes = notes.filter(note => note._id !== oldNote._id);
 
         setNotes(newNotes);
     };
@@ -142,32 +143,24 @@ const NotesPage = () => {
             >
                 <Container>
                     {renderLogOut()}
-                    <Grid container spacing={1}>
-                        {notes ? (
-                            notes.map((note) => {
-                                return (
-                                    <Grid
-                                        item
-                                        xs={6}
-                                        sm={4}
-                                        md={3}
-                                        key={note._id}
-                                    >
-                                        <Note
-                                            model={note}
-                                            deleteNoteFromList={
-                                                deleteNoteFromList
-                                            }
-                                        />
-                                    </Grid>
-                                );
-                            })
-                        ) : (
-                            <div className={styles.loader}>
-                                <CircularProgress size={60} />
-                            </div>
-                        )}
-                    </Grid>
+                    {notes && (
+                        <>
+                            <NotesGrid
+                                notes={notes!.filter(
+                                    note => note.owner === getEmailFromToken()
+                                )}
+                                deleteNoteFromList={deleteNoteFromList}
+                                name="My notes"
+                            />
+                            <NotesGrid
+                                notes={notes!.filter(
+                                    note => note.owner !== getEmailFromToken()
+                                )}
+                                deleteNoteFromList={deleteNoteFromList}
+                                name="Notes shared to me"
+                            />
+                        </>
+                    )}
                     <Fab
                         color="primary"
                         className={styles.fab}

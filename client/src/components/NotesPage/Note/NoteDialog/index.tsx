@@ -22,6 +22,7 @@ import styles from "./NoteDialog.module.scss";
 import Menu from "./Menu";
 import NoteModel from "../../../../models/Note";
 import noteApi from "../../../../apis/NoteAPI";
+import PaletteMenu from "./PaletteMenu";
 
 interface INoteDialogProps {
     open: boolean;
@@ -36,6 +37,9 @@ const NoteDialog = (props: INoteDialogProps) => {
         fullScreen = useMediaQuery(theme.breakpoints.down("xs")),
         [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null),
         [subAnchorEl, setSubAnchorEl] = React.useState<null | HTMLElement>(
+            null
+        ),
+        [anchorPalette, setAnchorPalette] = React.useState<null | HTMLElement>(
             null
         );
 
@@ -68,9 +72,14 @@ const NoteDialog = (props: INoteDialogProps) => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
         setAnchorEl(event.currentTarget);
 
+    const handlePaletteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorPalette(event.currentTarget);
+    };
+
     const handleClose = () => {
         subHandleClose();
         setAnchorEl(null);
+        setAnchorPalette(null);
     };
 
     const subHandleClick = (event: React.MouseEvent<HTMLLIElement>) =>
@@ -132,7 +141,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                                     styles.dialogTitleMenuDesktop
                                 )}
                             >
-                                <IconButton>
+                                <IconButton onClick={handlePaletteClick}>
                                     <Palette />
                                 </IconButton>
                                 <IconButton onClick={deleteNote}>
@@ -147,6 +156,13 @@ const NoteDialog = (props: INoteDialogProps) => {
                             </div>
                         </Hidden>
                     </div>
+                    <PaletteMenu
+                        handleClose={handleClose}
+                        anchorEl={anchorPalette}
+                        handleNoteChange={props.handleNoteChange}
+                        note={props.note}
+                    />
+
                     <Menu
                         subHandleClose={subHandleClose}
                         subHandleClick={subHandleClick}

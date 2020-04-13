@@ -111,7 +111,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 <ArrowBack />
                             </IconButton>
                             <div className={styles.dialogTitleMenu}>
-                                <IconButton>
+                                <IconButton onClick={handlePaletteClick}>
                                     <Palette />
                                 </IconButton>
                                 <IconButton onClick={deleteNote}>
@@ -119,6 +119,9 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 </IconButton>
                                 <IconButton onClick={handleClick}>
                                     <MoreVert />
+                                </IconButton>
+                                <IconButton onClick={props.closeDialog}>
+                                    <Close />
                                 </IconButton>
                             </div>
                         </div>

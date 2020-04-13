@@ -11,8 +11,8 @@ import {
 } from "@material-ui/core";
 import { AddBox, Delete } from "@material-ui/icons";
 import styles from "./UserShareDialog.module.scss";
-import NoteModel from "../../../../../../models/Note";
-import userApi from "../../../../../../apis/UserAPI";
+import NoteModel from "../../../../../../../models/Note";
+import userApi from "../../../../../../../apis/UserAPI";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 

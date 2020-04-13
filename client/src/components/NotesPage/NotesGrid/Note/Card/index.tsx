@@ -7,7 +7,7 @@ import {
     useTheme
 } from "@material-ui/core";
 import clsx from "clsx";
-import NoteModel from "../../../../models/Note";
+import NoteModel from "../../../../../models/Note";
 
 interface ICardProps {
     openDialog: () => void;

@@ -4,7 +4,7 @@ import { Share, ArrowRight } from "@material-ui/icons";
 import styles from "./Menu.module.scss";
 import LinkShareDialog from "./LinkShareDialog";
 import UserShareDialog from "./UserShareDialog";
-import NoteModel from "../../../../../models/Note";
+import NoteModel from "../../../../../../models/Note";
 
 interface IMenuProps {
     subHandleClose: () => void;

@@ -1,7 +1,7 @@
 import React from "react";
 import NoteModel from "../../../models/Note";
 import { Grid, Typography, useTheme } from "@material-ui/core";
-import Note from "../Note";
+import Note from "./Note";
 import styles from "./NotesGrid.module.scss";
 
 interface INotesGridProps {

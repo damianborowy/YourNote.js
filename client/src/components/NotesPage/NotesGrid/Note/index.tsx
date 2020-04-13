@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import NoteModel from "../../../models/Note";
-import noteApi from "../../../apis/NoteAPI";
+import NoteModel from "../../../../models/Note";
+import noteApi from "../../../../apis/NoteAPI";
 import Card from "./Card";
 import NoteDialog from "./NoteDialog";
 import "./Note.scss";

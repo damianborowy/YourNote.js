@@ -7,7 +7,7 @@ import {
     useTheme
 } from "@material-ui/core";
 import styles from "./PaletteMenu.module.scss";
-import NoteModel from "../../../../../models/Note";
+import NoteModel from "../../../../../../models/Note";
 import clsx from "clsx";
 
 interface IPaletteMenuProps {

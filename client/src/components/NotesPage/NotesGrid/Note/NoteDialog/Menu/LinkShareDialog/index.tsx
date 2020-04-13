@@ -15,7 +15,7 @@ import {
 import CopyToClipboard from "react-copy-to-clipboard";
 import { FileCopy } from "@material-ui/icons";
 import styles from "./LinkShareDialog.module.scss";
-import NoteModel from "../../../../../../models/Note";
+import NoteModel from "../../../../../../../models/Note";
 
 const env = process.env.NODE_ENV || "development";
 const clientUrl =

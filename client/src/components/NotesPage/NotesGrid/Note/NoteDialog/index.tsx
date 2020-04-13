@@ -20,8 +20,8 @@ import {
 import clsx from "clsx";
 import styles from "./NoteDialog.module.scss";
 import Menu from "./Menu";
-import NoteModel from "../../../../models/Note";
-import noteApi from "../../../../apis/NoteAPI";
+import NoteModel from "../../../../../models/Note";
+import noteApi from "../../../../../apis/NoteAPI";
 import PaletteMenu from "./PaletteMenu";
 
 interface INoteDialogProps {

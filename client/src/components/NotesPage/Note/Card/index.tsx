@@ -13,7 +13,6 @@ interface ICardProps {
     openDialog: () => void;
     note: NoteModel;
 }
-
 const Card = ({ note, openDialog }: ICardProps) => {
     const theme = useTheme();
 

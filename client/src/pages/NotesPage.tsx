@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
-import Grid from "@material-ui/core/Grid";
 import {
     isTokenPresent,
     removeToken,
@@ -24,7 +23,6 @@ import {
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
-import Note from "../components/NotesPage/Note";
 import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
 import { useStore } from "../components/DarkModeProvider";

@@ -24,7 +24,7 @@ const SharedNotesPage = () => {
         };
 
         fetchData();
-    }, []);
+    }, [noteId]);
 
     return (
         <div className={styles.container}>

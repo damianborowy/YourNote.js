@@ -74,7 +74,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
         >
             <DialogTitle>Share note to other users</DialogTitle>
             <DialogContent>
-                {errorMess != "" && (
+                {errorMess !== "" && (
                     <Alert
                         variant="filled"
                         severity="error"
@@ -105,9 +105,9 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                         onChange={handleEmailChange}
                         value={email}
                         type="email"
-                        error={!validateMail() && email != ""}
+                        error={!validateMail() && email !== ""}
                         helperText={
-                            !validateMail() && email != ""
+                            !validateMail() && email !== ""
                                 ? "Email address is invalid."
                                 : ""
                         }

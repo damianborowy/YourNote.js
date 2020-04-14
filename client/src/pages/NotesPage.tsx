@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import {
@@ -12,29 +11,23 @@ import {
     AppBar,
     Toolbar,
     IconButton,
-    SwipeableDrawer,
-    Typography,
     CircularProgress,
-    useTheme,
-    Divider,
-    Switch,
-    FormControlLabel
+    useTheme
 } from "@material-ui/core";
 import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import noteApi from "../apis/NoteAPI";
 import jwt from "jsonwebtoken";
-import { useStore } from "../components/DarkModeProvider";
 import { withThemeProvider } from "../components/DarkModeProvider";
 import NotesGrid from "../components/NotesPage/NotesGrid";
+import Drawer from "../components/NotesPage/Drawer";
 
 const NotesPage = () => {
     const theme = useTheme(),
         [logOut, setLogOut] = useState(false),
         [notes, setNotes] = useState<NoteModel[] | null>(null),
-        [drawerOpen, setDrawerOpen] = useState(false),
-        { darkMode, setDarkMode } = useStore();
+        [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -49,8 +42,6 @@ const NotesPage = () => {
 
         fetchNotes();
     }, []);
-
-    const toggleDarkMode = () => setDarkMode(!darkMode);
 
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
@@ -102,39 +93,13 @@ const NotesPage = () => {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <SwipeableDrawer
-                classes={{ paper: styles.drawer }}
-                open={drawerOpen}
-                onClose={onDrawerClose}
-                onOpen={onDrawerOpen}
-            >
-                <div className={styles.drawerBottom}>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={darkMode}
-                                color="primary"
-                                onChange={toggleDarkMode}
-                            />
-                        }
-                        label="Toggle dark mode"
-                    />
-
-                    <Divider className={styles.divider} />
-                    <Typography>
-                        Logged in as: <br />
-                        {getEmailFromToken()}
-                    </Typography>
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={handleLogOutButtonClick}
-                        className={styles.drawerButton}
-                    >
-                        Log out
-                    </Button>
-                </div>
-            </SwipeableDrawer>
+            <Drawer
+                drawerOpen={drawerOpen}
+                onDrawerClose={onDrawerClose}
+                onDrawerOpen={onDrawerOpen}
+                handleLogOutButtonClick={handleLogOutButtonClick}
+                getEmailFromToken={getEmailFromToken}
+            />
             <div
                 style={{ backgroundColor: theme.palette.background.paper }}
                 className={styles.container}

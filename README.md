@@ -42,3 +42,26 @@ Publicznie dostępna notatka
 
 ![](https://github.com/damianborowy/e-otis/blob/master/images/public%20note.png)
 
+Ciemny i jasny motyw
+
+![](https://github.com/damianborowy/e-otis/blob/master/images/dark%20theme.png)
+![](https://github.com/damianborowy/e-otis/blob/master/images/light%20theme.png)
+
+Udostępnianie notatek innym użytkownikom
+
+![](https://github.com/damianborowy/e-otis/blob/master/images/share%20menu.png)
+![](https://github.com/damianborowy/e-otis/blob/master/images/share%20to%20user.png)
+
+W przypadku użycia adresu email, który jest niewłaściwy, nie istnieje w bazie bądź jest naszym własnym adresem email pojawi się komunikat o podaniu błędnego adresu email
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/share%20to%20user%20error.png)
+
+Po podaniu właściwego adresu można podać kolejny, a dodany użytkownik ma dostęp do notatki w sekcji współdzielonych notatek
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/shared%20to%20user.png)
+
+Zmiana koloru notatki
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/green%20note.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/blue%20note.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/red%20note.png)

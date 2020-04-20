@@ -19,4 +19,4 @@ Należy uruchomić dwa serwery, oddzielnie dla klienta i serwera. Znów znajduj�
 
 Logowanie
 
-![Logowanie][https://github.com/damianborowy/e-otis/blob/master/images/login.png]
+![](https://github.com/damianborowy/e-otis/blob/master/images/login.png)

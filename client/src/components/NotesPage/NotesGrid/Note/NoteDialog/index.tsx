@@ -52,13 +52,13 @@ const NoteDialog = (props: INoteDialogProps) => {
 
         if (note.owner === userEmail) {
             const result = await noteApi.delete(note._id);
-            if (!result) return;
+            if (!result.success) return;
         } else {
             const newNote = { ...note };
             const index = newNote.sharedTo?.findIndex(email => email === userEmail);
             newNote.sharedTo?.splice(index!, 1);
             const result = await noteApi.update(newNote);
-            console.log(result);
+            if (!result.success) return;
         }
 
         props.deleteNoteFromList(note);

@@ -28,13 +28,14 @@ const userController = {
         const user = await User.findOne({ email: req.body.email });
         if (!user)
             return res
-                .status(401)
+                .status(400)
                 .send("User with this e-mail address doesn't exist.");
 
         const isPasswordCorrect = await bcryptjs.compare(
             req.body.password,
             user.password
         );
+        
         if (!isPasswordCorrect)
             return res.status(400).send("Incorrect password.");
 

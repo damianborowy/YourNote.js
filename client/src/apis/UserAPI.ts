@@ -1,5 +1,6 @@
 import ApiResponse from "./ApiResponse";
 import { saveToken } from "../utils/TokenHandler";
+import { insertTokenAndHeaders } from "../utils/TokenHandler";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -51,7 +52,10 @@ const userApi = {
 
     async checkIfEmailExists(email: string) {
         const response = await fetch(
-            `${serverUrl}/users/isValidEmail/${email}`
+            `${serverUrl}/users/isValidEmail/${email}`,
+            {
+                headers: insertTokenAndHeaders()
+            }
         );
         if (response.status > 300)
             return new ApiResponse(response.status, await response.text());

@@ -3,8 +3,7 @@ import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import {
     isTokenPresent,
-    removeToken,
-    extractToken
+    removeToken
 } from "../utils/TokenHandler";
 import {
     Fab,
@@ -18,10 +17,10 @@ import { Add, Menu } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import noteApi from "../apis/NoteAPI";
-import jwt from "jsonwebtoken";
 import { withThemeProvider } from "../components/DarkModeProvider";
 import NotesGrid from "../components/NotesPage/NotesGrid";
 import Drawer from "../components/NotesPage/Drawer";
+import { getEmailFromToken } from "../utils/TokenHandler";
 
 const NotesPage = () => {
     const theme = useTheme(),
@@ -60,14 +59,7 @@ const NotesPage = () => {
         if (logOut) return <Redirect to="/"></Redirect>;
     };
 
-    const getEmailFromToken = () => {
-        const decodedToken = jwt.decode(extractToken());
-        if (!decodedToken || typeof decodedToken !== "object") return "";
 
-        const email: string = decodedToken.email;
-
-        return email ?? "";
-    };
 
     const onDrawerOpen = () => setDrawerOpen(true);
 

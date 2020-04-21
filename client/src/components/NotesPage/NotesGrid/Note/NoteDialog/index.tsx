@@ -23,6 +23,7 @@ import Menu from "./Menu";
 import NoteModel from "../../../../../models/Note";
 import noteApi from "../../../../../apis/NoteAPI";
 import PaletteMenu from "./PaletteMenu";
+import { getEmailFromToken } from "../../../../../utils/TokenHandler";
 
 interface INoteDialogProps {
     open: boolean;
@@ -47,8 +48,18 @@ const NoteDialog = (props: INoteDialogProps) => {
         const { note } = props;
         if (!note._id) return;
 
-        const result = await noteApi.delete(note._id);
-        if (!result) return;
+        const userEmail = getEmailFromToken();
+
+        if (note.owner === userEmail) {
+            const result = await noteApi.delete(note._id);
+            if (!result) return;
+        } else {
+            const newNote = { ...note };
+            const index = newNote.sharedTo?.findIndex(email => email === userEmail);
+            newNote.sharedTo?.splice(index!, 1);
+            const result = await noteApi.update(newNote);
+            console.log(result);
+        }
 
         props.deleteNoteFromList(note);
     };
@@ -72,9 +83,8 @@ const NoteDialog = (props: INoteDialogProps) => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
         setAnchorEl(event.currentTarget);
 
-    const handlePaletteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handlePaletteClick = (event: React.MouseEvent<HTMLButtonElement>) =>
         setAnchorPalette(event.currentTarget);
-    };
 
     const handleClose = () => {
         subHandleClose();

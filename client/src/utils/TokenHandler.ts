@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export function extractToken(): string {
     const token = localStorage.getItem("jwt");
 
@@ -27,4 +29,13 @@ export function insertTokenAndHeaders() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
     };
+}
+
+export function getEmailFromToken() {
+    const decodedToken = jwt.decode(extractToken());
+    if (!decodedToken || typeof decodedToken !== "object") return "";
+
+    const email: string = decodedToken.email;
+
+    return email ?? "";
 }

@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
+import _ from "lodash";
 
 const SharedNotesPage = () => {
     const { noteId } = useParams();
@@ -19,6 +20,8 @@ const SharedNotesPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await noteApi.readPublicNote(noteId!);
+
+            if (_.isEmpty(result.payload)) return; 
 
             setNote(result.payload);
         };

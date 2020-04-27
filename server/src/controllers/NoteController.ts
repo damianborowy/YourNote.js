@@ -13,7 +13,7 @@ const noteController = {
         // @ts-ignore
         const owner = token["email"];
 
-        const note = new Note({
+        const newNote = new Note({
             owner,
             title: req.body.title,
             content: req.body.content,
@@ -21,8 +21,8 @@ const noteController = {
         });
 
         try {
-            const result = await noteService.create(note);
-            res.status(200).send(result);
+            const note = await noteService.create(newNote);
+            res.status(200).send(note);
         } catch (e) {
             res.status(400).send(e);
         }
@@ -34,8 +34,8 @@ const noteController = {
         const owner = token["email"];
 
         try {
-            const result = await noteService.read(owner);
-            res.status(200).send(result);
+            const notes = await noteService.read(owner);
+            res.status(200).send(notes);
         } catch (e) {
             res.status(400).send(e);
         }
@@ -43,8 +43,8 @@ const noteController = {
 
     async update(req: Request, res: Response) {
         try {
-            const result = await noteService.update(req.body);
-            res.status(200).send(result);
+            const note = await noteService.update(req.body);
+            res.status(200).send(note);
         } catch (e) {
             res.status(400).send(e);
         }
@@ -67,6 +67,17 @@ const noteController = {
 
             if (note.isPublic) res.status(200).send(note);
             else res.status(401).send("You don't have access to this note");
+        } catch (e) {
+            res.status(400).send(e);
+        }
+    },
+
+    async adminRead(req: Request, res: Response) {
+        const email = req.params.email;
+
+        try {
+            const notes = await noteService.read(email);
+            res.status(200).send(notes);
         } catch (e) {
             res.status(400).send(e);
         }

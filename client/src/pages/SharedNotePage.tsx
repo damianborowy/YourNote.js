@@ -21,7 +21,7 @@ const SharedNotesPage = () => {
         const fetchData = async () => {
             const result = await noteApi.readPublicNote(noteId!);
 
-            if (_.isEmpty(result.payload)) return; 
+            if (_.isEmpty(result.payload)) return;
 
             setNote(result.payload);
         };

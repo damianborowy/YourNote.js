@@ -18,6 +18,7 @@ interface ILoginPageState {
     res: ApiResponse;
     loggedIn: boolean;
 }
+
 class LoginPage extends Component<{}, ILoginPageState> {
     state: Readonly<ILoginPageState> = {
         email: "",
@@ -82,7 +83,6 @@ class LoginPage extends Component<{}, ILoginPageState> {
                 <Grid container spacing={2} className={styles.container}>
                     <Grid item xs={12}>
                         {this.renderLoggedCorectly()}
-
                         <h1 className={styles.headers}>Your Note</h1>
                     </Grid>
                     <Grid item xs={12}>

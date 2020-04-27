@@ -8,6 +8,10 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 #root {
     height: 100%;
 }

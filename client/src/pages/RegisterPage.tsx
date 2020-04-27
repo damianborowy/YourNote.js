@@ -12,18 +12,19 @@ interface IRegisterPageState {
     password: string;
     confirmed: string;
     goBack: boolean;
-    regSucc: ApiResponse;
+    regSucc: ApiResponse | null;
 }
+
 class RegisterPage extends Component<{}, IRegisterPageState> {
     state: Readonly<IRegisterPageState> = {
         email: "",
         password: "",
         confirmed: "",
         goBack: false,
-        regSucc: null!
+        regSucc: null
     };
 
-    handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ email: event.target.value });
     };
 
@@ -91,13 +92,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
         }
     };
 
-    validatePassword = () => {
-        if (this.state.password === this.state.confirmed) {
-            return true;
-        }
-
-        return false;
-    };
+    validatePassword = () => this.state.password === this.state.confirmed;
 
     render() {
         return (
@@ -113,7 +108,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             id="filled-basic"
                             label="e-mail"
                             variant="filled"
-                            onChange={this.handleLoginChange}
+                            onChange={this.handleEmailChange}
                             type="email"
                             error={
                                 !this.validateMail() &&
@@ -163,7 +158,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             onClick={this.handleRegisterButtonClick}
                             disabled={
                                 !this.validatePassword() ||
-                                !this.validateMail ||
+                                !this.validateMail() ||
                                 this.state.password.length === 0 ||
                                 this.state.email.length === 0 ||
                                 (!this.validateMail() &&
@@ -181,7 +176,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             color="primary"
                             onClick={this.handleGoBackButtonClick}
                         >
-                            sign in instead
+                            Sign in instead
                         </Button>
                     </Grid>
                 </Grid>

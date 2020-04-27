@@ -39,3 +39,12 @@ export function getEmailFromToken() {
 
     return email ?? "";
 }
+
+export function getRoleFromToken() {
+    const decodedToken = jwt.decode(extractToken());
+    if (!decodedToken || typeof decodedToken !== "object") return "";
+
+    const role: string = decodedToken.role;
+
+    return role ?? "";
+}

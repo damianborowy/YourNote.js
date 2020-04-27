@@ -11,8 +11,13 @@ const {
 
 const request = supertest(app);
 
-const headers = {
+const userHeaders = {
     Authorization: `Bearer ${process.env.TESTING_TOKEN}`,
+    "Content-Type": "application/json"
+};
+
+const adminHeaders = {
+    Authorization: `Bearer ${process.env.TESTING_ADMIN_TOKEN}`,
     "Content-Type": "application/json"
 };
 
@@ -78,11 +83,11 @@ describe("Testing endpoints", () => {
 
         describe("Testing CRUD with authentication token", () => {
             it("GET and succeed", () => {
-                return request.get("/notes").set(headers).expect(200);
+                return request.get("/notes").set(userHeaders).expect(200);
             });
 
             it("POST and succeed", () => {
-                return request.post("/notes").set(headers).expect(200);
+                return request.post("/notes").set(userHeaders).expect(200);
             });
 
             it("PUT and succeed", async (done) => {
@@ -90,7 +95,7 @@ describe("Testing endpoints", () => {
 
                 const response = await request
                     .put("/notes")
-                    .set(headers)
+                    .set(userHeaders)
                     .send(note);
 
                 expect(response.status).toBe(200);
@@ -102,7 +107,7 @@ describe("Testing endpoints", () => {
 
                 const response = await request
                     .delete(`/notes/${note._id}`)
-                    .set(headers);
+                    .set(userHeaders);
 
                 expect(response.status).toBe(200);
                 done();
@@ -143,7 +148,7 @@ describe("Testing endpoints", () => {
             it("GET /isValidEmail endpoint with a proper email with authentication token and succeed", () => {
                 return request
                     .get(`/users/isValidEmail/${process.env.TESTING_EMAIL}`)
-                    .set(headers)
+                    .set(userHeaders)
                     .expect(200);
             });
 
@@ -156,51 +161,225 @@ describe("Testing endpoints", () => {
             it("GET /isValidEmail endpoint with an improper email with authentication token and succeed", () => {
                 return request
                     .get("/users/isValidEmail/someRandomEmail")
-                    .set(headers)
+                    .set(userHeaders)
                     .expect(400);
             });
         });
     });
 
     describe("/users", () => {
-        it("POST /register endpoint to register a new user and succeed", () => {
-            return request
-                .post("/users/register")
-                .send({
-                    email: "someRandomEmail@foo.com",
-                    password: "andSomeRandomPassword!"
-                })
-                .expect(200);
+        describe("Test logging in and registration", () => {
+            it("POST /register endpoint to register a new user and succeed", () => {
+                return request
+                    .post("/users/register")
+                    .send({
+                        email: "someRandomEmail@foo.com",
+                        password: "andSomeRandomPassword!"
+                    })
+                    .expect(200);
+            });
+
+            it("POST /register endpoint to register an already existing user and fail", () => {
+                return request
+                    .post("/users/register")
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        password: process.env.TESTING_PASSWORD
+                    })
+                    .expect(400);
+            });
+
+            it("POST /login endpoint with correct data and succeed", () => {
+                return request
+                    .post("/users/login")
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        password: process.env.TESTING_PASSWORD
+                    })
+                    .expect(200);
+            });
+
+            it("POST /login endpoint with incorrect data and fail", () => {
+                return request
+                    .post("/users/login")
+                    .send({
+                        email: "email",
+                        password: "password"
+                    })
+                    .expect(400);
+            });
         });
 
-        it("POST /register endpoint to register an already existing user and fail", () => {
-            return request
-                .post("/users/register")
-                .send({
-                    email: process.env.TESTING_EMAIL,
-                    password: process.env.TESTING_PASSWORD
-                })
-                .expect(400);
+        describe("Test admin endpoints with a priviliged token", () => {
+            it("GET /users endpoint and succeed", () => {
+                return request.get("/users").set(adminHeaders).expect(200);
+            });
+
+            it("POST /users endpoint to register a new user and succeed", () => {
+                return request
+                    .post("/users")
+                    .set(adminHeaders)
+                    .send({
+                        email: "someRandomEmail@foo.com",
+                        password: "andSomeRandomPassword!"
+                    })
+                    .expect(200);
+            });
+
+            it("POST /users endpoint to register an already existing user and fail", () => {
+                return request
+                    .post("/users")
+                    .set(adminHeaders)
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        password: process.env.TESTING_PASSWORD
+                    })
+                    .expect(400);
+            });
+
+            it("PUT /users endpoint with correct data and succeed", () => {
+                return request
+                    .put("/users")
+                    .set(adminHeaders)
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        role: "User"
+                    })
+                    .expect(200);
+            });
+
+            it("PUT /users endpoint with incorrect data and fail", () => {
+                return request
+                    .put("/users")
+                    .set(adminHeaders)
+                    .send({ role: "User" })
+                    .expect(400);
+            });
+
+            it("DELETE /users endpoint with correct data and succeed", () => {
+                return request
+                    .delete(`/users/${process.env.TESTING_EMAIL}`)
+                    .set(adminHeaders)
+                    .expect(200);
+            });
+
+            it("DELETE /users endpoint with incorrect data and fail", () => {
+                return request
+                    .delete("/users/someFooMail@xd.pl")
+                    .set(adminHeaders)
+                    .expect(400);
+            });
         });
 
-        it("POST /login endpoint with correct data and succeed", () => {
-            return request
-                .post("/users/login")
-                .send({
-                    email: process.env.TESTING_EMAIL,
-                    password: process.env.TESTING_PASSWORD
-                })
-                .expect(200);
+        describe("Test admin endpoints with an unpriviliged token", () => {
+            it("GET /users endpoint and fail", () => {
+                return request.get("/users").set(userHeaders).expect(403);
+            });
+
+            it("POST /users endpoint to register a new user and fail", () => {
+                return request
+                    .post("/users")
+                    .set(userHeaders)
+                    .send({
+                        email: "someRandomEmail@foo.com",
+                        password: "andSomeRandomPassword!"
+                    })
+                    .expect(403);
+            });
+
+            it("POST /users endpoint to register an already existing user and fail", () => {
+                return request
+                    .post("/users")
+                    .set(userHeaders)
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        password: process.env.TESTING_PASSWORD
+                    })
+                    .expect(403);
+            });
+
+            it("PUT /users endpoint with correct data and fail", () => {
+                return request
+                    .put("/users")
+                    .set(userHeaders)
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        role: "User"
+                    })
+                    .expect(403);
+            });
+
+            it("PUT /users endpoint with incorrect data and fail", () => {
+                return request
+                    .put("/users")
+                    .set(userHeaders)
+                    .send({ role: "User" })
+                    .expect(403);
+            });
+
+            it("DELETE /users endpoint with correct data and fail", () => {
+                return request
+                    .delete(`/users/${process.env.TESTING_EMAIL}`)
+                    .set(userHeaders)
+                    .expect(403);
+            });
+
+            it("DELETE /users endpoint with incorrect data and fail", () => {
+                return request
+                    .delete("/users/someFooMail@xd.pl")
+                    .set(userHeaders)
+                    .expect(403);
+            });
         });
 
-        it("POST /login endpoint with incorrect data and fail", () => {
-            return request
-                .post("/users/login")
-                .send({
-                    email: "email",
-                    password: "password"
-                })
-                .expect(400);
+        describe("Test admin endpoints without token", () => {
+            it("GET /users endpoint and fail", () => {
+                return request.get("/users").expect(401);
+            });
+
+            it("POST /users endpoint to register a new user and fail", () => {
+                return request
+                    .post("/users")
+                    .send({
+                        email: "someRandomEmail@foo.com",
+                        password: "andSomeRandomPassword!"
+                    })
+                    .expect(401);
+            });
+
+            it("POST /users endpoint to register an already existing user and fail", () => {
+                return request
+                    .post("/users")
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        password: process.env.TESTING_PASSWORD
+                    })
+                    .expect(401);
+            });
+
+            it("PUT /users endpoint with correct data and fail", () => {
+                return request
+                    .put("/users")
+                    .send({
+                        email: process.env.TESTING_EMAIL,
+                        role: "User"
+                    })
+                    .expect(401);
+            });
+
+            it("PUT /users endpoint with incorrect data and fail", () => {
+                return request.put("/users").send({ role: "User" }).expect(401);
+            });
+
+            it("DELETE /users endpoint with correct data and fail", () => {
+                return request
+                    .delete(`/users/${process.env.TESTING_EMAIL}`)
+                    .expect(401);
+            });
+
+            it("DELETE /users endpoint with incorrect data and fail", () => {
+                return request.delete("/users/someFooMail@xd.pl").expect(401);
+            });
         });
     });
 });

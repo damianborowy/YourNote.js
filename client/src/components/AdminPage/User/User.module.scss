@@ -1,0 +1,45 @@
+div .card {
+    width: 95%;
+    margin: 10px;
+}
+
+@media (min-width: 600px) {
+    div .card {
+        width: 500px;
+    }
+}
+
+div .cardContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div .cardContent:last-child {
+    padding-bottom: 16px;
+}
+
+div .typography {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div .box > * {
+    margin: 10px auto;
+}
+
+div .formControl {
+    width: 150px;
+}
+
+div .buttons {
+    display: flex;
+}

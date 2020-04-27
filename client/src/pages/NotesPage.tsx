@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
-import {
-    isTokenPresent,
-    removeToken
-} from "../utils/TokenHandler";
+import { isTokenPresent, removeToken } from "../utils/TokenHandler";
 import {
     Fab,
     AppBar,
@@ -30,17 +27,19 @@ const NotesPage = () => {
 
     useEffect(() => {
         const fetchNotes = async () => {
-            const logOut = !isTokenPresent();
-            setLogOut(logOut);
-
-            if (logOut) return;
-
             const result = await noteApi.read();
             setNotes(result.payload);
         };
 
         fetchNotes();
     }, []);
+
+    useEffect(() => {
+        const logOut = !isTokenPresent();
+        setLogOut(logOut);
+
+        if (logOut) return;
+    }, [logOut]);
 
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
@@ -58,8 +57,6 @@ const NotesPage = () => {
     const renderLogOut = () => {
         if (logOut) return <Redirect to="/"></Redirect>;
     };
-
-
 
     const onDrawerOpen = () => setDrawerOpen(true);
 

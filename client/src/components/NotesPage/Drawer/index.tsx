@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core";
 import styles from "./Drawer.module.scss";
 import { useStore } from "../../DarkModeProvider";
+import { getRoleFromToken } from "../../../utils/TokenHandler";
+import { Link } from "react-router-dom";
 
 interface DrawerProps {
     drawerOpen: boolean;
@@ -22,6 +24,12 @@ const Drawer = (props: DrawerProps) => {
     const { darkMode, setDarkMode } = useStore();
 
     const toggleDarkMode = () => setDarkMode(!darkMode);
+
+    const isAdmin = () => {
+        const role = getRoleFromToken();
+
+        return role === "Admin";
+    };
 
     return (
         <SwipeableDrawer
@@ -48,13 +56,24 @@ const Drawer = (props: DrawerProps) => {
                     {props.getEmailFromToken()}
                 </Typography>
                 <Button
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     onClick={props.handleLogOutButtonClick}
                     className={styles.drawerButton}
                 >
                     Log out
                 </Button>
+                {isAdmin() && (
+                    <Link to="/admin">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={styles.drawerButton}
+                        >
+                            Admin panel
+                        </Button>
+                    </Link>
+                )}
             </div>
         </SwipeableDrawer>
     );

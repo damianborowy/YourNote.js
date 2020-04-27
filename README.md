@@ -65,3 +65,29 @@ Zmiana koloru notatki
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/green%20note.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/blue%20note.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/red%20note.png)
+
+Notatki mogą posiadać przypisane do siebie tagi, wyświetlane na dole notatki
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/note%20tags.png)
+
+Przy dodawaniu tagu wyświetla nam się okno dialogowe
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/add%20tag.png)
+
+Sprawdzana jest unikalność tagów, jako że notatka nie może posiadać dwóch tagów o takiej samej nazwie
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/add%20tag%20error.png)
+
+Dostępny jest też panel administracyjny do którego administrator może przejść przez menu boczne
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/admin%20panel%20button.png)
+
+Administrator ma podgląd na wszystkich zarejestrowanych użytkowników z podziałem na ich rolę
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/admin%20panel.png)
+
+Administrator może zmienić rolę innych użytkowników, usunąć ich lub dodać nowego użytkownika
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/role%20change.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/delete%20user.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/add%20new%20user.png)

@@ -7,6 +7,15 @@ div {
         padding: 8px 24px 20px;
     }
 
+    .dialogActions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .dialogActions > * {
+        margin: 5px;
+    }
+
     .dialogTitleText {
         font-weight: bold !important;
     }

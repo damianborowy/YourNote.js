@@ -6,7 +6,7 @@ export default class Note {
         public color?: string,
         public owner?: string,
         public date?: Date,
-        public tags?: string,
+        public tags?: string[],
         public sharedTo?: string[],
         public isPublic?: boolean,
         public wasJustCreated?: boolean

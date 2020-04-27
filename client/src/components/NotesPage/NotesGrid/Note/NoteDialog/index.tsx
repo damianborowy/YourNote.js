@@ -8,14 +8,18 @@ import {
     useTheme,
     Input,
     DialogContent,
-    TextField
+    TextField,
+    DialogActions,
+    Chip,
+    Button
 } from "@material-ui/core";
 import {
     ArrowBack,
     Delete,
     Palette,
     MoreVert,
-    Close
+    Close,
+    LocalOffer
 } from "@material-ui/icons";
 import clsx from "clsx";
 import styles from "./NoteDialog.module.scss";
@@ -42,7 +46,9 @@ const NoteDialog = (props: INoteDialogProps) => {
         ),
         [anchorPalette, setAnchorPalette] = React.useState<null | HTMLElement>(
             null
-        );
+        ),
+        [open, setOpen] = React.useState(false),
+        [newTag, setNewTag] = React.useState("");
 
     const deleteNote = async () => {
         const { note } = props;
@@ -55,7 +61,9 @@ const NoteDialog = (props: INoteDialogProps) => {
             if (!result.success) return;
         } else {
             const newNote = { ...note };
-            const index = newNote.sharedTo?.findIndex(email => email === userEmail);
+            const index = newNote.sharedTo?.findIndex(
+                (email) => email === userEmail
+            );
             newNote.sharedTo?.splice(index!, 1);
             const result = await noteApi.update(newNote);
             if (!result.success) return;
@@ -97,6 +105,45 @@ const NoteDialog = (props: INoteDialogProps) => {
 
     const subHandleClose = () => setSubAnchorEl(null);
 
+    const openDialog = () => setOpen(true);
+
+    const closeDialog = () => setOpen(false);
+
+    const handleNewTagChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+        setNewTag(event.target.value);
+
+    const checkTag = () => {
+        return !props.note.tags?.includes(newTag);
+    };
+
+    const addTag = () => {
+        if (!props.note.tags) return;
+
+        closeDialog();
+
+        const newNote = { ...props.note };
+
+        newNote.tags!.push(newTag);
+
+        setNewTag("");
+
+        props.handleNoteChange(newNote);
+    };
+
+    const deleteTag = (deletedTag: string) => {
+        if (props.note.tags && props.note.tags.length > 0) {
+            const tagIndex = props.note.tags.findIndex(
+                (tag) => tag === deletedTag
+            );
+
+            const newNote = { ...props.note };
+
+            newNote.tags!.splice(tagIndex, 1);
+
+            props.handleNoteChange(newNote);
+        }
+    };
+
     return (
         <>
             <Dialog
@@ -121,6 +168,9 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 <ArrowBack />
                             </IconButton>
                             <div className={styles.dialogTitleMenu}>
+                                <IconButton onClick={openDialog}>
+                                    <LocalOffer />
+                                </IconButton>
                                 <IconButton onClick={handlePaletteClick}>
                                     <Palette />
                                 </IconButton>
@@ -129,9 +179,6 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 </IconButton>
                                 <IconButton onClick={handleClick}>
                                     <MoreVert />
-                                </IconButton>
-                                <IconButton onClick={props.closeDialog}>
-                                    <Close />
                                 </IconButton>
                             </div>
                         </div>
@@ -154,6 +201,9 @@ const NoteDialog = (props: INoteDialogProps) => {
                                     styles.dialogTitleMenuDesktop
                                 )}
                             >
+                                <IconButton onClick={openDialog}>
+                                    <LocalOffer />
+                                </IconButton>
                                 <IconButton onClick={handlePaletteClick}>
                                     <Palette />
                                 </IconButton>
@@ -202,6 +252,49 @@ const NoteDialog = (props: INoteDialogProps) => {
                         onChange={handleContentChange}
                     />
                 </DialogContent>
+                {props.note.tags && props.note.tags.length > 0 && (
+                    <DialogActions
+                        className={clsx(
+                            styles.dialogActions,
+                            theme.palette.type || "light",
+                            props.note.color?.toLowerCase()
+                        )}
+                    >
+                        {props.note.tags.map((tag) => (
+                            <Chip
+                                variant="outlined"
+                                label={tag}
+                                onDelete={() => deleteTag(tag)}
+                                key={tag}
+                            />
+                        ))}
+                    </DialogActions>
+                )}
+                <Dialog open={open} onClose={closeDialog}>
+                    <DialogTitle>Add new tag</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            value={newTag}
+                            variant="filled"
+                            label="Tag"
+                            onChange={handleNewTagChange}
+                            error={!checkTag()}
+                            helperText={
+                                !checkTag() ? "Tag already exists." : ""
+                            }
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialog}>Close</Button>
+                        <Button
+                            color="primary"
+                            onClick={addTag}
+                            disabled={newTag.length === 0}
+                        >
+                            Add
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Dialog>
         </>
     );

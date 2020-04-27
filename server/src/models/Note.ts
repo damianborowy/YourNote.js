@@ -28,7 +28,7 @@ const NoteSchema = new Schema({
         required: true,
         default: "TRANSPARENT"
     },
-    tags: { type: String, required: false },
+    tags: { type: [String], required: false },
     date: { type: Date, required: true, default: Date.now() },
     owner: { type: String, required: true },
     sharedTo: { type: [String], required: false },

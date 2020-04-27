@@ -32,13 +32,13 @@ const noteApi = {
     },
 
     async readPublicNote(noteId: string) {
-        const result = await fetch(
-            `${serverUrl}/notes/public/${noteId}`
-        ).then((res) => res.json());
+        const result = await fetch(`${serverUrl}/notes/public/${noteId}`);
 
-        if (!result) return new ApiResponse(400);
+        console.log(result);
 
-        return new ApiResponse(200, result);
+        if (!result.ok) return new ApiResponse(400);
+
+        return new ApiResponse(200, await result.json());
     },
 
     async update(note: Note) {

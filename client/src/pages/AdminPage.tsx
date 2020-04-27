@@ -11,7 +11,8 @@ import {
     DialogActions,
     Button,
     Box,
-    TextField
+    TextField,
+    IconButton
 } from "@material-ui/core";
 import adminApi from "../apis/AdminAPI";
 import _ from "lodash";
@@ -19,6 +20,8 @@ import { withThemeProvider } from "../components/DarkModeProvider";
 import UserModel from "../models/User";
 import { Add } from "@material-ui/icons";
 import User from "../components/AdminPage/User";
+import { ArrowBack } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const sortUsers = (users: UserModel[]) => {
     users.sort((a: UserModel, b: UserModel) => {
@@ -99,13 +102,24 @@ const AdminPage = () => {
             }}
         >
             <Container>
-                <Typography
-                    style={{ padding: "30px 0" }}
-                    variant="h5"
-                    component="h5"
-                >
-                    Admin panel
-                </Typography>
+                <div className={styles.header}>
+                    <Link
+                        to={"/"}
+                        style={{
+                            textDecoration: "none",
+                            color: theme.palette.text.primary,
+                            display: "flex",
+                            alignItems: "center"
+                        }}
+                    >
+                        <IconButton>
+                            <ArrowBack />
+                        </IconButton>
+                        <Typography variant="h6" component="h6">
+                            Back
+                        </Typography>
+                    </Link>
+                </div>
                 <div className={styles.container}>
                     <Typography
                         style={{ padding: 10 }}

@@ -88,8 +88,6 @@ const AdminPage = () => {
         const newUser: UserModel = result.payload;
         const newUsers = [...users, newUser];
 
-        console.log(newUsers);
-
         updateAndSortUsers(newUsers);
     };
 
@@ -179,7 +177,7 @@ const AdminPage = () => {
                                         : ""
                                 }
                                 required
-                            ></TextField>
+                            />
                         </div>
                         <div className={styles.input}>
                             <TextField
@@ -189,7 +187,7 @@ const AdminPage = () => {
                                 variant="filled"
                                 onChange={handlePasswordChange}
                                 required
-                            ></TextField>
+                            />
                         </div>
                         <div className={styles.input}>
                             <TextField
@@ -205,7 +203,7 @@ const AdminPage = () => {
                                 required
                                 variant="filled"
                                 onChange={handleConfirmedPasswordChange}
-                            ></TextField>
+                            />
                         </div>
                     </Box>
                 </DialogContent>

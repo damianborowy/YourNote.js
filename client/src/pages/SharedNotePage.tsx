@@ -46,7 +46,7 @@ const SharedNotesPage = () => {
                         </DialogContent>
                         <DialogActions>
                             <Link to={"/"} style={{ textDecoration: "none" }}>
-                                <Button>Go to login screen</Button>
+                                <Button>Go back to site</Button>
                             </Link>
                         </DialogActions>
                     </div>
@@ -58,7 +58,7 @@ const SharedNotesPage = () => {
                             note
                         </Typography>
                         <Link to={"/"}>
-                            <Typography>Go to login screen</Typography>
+                            <Typography>Go back to site</Typography>
                         </Link>
                     </Alert>
                 )}

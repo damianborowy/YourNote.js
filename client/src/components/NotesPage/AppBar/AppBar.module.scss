@@ -3,14 +3,19 @@ div {
         justify-content: center;
     }
 
+    .menuButton {
+        color: inherit;
+    }
+
     .search {
         width: 100%;
         justify-self: center;
         display: flex;
         align-items: center;
         background: rgba(255, 255, 255, 0.15);
-        border-radius: 4px;
         position: relative;
+        margin-left: 8px;
+        border-radius: 4px;
 
         &:hover {
             background: rgba(255, 255, 255, 0.25);
@@ -19,7 +24,7 @@ div {
 
     @media (min-width: 600px) {
         .search {
-            width: unset;
+            width: 300px;
         }
     }
 
@@ -31,6 +36,10 @@ div {
 
     .input {
         transition: 0.5s ease-in all;
+    }
+
+    .inputRoot {
+        color: inherit;
     }
 
     .inputInput {

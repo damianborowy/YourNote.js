@@ -2,7 +2,35 @@
     position: absolute;
     left: 0;
     top: 35px;
-    background-color: gray;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.colors {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.color {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: rgba(117, 117, 117, 0.35);
+    margin: 8px 4px;
+    cursor: pointer;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 8px;
 }

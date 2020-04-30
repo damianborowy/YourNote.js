@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, Switch } from "@material-ui/core";
 import styles from "./SearchDropdown.module.scss";
 import { useStore } from "../../../DarkModeProvider";
+import { Check } from "@material-ui/icons";
 import clsx from "clsx";
+import FilterSettings from "../../../../models/FilterSettings";
 
-interface ISearchDropdownProps {}
+interface ISearchDropdownProps {
+    filterSettings: FilterSettings;
+    setFilterSettings: (filterSettings: FilterSettings) => void;
+}
 
 const colors = [
     "transparent",
@@ -16,11 +21,44 @@ const colors = [
     "orange"
 ];
 
-const SearchDropdown = (props: ISearchDropdownProps) => {
+const SearchDropdown = ({
+    filterSettings,
+    setFilterSettings
+}: ISearchDropdownProps) => {
     const { darkMode } = useStore(),
-        [titles, setTitles] = useState(true),
-        [contents, setContents] = useState(true),
-        [tags, setTags] = useState(true);
+        { selectedColors, titles, contents, tags } = filterSettings;
+
+    const onColorClicked = (color: string) => {
+        const newSettings = filterSettings.copy();
+
+        if (selectedColors.includes(color)) {
+            const colorIndex = selectedColors.indexOf(color);
+            newSettings.selectedColors.splice(colorIndex, 1);
+        } else newSettings.selectedColors.push(color);
+
+        setFilterSettings(newSettings);
+    };
+
+    const onTitlesChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newSettings = filterSettings.copy();
+        newSettings.titles = event.target.checked;
+
+        setFilterSettings(newSettings);
+    };
+
+    const onContentsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newSettings = filterSettings.copy();
+        newSettings.contents = event.target.checked;
+
+        setFilterSettings(newSettings);
+    };
+
+    const onTagsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newSettings = filterSettings.copy();
+        newSettings.tags = event.target.checked;
+
+        setFilterSettings(newSettings);
+    };
 
     return (
         <Box
@@ -35,8 +73,13 @@ const SearchDropdown = (props: ISearchDropdownProps) => {
                             darkMode ? "dark" : "light",
                             color
                         )}
+                        onClick={() => onColorClicked(color)}
                         key={color}
-                    />
+                    >
+                        {selectedColors.includes(color) && (
+                            <Check fontSize="small" />
+                        )}
+                    </div>
                 ))}
             </div>
             <div className={styles.filter}>
@@ -44,7 +87,7 @@ const SearchDropdown = (props: ISearchDropdownProps) => {
                 <Switch
                     checked={titles}
                     color={darkMode ? "primary" : "secondary"}
-                    onChange={(e) => setTitles(e.target.checked)}
+                    onChange={onTitlesChanged}
                 />
             </div>
             <div className={styles.filter}>
@@ -52,7 +95,7 @@ const SearchDropdown = (props: ISearchDropdownProps) => {
                 <Switch
                     checked={contents}
                     color={darkMode ? "primary" : "secondary"}
-                    onChange={(e) => setContents(e.target.checked)}
+                    onChange={onContentsChanged}
                 />
             </div>
             <div className={styles.filter}>
@@ -60,7 +103,7 @@ const SearchDropdown = (props: ISearchDropdownProps) => {
                 <Switch
                     checked={tags}
                     color={darkMode ? "primary" : "secondary"}
-                    onChange={(e) => setTags(e.target.checked)}
+                    onChange={onTagsChanged}
                 />
             </div>
         </Box>

@@ -5,20 +5,29 @@ import {
     InputBase,
     ClickAwayListener
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, Search } from "@material-ui/icons";
 import styles from "./AppBar.module.scss";
 import SearchDropdown from "./SearchDropdown";
 import { useStore } from "../../DarkModeProvider";
+import FilterSettings from "../../../models/FilterSettings";
 
 interface IAppBarProps {
     onDrawerOpen: () => void;
+    applyFilters: (filterSettings: FilterSettings, searchText: string) => void;
 }
 
-const AppBar = ({ onDrawerOpen }: IAppBarProps) => {
-    const [search, setSearch] = useState(""),
+const AppBar = ({ onDrawerOpen, applyFilters }: IAppBarProps) => {
+    const { darkMode } = useStore(),
+        [search, setSearch] = useState(""),
         [dropdownOpen, setDropdownOpen] = useState(false),
-        { darkMode } = useStore();
+        [filterSettings, setFilterSettings] = useState<FilterSettings>(
+            new FilterSettings([], true, true, true)
+        );
+
+    useEffect(() => {
+        applyFilters(filterSettings, search);
+    }, [filterSettings, search]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
         setSearch(event.target.value);
@@ -65,7 +74,12 @@ const AppBar = ({ onDrawerOpen }: IAppBarProps) => {
                             value={search}
                             onChange={handleSearchChange}
                         />
-                        {dropdownOpen && <SearchDropdown />}
+                        {dropdownOpen && (
+                            <SearchDropdown
+                                filterSettings={filterSettings}
+                                setFilterSettings={setFilterSettings}
+                            />
+                        )}
                     </div>
                 </ClickAwayListener>
             </Toolbar>

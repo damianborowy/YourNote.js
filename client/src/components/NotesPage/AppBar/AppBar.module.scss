@@ -1,0 +1,40 @@
+div {
+    .appBar {
+        justify-content: center;
+    }
+
+    .search {
+        width: 100%;
+        justify-self: center;
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        position: relative;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    @media (min-width: 600px) {
+        .search {
+            width: unset;
+        }
+    }
+
+    .searchIcon {
+        padding: 0 16px;
+        margin-bottom: -4px;
+        cursor: pointer;
+    }
+
+    .input {
+        transition: 0.5s ease-in all;
+    }
+
+    .inputInput {
+        width: 100%;
+        padding: 8px 8px 8px 0;
+    }
+}

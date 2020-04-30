@@ -2,15 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import { isTokenPresent, removeToken } from "../utils/TokenHandler";
-import {
-    Fab,
-    AppBar,
-    Toolbar,
-    IconButton,
-    CircularProgress,
-    useTheme
-} from "@material-ui/core";
-import { Add, Menu } from "@material-ui/icons/";
+import { Fab, CircularProgress, useTheme } from "@material-ui/core";
+import { Add } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import noteApi from "../apis/NoteAPI";
@@ -18,6 +11,7 @@ import { withThemeProvider } from "../components/DarkModeProvider";
 import NotesGrid from "../components/NotesPage/NotesGrid";
 import Drawer from "../components/NotesPage/Drawer";
 import { getEmailFromToken } from "../utils/TokenHandler";
+import AppBar from "../components/NotesPage/AppBar";
 
 const NotesPage = () => {
     const theme = useTheme(),
@@ -75,13 +69,7 @@ const NotesPage = () => {
 
     return (
         <div className={styles.app}>
-            <AppBar position="static" color="default">
-                <Toolbar>
-                    <IconButton edge="start" onClick={onDrawerOpen}>
-                        <Menu />
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
+            <AppBar onDrawerOpen={onDrawerOpen} />
             <Drawer
                 drawerOpen={drawerOpen}
                 onDrawerClose={onDrawerClose}

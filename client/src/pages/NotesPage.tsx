@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import styles from "./NotesPage.module.scss";
 import { isTokenPresent, removeToken } from "../utils/TokenHandler";
@@ -19,7 +19,8 @@ const NotesPage = () => {
         [logOut, setLogOut] = useState(false),
         [notes, setNotes] = useState<NoteModel[] | null>(null),
         [filteredNotes, setFilteredNotes] = useState<NoteModel[] | null>(null),
-        [drawerOpen, setDrawerOpen] = useState(false);
+        [drawerOpen, setDrawerOpen] = useState(false),
+        prevNotesLength = useRef(-1);
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -30,6 +31,32 @@ const NotesPage = () => {
 
         fetchNotes();
     }, []);
+
+    useEffect(() => {
+        if (!notes || !filteredNotes) return;
+
+        if (notes.length !== prevNotesLength.current) {
+            const newFilteredNotes = [...filteredNotes];
+
+            const newNotes = notes.filter(
+                (note) => !filteredNotes.includes(note)
+            );
+            const deletedNotes = filteredNotes.filter(
+                (note) => !notes.includes(note)
+            );
+
+            for (let note of newNotes) newFilteredNotes.push(note);
+
+            for (let note of deletedNotes) {
+                const deletedNoteIndex = filteredNotes.indexOf(note);
+                newFilteredNotes.splice(deletedNoteIndex, 1);
+            }
+
+            setFilteredNotes(newFilteredNotes);
+
+            prevNotesLength.current = notes.length;
+        }
+    }, [notes]);
 
     useEffect(() => {
         const logOut = !isTokenPresent();
@@ -63,8 +90,6 @@ const NotesPage = () => {
             ) {
                 return setFilteredNotes([]);
             }
-
-            console.log(notesFilteredByText);
 
             const intersectedNotes = notesFilteredByText.filter((note) =>
                 notesFilteredBySettings.includes(note)

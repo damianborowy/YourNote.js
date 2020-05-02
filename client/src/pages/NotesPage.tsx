@@ -199,6 +199,7 @@ const NotesPage = () => {
         <div className={styles.app}>
             <AppBar onDrawerOpen={onDrawerOpen} applyFilters={applyFilters} />
             <Drawer
+                notes={filteredNotes}
                 drawerOpen={drawerOpen}
                 onDrawerClose={onDrawerClose}
                 onDrawerOpen={onDrawerOpen}

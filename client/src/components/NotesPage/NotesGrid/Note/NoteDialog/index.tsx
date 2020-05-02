@@ -145,158 +145,154 @@ const NoteDialog = (props: INoteDialogProps) => {
     };
 
     return (
-        <>
-            <Dialog
-                fullWidth
-                open={props.open}
-                fullScreen={fullScreen}
-                onClose={props.closeDialog}
+        <Dialog
+            fullWidth
+            open={props.open}
+            fullScreen={fullScreen}
+            onClose={props.closeDialog}
+        >
+            <DialogTitle
+                className={clsx(
+                    styles.dialogTitle,
+                    theme.palette.type || "light",
+                    props.note.color?.toLowerCase()
+                )}
             >
-                <DialogTitle
-                    className={clsx(
-                        styles.dialogTitle,
-                        theme.palette.type || "light",
-                        props.note.color?.toLowerCase()
-                    )}
-                >
-                    <Hidden smUp>
-                        <div className={styles.hiddenMobile}>
-                            <IconButton
-                                className={styles.back}
-                                onClick={props.closeDialog}
-                            >
-                                <ArrowBack />
+                <Hidden smUp>
+                    <div className={styles.hiddenMobile}>
+                        <IconButton
+                            className={styles.back}
+                            onClick={props.closeDialog}
+                        >
+                            <ArrowBack />
+                        </IconButton>
+                        <div className={styles.dialogTitleMenu}>
+                            <IconButton onClick={openDialog}>
+                                <LocalOffer />
                             </IconButton>
-                            <div className={styles.dialogTitleMenu}>
-                                <IconButton onClick={openDialog}>
-                                    <LocalOffer />
-                                </IconButton>
-                                <IconButton onClick={handlePaletteClick}>
-                                    <Palette />
-                                </IconButton>
-                                <IconButton onClick={deleteNote}>
-                                    <Delete />
-                                </IconButton>
-                                <IconButton onClick={handleClick}>
-                                    <MoreVert />
-                                </IconButton>
-                            </div>
+                            <IconButton onClick={handlePaletteClick}>
+                                <Palette />
+                            </IconButton>
+                            <IconButton onClick={deleteNote}>
+                                <Delete />
+                            </IconButton>
+                            <IconButton onClick={handleClick}>
+                                <MoreVert />
+                            </IconButton>
+                        </div>
+                    </div>
+                </Hidden>
+                <div style={{ display: "flex" }}>
+                    <Input
+                        value={props.note.title}
+                        placeholder="Title"
+                        className={styles.dialogTitleText}
+                        onChange={handleTitleChange}
+                        classes={{
+                            input: styles.dialogTitleText
+                        }}
+                        fullWidth
+                    />
+                    <Hidden xsDown>
+                        <div
+                            className={clsx(
+                                styles.dialogTitleMenu,
+                                styles.dialogTitleMenuDesktop
+                            )}
+                        >
+                            <IconButton onClick={openDialog}>
+                                <LocalOffer />
+                            </IconButton>
+                            <IconButton onClick={handlePaletteClick}>
+                                <Palette />
+                            </IconButton>
+                            <IconButton onClick={deleteNote}>
+                                <Delete />
+                            </IconButton>
+                            <IconButton onClick={handleClick}>
+                                <MoreVert />
+                            </IconButton>
+                            <IconButton onClick={props.closeDialog}>
+                                <Close />
+                            </IconButton>
                         </div>
                     </Hidden>
-                    <div style={{ display: "flex" }}>
-                        <Input
-                            value={props.note.title}
-                            placeholder="Title"
-                            className={styles.dialogTitleText}
-                            onChange={handleTitleChange}
-                            classes={{
-                                input: styles.dialogTitleText
-                            }}
-                            fullWidth
-                        />
-                        <Hidden xsDown>
-                            <div
-                                className={clsx(
-                                    styles.dialogTitleMenu,
-                                    styles.dialogTitleMenuDesktop
-                                )}
-                            >
-                                <IconButton onClick={openDialog}>
-                                    <LocalOffer />
-                                </IconButton>
-                                <IconButton onClick={handlePaletteClick}>
-                                    <Palette />
-                                </IconButton>
-                                <IconButton onClick={deleteNote}>
-                                    <Delete />
-                                </IconButton>
-                                <IconButton onClick={handleClick}>
-                                    <MoreVert />
-                                </IconButton>
-                                <IconButton onClick={props.closeDialog}>
-                                    <Close />
-                                </IconButton>
-                            </div>
-                        </Hidden>
-                    </div>
-                    <PaletteMenu
-                        handleClose={handleClose}
-                        anchorEl={anchorPalette}
-                        handleNoteChange={props.handleNoteChange}
-                        note={props.note}
-                    />
+                </div>
+                <PaletteMenu
+                    handleClose={handleClose}
+                    anchorEl={anchorPalette}
+                    handleNoteChange={props.handleNoteChange}
+                    note={props.note}
+                />
 
-                    <Menu
-                        subHandleClose={subHandleClose}
-                        subHandleClick={subHandleClick}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        subAnchorEl={subAnchorEl}
-                        note={props.note}
-                        handleNoteChange={props.handleNoteChange}
-                    />
-                </DialogTitle>
-                <DialogContent
+                <Menu
+                    subHandleClose={subHandleClose}
+                    subHandleClick={subHandleClick}
+                    handleClose={handleClose}
+                    anchorEl={anchorEl}
+                    subAnchorEl={subAnchorEl}
+                    note={props.note}
+                    handleNoteChange={props.handleNoteChange}
+                />
+            </DialogTitle>
+            <DialogContent
+                className={clsx(
+                    styles.dialogContent,
+                    theme.palette.type || "light",
+                    props.note.color?.toLowerCase()
+                )}
+            >
+                <TextField
+                    fullWidth
+                    multiline
+                    rowsMax={20}
+                    value={props.note.content}
+                    placeholder="Content"
+                    onChange={handleContentChange}
+                />
+            </DialogContent>
+            {props.note.tags && props.note.tags.length > 0 && (
+                <DialogActions
                     className={clsx(
-                        styles.dialogContent,
+                        styles.dialogActions,
                         theme.palette.type || "light",
                         props.note.color?.toLowerCase()
                     )}
                 >
+                    {props.note.tags.map((tag) => (
+                        <Chip
+                            variant="outlined"
+                            label={tag}
+                            onDelete={() => deleteTag(tag)}
+                            key={tag}
+                        />
+                    ))}
+                </DialogActions>
+            )}
+            <Dialog open={open} onClose={closeDialog}>
+                <DialogTitle>Add new tag</DialogTitle>
+                <DialogContent>
                     <TextField
-                        fullWidth
-                        multiline
-                        rowsMax={20}
-                        value={props.note.content}
-                        placeholder="Content"
-                        onChange={handleContentChange}
+                        value={newTag}
+                        variant="filled"
+                        label="Tag"
+                        onChange={handleNewTagChange}
+                        error={!checkTag()}
+                        helperText={!checkTag() ? "Tag already exists." : ""}
                     />
                 </DialogContent>
-                {props.note.tags && props.note.tags.length > 0 && (
-                    <DialogActions
-                        className={clsx(
-                            styles.dialogActions,
-                            theme.palette.type || "light",
-                            props.note.color?.toLowerCase()
-                        )}
+                <DialogActions>
+                    <Button onClick={closeDialog}>Close</Button>
+                    <Button
+                        color="primary"
+                        onClick={addTag}
+                        disabled={newTag.length === 0}
                     >
-                        {props.note.tags.map((tag) => (
-                            <Chip
-                                variant="outlined"
-                                label={tag}
-                                onDelete={() => deleteTag(tag)}
-                                key={tag}
-                            />
-                        ))}
-                    </DialogActions>
-                )}
-                <Dialog open={open} onClose={closeDialog}>
-                    <DialogTitle>Add new tag</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            value={newTag}
-                            variant="filled"
-                            label="Tag"
-                            onChange={handleNewTagChange}
-                            error={!checkTag()}
-                            helperText={
-                                !checkTag() ? "Tag already exists." : ""
-                            }
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={closeDialog}>Close</Button>
-                        <Button
-                            color="primary"
-                            onClick={addTag}
-                            disabled={newTag.length === 0}
-                        >
-                            Add
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                        Add
+                    </Button>
+                </DialogActions>
             </Dialog>
-        </>
+        </Dialog>
     );
 };
 

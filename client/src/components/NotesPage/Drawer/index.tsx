@@ -57,12 +57,13 @@ const Drawer = (props: DrawerProps) => {
 
         return (
             <Document title="My notes">
-                <Page size="A4" style={{ margin: 30, maxWidth: 535 }}>
+                <Page size="A4" style={{ margin: "0 30px", maxWidth: 535 }}>
                     {notes.map((note) => (
                         <View
                             style={{
-                                margin: "10px 0"
+                                margin: "30px 0 0px"
                             }}
+                            wrap={false}
                         >
                             {note.title && note.title?.length > 0 && (
                                 <Text style={{ fontSize: 25 }}>

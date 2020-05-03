@@ -39,10 +39,10 @@ const NotesPage = () => {
             const newFilteredNotes = [...filteredNotes];
 
             const newNotes = notes.filter(
-                (note) => !filteredNotes.includes(note)
+                note => !filteredNotes.includes(note)
             );
             const deletedNotes = filteredNotes.filter(
-                (note) => !notes.includes(note)
+                note => !notes.includes(note)
             );
 
             for (let note of newNotes) newFilteredNotes.push(note);
@@ -91,7 +91,7 @@ const NotesPage = () => {
                 return setFilteredNotes([]);
             }
 
-            const intersectedNotes = notesFilteredByText.filter((note) =>
+            const intersectedNotes = notesFilteredByText.filter(note =>
                 notesFilteredBySettings.includes(note)
             );
 
@@ -111,14 +111,14 @@ const NotesPage = () => {
 
         if (filterSettings.titles)
             filteredNotes.push(
-                ...notes.filter((note) =>
+                ...notes.filter(note =>
                     note.title?.toLowerCase().includes(searchText.toLowerCase())
                 )
             );
 
         if (filterSettings.contents)
             filteredNotes.push(
-                ...notes.filter((note) =>
+                ...notes.filter(note =>
                     note.content
                         ?.toLowerCase()
                         .includes(searchText.toLowerCase())
@@ -127,8 +127,8 @@ const NotesPage = () => {
 
         if (filterSettings.tags)
             filteredNotes.push(
-                ...notes.filter((note) => {
-                    const filteredByTags = note.tags?.filter((tag) =>
+                ...notes.filter(note => {
+                    const filteredByTags = note.tags?.filter(tag =>
                         tag.toLowerCase().includes(searchText.toLowerCase())
                     );
 
@@ -143,7 +143,7 @@ const NotesPage = () => {
         if (!notes) return [];
         if (colors.length === 0) return notes;
 
-        const filteredNotes = notes.filter((note) =>
+        const filteredNotes = notes.filter(note =>
             colors.includes(note.color.toLowerCase())
         );
 
@@ -166,7 +166,7 @@ const NotesPage = () => {
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
 
-        const newNotes = notes.filter((note) => note._id !== oldNote._id);
+        const newNotes = notes.filter(note => note._id !== oldNote._id);
 
         setNotes(newNotes);
     };
@@ -196,7 +196,7 @@ const NotesPage = () => {
     };
 
     return (
-        <div className={styles.app}>
+        <div className={styles.app} id="div1">
             <AppBar onDrawerOpen={onDrawerOpen} applyFilters={applyFilters} />
             <Drawer
                 notes={filteredNotes}
@@ -207,23 +207,24 @@ const NotesPage = () => {
                 getEmailFromToken={getEmailFromToken}
             />
             <div
+                id="div2"
                 style={{ backgroundColor: theme.palette.background.paper }}
                 className={styles.container}
             >
-                <Container>
+                <Container id="container">
                     {renderLogOut()}
                     {filteredNotes ? (
                         <>
                             <NotesGrid
                                 notes={filteredNotes.filter(
-                                    (note) => note.owner === getEmailFromToken()
+                                    note => note.owner === getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="My notes"
                             />
                             <NotesGrid
                                 notes={filteredNotes.filter(
-                                    (note) => note.owner !== getEmailFromToken()
+                                    note => note.owner !== getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="Notes shared to me"

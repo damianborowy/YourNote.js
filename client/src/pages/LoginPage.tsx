@@ -89,6 +89,7 @@ class LoginPage extends Component<{}, ILoginPageState> {
                         <TextField
                             className={styles.textField}
                             type="email"
+                            id="emailLog"
                             required
                             label="e-mail"
                             variant="filled"
@@ -99,6 +100,7 @@ class LoginPage extends Component<{}, ILoginPageState> {
                         <TextField
                             className={styles.textField}
                             required
+                            id="PassLogIn"
                             type="password"
                             label="Password"
                             variant="filled"
@@ -108,6 +110,7 @@ class LoginPage extends Component<{}, ILoginPageState> {
                     <Grid item xs={12}>
                         <Button
                             variant="contained"
+                            id="LogInButton"
                             className={styles.button}
                             onClick={this.handleLoginButtonClick}
                         >
@@ -118,6 +121,7 @@ class LoginPage extends Component<{}, ILoginPageState> {
                         {this.renderRedirect()}
                         <Button
                             variant="contained"
+                            id="RegisterButt2"
                             onClick={this.handleRegisterButtonClick}
                             className={styles.button}
                         >

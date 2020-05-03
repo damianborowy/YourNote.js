@@ -62,11 +62,12 @@ const SearchDropdown = ({
 
     return (
         <Box
+            id="box"
             className={styles.box}
             style={{ backgroundColor: darkMode ? "#595959" : "#59b0f6" }}
         >
             <div className={styles.colors}>
-                {colors.map((color) => (
+                {colors.map(color => (
                     <div
                         className={clsx(
                             styles.color,

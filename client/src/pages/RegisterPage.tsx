@@ -105,7 +105,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                     <Grid item xs={12}>
                         <TextField
                             className={styles.textField}
-                            id="filled-basic"
+                            id="mailReg"
                             label="e-mail"
                             variant="filled"
                             onChange={this.handleEmailChange}
@@ -127,7 +127,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                         <TextField
                             type="password"
                             className={styles.textField}
-                            id="filled-basic"
+                            id="Pass"
                             label="Password"
                             variant="filled"
                             onChange={this.handlePasswordChange}
@@ -139,7 +139,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                             type="password"
                             error={!this.validatePassword()}
                             className={styles.textField}
-                            id="filled-error-helper-text"
+                            id="ConfPass"
                             label="Confirm password"
                             helperText={
                                 !this.validatePassword()
@@ -153,6 +153,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                     </Grid>
                     <Grid item xs={12}>
                         <Button
+                            id="regButt"
                             variant="contained"
                             className={styles.button}
                             onClick={this.handleRegisterButtonClick}
@@ -172,6 +173,7 @@ class RegisterPage extends Component<{}, IRegisterPageState> {
                         {this.renderGoBack()}
                         <Button
                             className={styles.buttonLink}
+                            id="SignInButt"
                             variant="outlined"
                             color="primary"
                             onClick={this.handleGoBackButtonClick}

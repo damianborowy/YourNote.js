@@ -16,7 +16,7 @@ const NotesGrid = (props: INotesGridProps) => {
     return (
         <>
             {props.notes.length !== 0 && (
-                <div className={styles.container}>
+                <div id="note" className={styles.container}>
                     <Typography
                         variant="h6"
                         style={{ color: theme.palette.text.primary }}

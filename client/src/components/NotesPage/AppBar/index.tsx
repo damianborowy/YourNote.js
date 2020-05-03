@@ -34,6 +34,7 @@ const AppBar = ({ onDrawerOpen, applyFilters }: IAppBarProps) => {
 
     return (
         <MaterialAppBar
+            id="appBar"
             position="static"
             color={darkMode ? "default" : "primary"}
             className={styles.appBar}

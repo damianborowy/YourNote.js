@@ -18,6 +18,7 @@ const Card = ({ note, openDialog }: ICardProps) => {
 
     return (
         <MaterialCard
+            id="card"
             className={clsx(
                 styles.card,
                 theme.palette.type || "light",

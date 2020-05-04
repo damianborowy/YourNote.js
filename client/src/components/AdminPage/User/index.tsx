@@ -48,7 +48,7 @@ const User = (props: IUserProps) => {
         if (!result.success) return;
 
         const userIndex = props.users.findIndex(
-            (user) => user.email === props.user.email
+            user => user.email === props.user.email
         );
 
         const newUsers = [...props.users];
@@ -66,7 +66,7 @@ const User = (props: IUserProps) => {
         if (!result.success) return;
 
         const userIndex = props.users.findIndex(
-            (user) => user.email === props.user.email
+            user => user.email === props.user.email
         );
 
         const newUsers = [...props.users];
@@ -91,6 +91,7 @@ const User = (props: IUserProps) => {
                 </div>
             </CardContent>
             <Dialog
+                id="dialogAdmin1"
                 open={editOpen}
                 onClose={closeDialogs}
                 maxWidth="xs"

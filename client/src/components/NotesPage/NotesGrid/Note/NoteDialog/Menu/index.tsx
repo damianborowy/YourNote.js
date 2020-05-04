@@ -57,11 +57,14 @@ const Menu = (props: IMenuProps) => {
                 open={Boolean(props.subAnchorEl)}
                 onClose={props.subHandleClose}
             >
-                <MenuItem onClick={subShareDialogOpen}>
+                <MenuItem id="byLink" onClick={subShareDialogOpen}>
                     <Share className={styles.share} />
                     By link
                 </MenuItem>
-                <MenuItem onClick={subShareToUserDialogOpen}>
+                <MenuItem
+                    id="shareToOtherUser"
+                    onClick={subShareToUserDialogOpen}
+                >
                     <Share className={styles.share} />
                     To specified user
                 </MenuItem>

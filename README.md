@@ -91,3 +91,13 @@ Administrator może zmienić rolę innych użytkowników, usunąć ich lub doda�
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/role%20change.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/delete%20user.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/add%20new%20user.png)
+
+Istnieje możliwość filtrowania notatek po kolorze i przez sprawdzenie, czy tytuł, treść lub tagi notatki zawierają określony tekst
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/filter.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/filter%20red.png)
+
+Pobieranie notatek jako PDF
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/save%20as%20pdf.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/pdf.png)

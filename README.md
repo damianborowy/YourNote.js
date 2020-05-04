@@ -95,9 +95,9 @@ Administrator może zmienić rolę innych użytkowników, usunąć ich lub doda�
 Istnieje możliwość filtrowania notatek po kolorze i przez sprawdzenie, czy tytuł, treść lub tagi notatki zawierają określony tekst
 
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/filter.png)
-![](https://github.com/damianborowy/e-Otis/blob/master/images/filter%20red.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/filter%20green.png)
 
-Pobieranie notatek jako PDF
+Pobieranie notatek jako PDF połączone z filtrowaniem notatek, tj. pobrane zostaną tylko przefiltrowane notatki (lub wszystkie w przypadku braku nałożonych filtrów)
 
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/save%20as%20pdf.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/pdf.png)

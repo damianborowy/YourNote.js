@@ -200,19 +200,22 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 styles.dialogTitleMenuDesktop
                             )}
                         >
-                            <IconButton onClick={openDialog}>
+                            <IconButton id="local" onClick={openDialog}>
                                 <LocalOffer />
                             </IconButton>
-                            <IconButton onClick={handlePaletteClick}>
+                            <IconButton
+                                id="palette"
+                                onClick={handlePaletteClick}
+                            >
                                 <Palette />
                             </IconButton>
-                            <IconButton onClick={deleteNote}>
+                            <IconButton id="delete" onClick={deleteNote}>
                                 <Delete />
                             </IconButton>
-                            <IconButton onClick={handleClick}>
+                            <IconButton id="moreVert" onClick={handleClick}>
                                 <MoreVert />
                             </IconButton>
-                            <IconButton onClick={props.closeDialog}>
+                            <IconButton id="close" onClick={props.closeDialog}>
                                 <Close />
                             </IconButton>
                         </div>

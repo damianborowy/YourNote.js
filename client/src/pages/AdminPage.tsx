@@ -128,8 +128,8 @@ const AdminPage = () => {
                     </Typography>
                     {users &&
                         users
-                            .filter((user) => user.role === "Admin")
-                            .map((user) => (
+                            .filter(user => user.role === "Admin")
+                            .map(user => (
                                 <User
                                     user={user}
                                     users={users}
@@ -146,8 +146,8 @@ const AdminPage = () => {
                     </Typography>
                     {users &&
                         users
-                            .filter((user) => user.role === "User")
-                            .map((user) => (
+                            .filter(user => user.role === "User")
+                            .map(user => (
                                 <User
                                     user={user}
                                     users={users}
@@ -166,6 +166,7 @@ const AdminPage = () => {
                     <Box padding={2}>
                         <div className={styles.input}>
                             <TextField
+                                id="adminMail"
                                 label="e-mail"
                                 variant="filled"
                                 onChange={handleEmailChange}
@@ -181,8 +182,8 @@ const AdminPage = () => {
                         </div>
                         <div className={styles.input}>
                             <TextField
+                                id="AdminPass1"
                                 type="password"
-                                id="filled-basic"
                                 label="Password"
                                 variant="filled"
                                 onChange={handlePasswordChange}
@@ -193,7 +194,7 @@ const AdminPage = () => {
                             <TextField
                                 type="password"
                                 error={!validatePassword()}
-                                id="filled-error-helper-text"
+                                id="passwordAdmin"
                                 label="Confirm password"
                                 helperText={
                                     !validatePassword()

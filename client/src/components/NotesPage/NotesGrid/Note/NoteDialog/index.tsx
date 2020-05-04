@@ -289,7 +289,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     <Button
                         color="primary"
                         onClick={addTag}
-                        disabled={newTag.length === 0}
+                        disabled={newTag.length === 0 || !checkTag()}
                     >
                         Add
                     </Button>

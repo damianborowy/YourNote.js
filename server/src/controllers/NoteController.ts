@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import NoteService from "../services/NoteService";
 import jwt from "jsonwebtoken";
 import Note from "../models/Note";
-import mongoose from "mongoose";
+import _ from "lodash";
+import { UploadedFile } from "express-fileupload";
+import mkdirp from "mkdirp";
 
-const ObjectId = mongoose.mongo.ObjectId;
 const noteService = new NoteService();
 
 const noteController = {
@@ -80,6 +81,34 @@ const noteController = {
             res.status(200).send(notes);
         } catch (e) {
             res.status(400).send(e);
+        }
+    },
+
+    async attach(req: Request, res: Response) {
+        try {
+            if (!req.files) {
+                res.send({
+                    status: false,
+                    message: "No file uploaded"
+                });
+            } else {
+                const file = req.files.file as UploadedFile;
+
+                await mkdirp(`./public/attachments/${req.body.noteId}`);
+
+                file.mv(`./public/attachments/${req.body.noteId}/${file.name}`);
+
+                res.send({
+                    status: !file.truncated,
+                    data: {
+                        name: file.name,
+                        mimetype: file.mimetype,
+                        size: file.size
+                    }
+                });
+            }
+        } catch (err) {
+            res.status(500).send(err);
         }
     }
 };

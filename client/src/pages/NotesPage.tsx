@@ -39,10 +39,10 @@ const NotesPage = () => {
             const newFilteredNotes = [...filteredNotes];
 
             const newNotes = notes.filter(
-                note => !filteredNotes.includes(note)
+                (note) => !filteredNotes.includes(note)
             );
             const deletedNotes = filteredNotes.filter(
-                note => !notes.includes(note)
+                (note) => !notes.includes(note)
             );
 
             for (let note of newNotes) newFilteredNotes.push(note);
@@ -56,7 +56,7 @@ const NotesPage = () => {
 
             prevNotesLength.current = notes.length;
         }
-    }, [notes]);
+    }, [notes, filteredNotes]);
 
     useEffect(() => {
         const logOut = !isTokenPresent();
@@ -67,6 +67,73 @@ const NotesPage = () => {
 
     const applyFilters = useCallback(
         (filterSettings: FilterSettings, searchText: string) => {
+            const _filterByText = (
+                filterSettings: FilterSettings,
+                searchText: string
+            ): NoteModel[] => {
+                if (!notes) return [];
+                if (searchText.length === 0) return notes;
+
+                const filteredNotes = [];
+
+                if (filterSettings.titles)
+                    filteredNotes.push(
+                        ...notes.filter((note) =>
+                            note.title
+                                ?.toLowerCase()
+                                .includes(searchText.toLowerCase())
+                        )
+                    );
+
+                if (filterSettings.contents)
+                    filteredNotes.push(
+                        ...notes.filter((note) =>
+                            note.content
+                                ?.toLowerCase()
+                                .includes(searchText.toLowerCase())
+                        )
+                    );
+
+                if (filterSettings.tags)
+                    filteredNotes.push(
+                        ...notes.filter((note) => {
+                            const filteredByTags = note.tags?.filter((tag) =>
+                                tag
+                                    .toLowerCase()
+                                    .includes(searchText.toLowerCase())
+                            );
+
+                            return filteredByTags && filteredByTags.length > 0;
+                        })
+                    );
+
+                return _getUniqueNotes(filteredNotes);
+            };
+
+            const _filterByColors = (colors: string[]): NoteModel[] => {
+                if (!notes) return [];
+                if (colors.length === 0) return notes;
+
+                const filteredNotes = notes.filter((note) =>
+                    colors.includes(note.color.toLowerCase())
+                );
+
+                return _getUniqueNotes(filteredNotes);
+            };
+
+            const _getUniqueNotes = (notes: NoteModel[]): NoteModel[] => {
+                const result = [];
+                const map = new Map();
+                for (const note of notes) {
+                    if (!map.has(note._id)) {
+                        map.set(note._id, true);
+                        result.push(note);
+                    }
+                }
+
+                return result;
+            };
+
             if (!notes) return;
 
             if (
@@ -91,7 +158,7 @@ const NotesPage = () => {
                 return setFilteredNotes([]);
             }
 
-            const intersectedNotes = notesFilteredByText.filter(note =>
+            const intersectedNotes = notesFilteredByText.filter((note) =>
                 notesFilteredBySettings.includes(note)
             );
 
@@ -100,73 +167,10 @@ const NotesPage = () => {
         [notes]
     );
 
-    const _filterByText = (
-        filterSettings: FilterSettings,
-        searchText: string
-    ): NoteModel[] => {
-        if (!notes) return [];
-        if (searchText.length === 0) return notes;
-
-        const filteredNotes = [];
-
-        if (filterSettings.titles)
-            filteredNotes.push(
-                ...notes.filter(note =>
-                    note.title?.toLowerCase().includes(searchText.toLowerCase())
-                )
-            );
-
-        if (filterSettings.contents)
-            filteredNotes.push(
-                ...notes.filter(note =>
-                    note.content
-                        ?.toLowerCase()
-                        .includes(searchText.toLowerCase())
-                )
-            );
-
-        if (filterSettings.tags)
-            filteredNotes.push(
-                ...notes.filter(note => {
-                    const filteredByTags = note.tags?.filter(tag =>
-                        tag.toLowerCase().includes(searchText.toLowerCase())
-                    );
-
-                    return filteredByTags && filteredByTags.length > 0;
-                })
-            );
-
-        return _getUniqueNotes(filteredNotes);
-    };
-
-    const _filterByColors = (colors: string[]): NoteModel[] => {
-        if (!notes) return [];
-        if (colors.length === 0) return notes;
-
-        const filteredNotes = notes.filter(note =>
-            colors.includes(note.color.toLowerCase())
-        );
-
-        return _getUniqueNotes(filteredNotes);
-    };
-
-    const _getUniqueNotes = (notes: NoteModel[]): NoteModel[] => {
-        const result = [];
-        const map = new Map();
-        for (const note of notes) {
-            if (!map.has(note._id)) {
-                map.set(note._id, true);
-                result.push(note);
-            }
-        }
-
-        return result;
-    };
-
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
 
-        const newNotes = notes.filter(note => note._id !== oldNote._id);
+        const newNotes = notes.filter((note) => note._id !== oldNote._id);
 
         setNotes(newNotes);
     };
@@ -217,14 +221,14 @@ const NotesPage = () => {
                         <>
                             <NotesGrid
                                 notes={filteredNotes.filter(
-                                    note => note.owner === getEmailFromToken()
+                                    (note) => note.owner === getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="My notes"
                             />
                             <NotesGrid
                                 notes={filteredNotes.filter(
-                                    note => note.owner !== getEmailFromToken()
+                                    (note) => note.owner !== getEmailFromToken()
                                 )}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="Notes shared to me"

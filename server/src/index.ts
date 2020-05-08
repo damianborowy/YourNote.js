@@ -18,7 +18,8 @@ app.listen(port, () => {
         .connect(connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         .then(() => console.log("Successfully connected to database."))
         .catch((err) => console.error(err));

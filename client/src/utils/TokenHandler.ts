@@ -31,6 +31,14 @@ export function insertTokenAndHeaders() {
     };
 }
 
+export function fileUploadHeaders() {
+    const token = extractToken();
+
+    return {
+        Authorization: `Bearer ${token}`
+    };
+}
+
 export function getEmailFromToken() {
     const decodedToken = jwt.decode(extractToken());
     if (!decodedToken || typeof decodedToken !== "object") return "";

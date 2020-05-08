@@ -27,7 +27,7 @@ const AppBar = ({ onDrawerOpen, applyFilters }: IAppBarProps) => {
 
     useEffect(() => {
         applyFilters(filterSettings, search);
-    }, [filterSettings, search]);
+    }, [filterSettings, search, applyFilters]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
         setSearch(event.target.value);

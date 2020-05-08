@@ -1,5 +1,5 @@
 import Note, { INote } from "../models/Note";
-
+import fs from "fs-extra";
 import ICrudRepository from "./interfaces/ICrudRepository";
 
 export default class NoteService implements ICrudRepository<INote> {
@@ -59,9 +59,11 @@ export default class NoteService implements ICrudRepository<INote> {
     private async deleteNote(id: string): Promise<boolean> {
         let result = false;
 
-        await Note.deleteOne({ _id: id }, (err) => {
+        const note = await Note.findOneAndDelete({ _id: id }, (err) => {
             if (!err) result = true;
         });
+
+        await fs.remove(`./public/attachments/${id}`);
 
         return result;
     }

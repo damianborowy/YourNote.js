@@ -62,6 +62,18 @@ const noteApi = {
         if (!result) return new ApiResponse(400);
 
         return new ApiResponse(200, result);
+    },
+
+    async detach(noteId: string, fileName: string) {
+        const result = await fetch(`${serverUrl}/notes/detach`, {
+            method: "PATCH",
+            headers: insertTokenAndHeaders(),
+            body: JSON.stringify({ noteId, fileName })
+        }).then((res) => res.json());
+
+        if (!result) return new ApiResponse(400);
+
+        return new ApiResponse(200, result);
     }
 };
 

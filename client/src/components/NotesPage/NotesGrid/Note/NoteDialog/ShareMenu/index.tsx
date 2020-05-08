@@ -1,18 +1,15 @@
 import React from "react";
 import { Menu as MaterialMenu, MenuItem } from "@material-ui/core";
-import { Share, ArrowRight, AttachFile } from "@material-ui/icons";
+import { Share } from "@material-ui/icons";
 import styles from "./Menu.module.scss";
 import LinkShareDialog from "./LinkShareDialog";
 import UserShareDialog from "./UserShareDialog";
 import NoteModel from "../../../../../../models/Note";
 
 interface IMenuProps {
-    subHandleClose: () => void;
     handleClose: () => void;
-    subHandleClick: (event: React.MouseEvent<HTMLLIElement>) => void;
     handleNoteChange: (note: NoteModel) => void;
     anchorEl: null | HTMLElement;
-    subAnchorEl: null | HTMLElement;
     note: NoteModel;
 }
 

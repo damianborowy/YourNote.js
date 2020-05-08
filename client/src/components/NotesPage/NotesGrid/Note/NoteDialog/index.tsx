@@ -29,6 +29,7 @@ import NoteModel from "../../../../../models/Note";
 import noteApi from "../../../../../apis/NoteAPI";
 import PaletteMenu from "./PaletteMenu";
 import { getEmailFromToken } from "../../../../../utils/TokenHandler";
+import AttachmentsDialog from "./AttachmentsDialog";
 
 interface INoteDialogProps {
     open: boolean;
@@ -41,14 +42,14 @@ interface INoteDialogProps {
 const NoteDialog = (props: INoteDialogProps) => {
     const theme = useTheme(),
         fullScreen = useMediaQuery(theme.breakpoints.down("xs")),
-        [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null),
-        [subAnchorEl, setSubAnchorEl] = React.useState<null | HTMLElement>(
+        [anchorShare, setAnchorShare] = React.useState<null | HTMLElement>(
             null
         ),
         [anchorPalette, setAnchorPalette] = React.useState<null | HTMLElement>(
             null
         ),
-        [open, setOpen] = React.useState(false),
+        [tagOpen, setTagOpen] = React.useState(false),
+        [attachOpen, setAttachOpen] = React.useState(false),
         [newTag, setNewTag] = React.useState("");
 
     const deleteNote = async () => {
@@ -89,26 +90,24 @@ const NoteDialog = (props: INoteDialogProps) => {
         props.handleNoteChange(newNote);
     };
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
-        setAnchorEl(event.currentTarget);
+    const handleShareClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+        setAnchorShare(event.currentTarget);
 
     const handlePaletteClick = (event: React.MouseEvent<HTMLButtonElement>) =>
         setAnchorPalette(event.currentTarget);
 
     const handleClose = () => {
-        subHandleClose();
-        setAnchorEl(null);
+        setAnchorShare(null);
         setAnchorPalette(null);
     };
 
-    const subHandleClick = (event: React.MouseEvent<HTMLLIElement>) =>
-        setSubAnchorEl(event.currentTarget);
+    const openTagDialog = () => setTagOpen(true);
 
-    const subHandleClose = () => setSubAnchorEl(null);
+    const closeTagDialog = () => setTagOpen(false);
 
-    const openDialog = () => setOpen(true);
+    const openAttachmentsDialog = () => setAttachOpen(true);
 
-    const closeDialog = () => setOpen(false);
+    const closeAttachmentsDialog = () => setAttachOpen(false);
 
     const handleNewTagChange = (event: React.ChangeEvent<HTMLInputElement>) =>
         setNewTag(event.target.value);
@@ -120,7 +119,7 @@ const NoteDialog = (props: INoteDialogProps) => {
     const addTag = () => {
         if (!props.note.tags) return;
 
-        closeDialog();
+        closeTagDialog();
 
         const newNote = { ...props.note };
 
@@ -168,19 +167,22 @@ const NoteDialog = (props: INoteDialogProps) => {
                             <ArrowBack />
                         </IconButton>
                         <div className={styles.dialogTitleMenu}>
-                            <IconButton onClick={openDialog}>
+                            <IconButton onClick={openTagDialog}>
                                 <Tag />
                             </IconButton>
                             <IconButton onClick={handlePaletteClick}>
                                 <Palette />
                             </IconButton>
-                            <IconButton>
+                            <IconButton
+                                id="attachments"
+                                onClick={openAttachmentsDialog}
+                            >
                                 <AttachFile />
                             </IconButton>
                             <IconButton onClick={deleteNote}>
                                 <Delete />
                             </IconButton>
-                            <IconButton onClick={handleClick}>
+                            <IconButton onClick={handleShareClick}>
                                 <Share />
                             </IconButton>
                         </div>
@@ -204,7 +206,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                                 styles.dialogTitleMenuDesktop
                             )}
                         >
-                            <IconButton id="local" onClick={openDialog}>
+                            <IconButton id="local" onClick={openTagDialog}>
                                 <Tag />
                             </IconButton>
                             <IconButton
@@ -213,13 +215,19 @@ const NoteDialog = (props: INoteDialogProps) => {
                             >
                                 <Palette />
                             </IconButton>
-                            <IconButton>
+                            <IconButton
+                                id="attachments"
+                                onClick={openAttachmentsDialog}
+                            >
                                 <AttachFile />
                             </IconButton>
                             <IconButton id="delete" onClick={deleteNote}>
                                 <Delete />
                             </IconButton>
-                            <IconButton id="moreVert" onClick={handleClick}>
+                            <IconButton
+                                id="moreVert"
+                                onClick={handleShareClick}
+                            >
                                 <Share />
                             </IconButton>
                             <IconButton id="close" onClick={props.closeDialog}>
@@ -235,13 +243,10 @@ const NoteDialog = (props: INoteDialogProps) => {
                     note={props.note}
                 />
                 <ShareMenu
-                    subHandleClose={subHandleClose}
-                    subHandleClick={subHandleClick}
                     handleClose={handleClose}
-                    anchorEl={anchorEl}
-                    subAnchorEl={subAnchorEl}
-                    note={props.note}
+                    anchorEl={anchorShare}
                     handleNoteChange={props.handleNoteChange}
+                    note={props.note}
                 />
             </DialogTitle>
             <DialogContent
@@ -280,7 +285,13 @@ const NoteDialog = (props: INoteDialogProps) => {
                     </div>
                 </DialogActions>
             )}
-            <Dialog open={open} onClose={closeDialog}>
+            <AttachmentsDialog
+                open={attachOpen}
+                handleClose={closeAttachmentsDialog}
+                handleNoteChange={props.handleNoteChange}
+                note={props.note}
+            />
+            <Dialog open={tagOpen} onClose={closeTagDialog}>
                 <DialogTitle>Add new tag</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -293,7 +304,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialog}>Close</Button>
+                    <Button onClick={closeTagDialog}>Close</Button>
                     <Button
                         color="primary"
                         onClick={addTag}

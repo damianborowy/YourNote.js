@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import NoteService from "../services/NoteService";
 import jwt from "jsonwebtoken";
-import Note, { INote } from "../models/Note";
+import Note from "../models/Note";
 import _ from "lodash";
 import { UploadedFile } from "express-fileupload";
 import mkdirp from "mkdirp";
-import mongoose from "mongoose";
 import fs from "fs-extra";
 
 const noteService = new NoteService();
@@ -94,14 +93,20 @@ const noteController = {
                 });
             } else {
                 const file = req.files.file as UploadedFile;
+                const path = `./public/attachments/${noteId}`;
 
-                await mkdirp(`./public/attachments/${noteId}`);
-                file.mv(`./public/attachments/${noteId}/${file.name}`);
+                if (note.files.includes(file.name))
+                    return res
+                        .status(400)
+                        .send("File with the given name already exists.");
+
+                await mkdirp(path);
+                file.mv(`${path}/${file.name}`);
 
                 note.files.push(file.name);
                 await noteService.update(note);
 
-                res.send({
+                res.status(file.truncated ? 400 : 200).send({
                     status: !file.truncated,
                     data: {
                         name: file.name,

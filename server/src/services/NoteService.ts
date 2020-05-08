@@ -59,7 +59,7 @@ export default class NoteService implements ICrudRepository<INote> {
     private async deleteNote(id: string): Promise<boolean> {
         let result = false;
 
-        const note = await Note.findOneAndDelete({ _id: id }, (err) => {
+        await Note.deleteOne({ _id: id }, (err) => {
             if (!err) result = true;
         });
 

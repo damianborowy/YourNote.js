@@ -3,11 +3,8 @@ import logger from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 import bearerToken from "express-bearer-token";
-
 import usersRouter from "./routes/Users";
 import notesRouter from "./routes/Notes";
-import fileUpload from "express-fileupload";
-import path from "path";
 
 dotenv.config();
 const app = express();

@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 interface ICrudRepository<T> {
     create(obj: T): Promise<T>;
 

@@ -1,7 +1,6 @@
 import express from "express";
 import noteController from "../controllers/NoteController";
 import auth from "../middlewares/Authentication";
-import { admin } from "../middlewares/Authorization";
 import fileUpload from "express-fileupload";
 
 const router = express.Router();
@@ -15,16 +14,13 @@ router.post("/", noteController.create);
 router.put("/", noteController.update);
 router.delete("/:noteId", noteController.delete);
 
-router.use(admin);
-
-router.get("/:email", noteController.adminRead);
-
 router.use(
     fileUpload({
         limits: { fileSize: 10 * 1024 * 1024 }
     })
 );
 
+router.put("/detach", noteController.detach);
 router.post("/attach", noteController.attach);
 
 export default router;

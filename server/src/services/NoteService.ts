@@ -46,9 +46,9 @@ export default class NoteService implements ICrudRepository<INote> {
     }
 
     private async updateNote(note: INote): Promise<INote> {
-        await Note.updateOne({ _id: note._id }, note);
-
-        const result = await Note.findOne({ _id: note._id });
+        const result = await Note.findOneAndUpdate({ _id: note._id }, note, {
+            new: true
+        });
 
         if (!result)
             throw new Error("Couldn't find note with the given noteId");

@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import NoteService from "../services/NoteService";
 import jwt from "jsonwebtoken";
-import Note from "../models/Note";
+import Note, { INote } from "../models/Note";
 import _ from "lodash";
 import { UploadedFile } from "express-fileupload";
 import mkdirp from "mkdirp";
 import mongoose from "mongoose";
+import fs from "fs-extra";
 
 const noteService = new NoteService();
 
@@ -74,17 +75,6 @@ const noteController = {
         }
     },
 
-    async adminRead(req: Request, res: Response) {
-        const email = req.params.email;
-
-        try {
-            const notes = await noteService.read(email);
-            res.status(200).send(notes);
-        } catch (e) {
-            res.status(400).send(e);
-        }
-    },
-
     async attach(req: Request, res: Response) {
         const { noteId } = req.body;
         const note = await Note.findOne({ _id: noteId });
@@ -122,6 +112,30 @@ const noteController = {
             }
         } catch (err) {
             res.status(500).send(err);
+        }
+    },
+
+    async detach(req: Request, res: Response) {
+        const { noteId, fileName } = req.body;
+        const note = await Note.findOne({ _id: noteId });
+
+        if (!note)
+            return res
+                .status(404)
+                .send(
+                    "Couldn't find a note you're trying to remove attachment from"
+                );
+
+        const fileIndex = note.files.indexOf(fileName);
+        note.files.splice(fileIndex, 1);
+
+        await fs.remove(`./public/attachments/${noteId}/${fileName}`);
+
+        try {
+            const newNote = await noteService.update(note);
+            res.status(200).send(newNote);
+        } catch (e) {
+            res.status(400).send(e);
         }
     }
 };

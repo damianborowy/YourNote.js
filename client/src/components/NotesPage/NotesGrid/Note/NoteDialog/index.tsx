@@ -17,13 +17,14 @@ import {
     ArrowBack,
     Delete,
     Palette,
-    MoreVert,
     Close,
-    LocalOffer
+    LocalOffer as Tag,
+    Share,
+    AttachFile
 } from "@material-ui/icons";
 import clsx from "clsx";
 import styles from "./NoteDialog.module.scss";
-import Menu from "./Menu";
+import ShareMenu from "./ShareMenu";
 import NoteModel from "../../../../../models/Note";
 import noteApi from "../../../../../apis/NoteAPI";
 import PaletteMenu from "./PaletteMenu";
@@ -168,16 +169,19 @@ const NoteDialog = (props: INoteDialogProps) => {
                         </IconButton>
                         <div className={styles.dialogTitleMenu}>
                             <IconButton onClick={openDialog}>
-                                <LocalOffer />
+                                <Tag />
                             </IconButton>
                             <IconButton onClick={handlePaletteClick}>
                                 <Palette />
+                            </IconButton>
+                            <IconButton>
+                                <AttachFile />
                             </IconButton>
                             <IconButton onClick={deleteNote}>
                                 <Delete />
                             </IconButton>
                             <IconButton onClick={handleClick}>
-                                <MoreVert />
+                                <Share />
                             </IconButton>
                         </div>
                     </div>
@@ -201,7 +205,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                             )}
                         >
                             <IconButton id="local" onClick={openDialog}>
-                                <LocalOffer />
+                                <Tag />
                             </IconButton>
                             <IconButton
                                 id="palette"
@@ -209,11 +213,14 @@ const NoteDialog = (props: INoteDialogProps) => {
                             >
                                 <Palette />
                             </IconButton>
+                            <IconButton>
+                                <AttachFile />
+                            </IconButton>
                             <IconButton id="delete" onClick={deleteNote}>
                                 <Delete />
                             </IconButton>
                             <IconButton id="moreVert" onClick={handleClick}>
-                                <MoreVert />
+                                <Share />
                             </IconButton>
                             <IconButton id="close" onClick={props.closeDialog}>
                                 <Close />
@@ -227,8 +234,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     handleNoteChange={props.handleNoteChange}
                     note={props.note}
                 />
-
-                <Menu
+                <ShareMenu
                     subHandleClose={subHandleClose}
                     subHandleClick={subHandleClick}
                     handleClose={handleClose}
@@ -254,8 +260,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     onChange={handleContentChange}
                 />
             </DialogContent>
-            {((props.note.tags && props.note.tags.length > 0) ||
-                props.note.files.length > 0) && (
+            {props.note.tags && props.note.tags.length > 0 && (
                 <DialogActions
                     className={clsx(
                         styles.dialogActions,
@@ -263,23 +268,16 @@ const NoteDialog = (props: INoteDialogProps) => {
                         props.note.color?.toLowerCase()
                     )}
                 >
-                    {props.note.tags && props.note.tags.length > 0 && (
-                        <div className={styles.dialogActionsRow}>
-                            {props.note.tags.map((tag) => (
-                                <Chip
-                                    variant="outlined"
-                                    label={`#${tag}`}
-                                    onDelete={() => deleteTag(tag)}
-                                    key={tag}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    {props.note.files.length > 0 && (
-                        <div className={styles.dialogActionsRow}>
-                            <h1>foo</h1>
-                        </div>
-                    )}
+                    <div className={styles.dialogActionsRow}>
+                        {props.note.tags.map((tag) => (
+                            <Chip
+                                variant="outlined"
+                                label={`#${tag}`}
+                                onDelete={() => deleteTag(tag)}
+                                key={tag}
+                            />
+                        ))}
+                    </div>
                 </DialogActions>
             )}
             <Dialog open={open} onClose={closeDialog}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu as MaterialMenu, MenuItem } from "@material-ui/core";
-import { Share, ArrowRight } from "@material-ui/icons";
+import { Share, ArrowRight, AttachFile } from "@material-ui/icons";
 import styles from "./Menu.module.scss";
 import LinkShareDialog from "./LinkShareDialog";
 import UserShareDialog from "./UserShareDialog";
@@ -16,26 +16,26 @@ interface IMenuProps {
     note: NoteModel;
 }
 
-const Menu = (props: IMenuProps) => {
-    const [subDialogOpen, setSubDialogOpen] = React.useState(false),
-        [subToUserDialogOpen, setSubToUserDialogOpen] = React.useState(false);
+const ShareMenu = (props: IMenuProps) => {
+    const [dialogOpen, setDialogOpen] = React.useState(false),
+        [toUserDialogOpen, setToUserDialogOpen] = React.useState(false);
 
-    const subShareDialogOpen = () => {
+    const shareDialogOpen = () => {
         props.handleClose();
-        setSubDialogOpen(true);
+        setDialogOpen(true);
     };
 
-    const subShareDialogClose = () => {
-        setSubDialogOpen(false);
+    const shareDialogClose = () => {
+        setDialogOpen(false);
     };
 
-    const subShareToUserDialogOpen = () => {
+    const shareToUserDialogOpen = () => {
         props.handleClose();
-        setSubToUserDialogOpen(true);
+        setToUserDialogOpen(true);
     };
 
-    const subShareToUserDialogClose = () => {
-        setSubToUserDialogOpen(false);
+    const shareToUserDialogClose = () => {
+        setToUserDialogOpen(false);
     };
 
     return (
@@ -46,43 +46,29 @@ const Menu = (props: IMenuProps) => {
                 open={Boolean(props.anchorEl)}
                 onClose={props.handleClose}
             >
-                <MenuItem onClick={props.subHandleClick}>
-                    Share
-                    <ArrowRight />
-                </MenuItem>
-            </MaterialMenu>
-            <MaterialMenu
-                anchorEl={props.subAnchorEl}
-                keepMounted
-                open={Boolean(props.subAnchorEl)}
-                onClose={props.subHandleClose}
-            >
-                <MenuItem id="byLink" onClick={subShareDialogOpen}>
+                <MenuItem id="byLink" onClick={shareDialogOpen}>
                     <Share className={styles.share} />
                     By link
                 </MenuItem>
-                <MenuItem
-                    id="shareToOtherUser"
-                    onClick={subShareToUserDialogOpen}
-                >
+                <MenuItem id="shareToOtherUser" onClick={shareToUserDialogOpen}>
                     <Share className={styles.share} />
                     To specified user
                 </MenuItem>
             </MaterialMenu>
             <LinkShareDialog
                 note={props.note}
-                subDialogOpen={subDialogOpen}
-                subShareDialogClose={subShareDialogClose}
+                subDialogOpen={dialogOpen}
+                subShareDialogClose={shareDialogClose}
                 handleNoteChange={props.handleNoteChange}
             />
             <UserShareDialog
                 handleNoteChange={props.handleNoteChange}
-                subShareToUserDialogClose={subShareToUserDialogClose}
-                subToUserDialogOpen={subToUserDialogOpen}
+                subShareToUserDialogClose={shareToUserDialogClose}
+                subToUserDialogOpen={toUserDialogOpen}
                 note={props.note}
             />
         </>
     );
 };
 
-export default Menu;
+export default ShareMenu;

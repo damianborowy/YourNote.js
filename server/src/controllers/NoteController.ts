@@ -5,6 +5,7 @@ import Note from "../models/Note";
 import _ from "lodash";
 import { UploadedFile } from "express-fileupload";
 import mkdirp from "mkdirp";
+import mongoose from "mongoose";
 
 const noteService = new NoteService();
 
@@ -85,6 +86,16 @@ const noteController = {
     },
 
     async attach(req: Request, res: Response) {
+        const { noteId } = req.body;
+        const note = await Note.findOne({ _id: noteId });
+
+        if (!note)
+            return res
+                .status(400)
+                .send(
+                    "Couldn't find a note you're trying to add attachment to"
+                );
+
         try {
             if (!req.files) {
                 res.send({
@@ -94,9 +105,11 @@ const noteController = {
             } else {
                 const file = req.files.file as UploadedFile;
 
-                await mkdirp(`./public/attachments/${req.body.noteId}`);
+                await mkdirp(`./public/attachments/${noteId}`);
+                file.mv(`./public/attachments/${noteId}/${file.name}`);
 
-                file.mv(`./public/attachments/${req.body.noteId}/${file.name}`);
+                note.files.push(file.name);
+                await noteService.update(note);
 
                 res.send({
                     status: !file.truncated,

@@ -62,7 +62,7 @@ const NoteDialog = (props: INoteDialogProps) => {
         } else {
             const newNote = { ...note };
             const index = newNote.sharedTo?.findIndex(
-                email => email === userEmail
+                (email) => email === userEmail
             );
             newNote.sharedTo?.splice(index!, 1);
             const result = await noteApi.update(newNote);
@@ -133,7 +133,7 @@ const NoteDialog = (props: INoteDialogProps) => {
     const deleteTag = (deletedTag: string) => {
         if (props.note.tags && props.note.tags.length > 0) {
             const tagIndex = props.note.tags.findIndex(
-                tag => tag === deletedTag
+                (tag) => tag === deletedTag
             );
 
             const newNote = { ...props.note };
@@ -254,7 +254,8 @@ const NoteDialog = (props: INoteDialogProps) => {
                     onChange={handleContentChange}
                 />
             </DialogContent>
-            {props.note.tags && props.note.tags.length > 0 && (
+            {((props.note.tags && props.note.tags.length > 0) ||
+                props.note.files.length > 0) && (
                 <DialogActions
                     className={clsx(
                         styles.dialogActions,
@@ -262,14 +263,23 @@ const NoteDialog = (props: INoteDialogProps) => {
                         props.note.color?.toLowerCase()
                     )}
                 >
-                    {props.note.tags.map(tag => (
-                        <Chip
-                            variant="outlined"
-                            label={tag}
-                            onDelete={() => deleteTag(tag)}
-                            key={tag}
-                        />
-                    ))}
+                    {props.note.tags && props.note.tags.length > 0 && (
+                        <div className={styles.dialogActionsRow}>
+                            {props.note.tags.map((tag) => (
+                                <Chip
+                                    variant="outlined"
+                                    label={`#${tag}`}
+                                    onDelete={() => deleteTag(tag)}
+                                    key={tag}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    {props.note.files.length > 0 && (
+                        <div className={styles.dialogActionsRow}>
+                            <h1>foo</h1>
+                        </div>
+                    )}
                 </DialogActions>
             )}
             <Dialog open={open} onClose={closeDialog}>

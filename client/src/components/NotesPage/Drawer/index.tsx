@@ -64,6 +64,7 @@ const Drawer = (props: DrawerProps) => {
                                 margin: "30px 0 0px"
                             }}
                             wrap={false}
+                            key={note._id}
                         >
                             {note.title && note.title?.length > 0 && (
                                 <Text style={{ fontSize: 25 }}>

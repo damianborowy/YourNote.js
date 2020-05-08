@@ -12,7 +12,13 @@ div {
         flex-wrap: wrap;
     }
 
-    .dialogActions > * {
+    .dialogActionsRow {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .dialogActionsRow > * {
         margin: 5px;
     }
 

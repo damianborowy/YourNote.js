@@ -9,6 +9,7 @@ export interface INote extends Document {
     owner: string;
     sharedTo: string[];
     isPublic: boolean;
+    files: string[];
 }
 
 const NoteSchema = new Schema({
@@ -32,7 +33,8 @@ const NoteSchema = new Schema({
     date: { type: Date, required: true, default: Date.now() },
     owner: { type: String, required: true },
     sharedTo: { type: [String], required: false },
-    isPublic: { type: Boolean, required: true, default: false }
+    isPublic: { type: Boolean, required: true, default: false },
+    files: { type: [String], required: false, default: [] }
 });
 
 export default mongoose.model<INote>("Notes", NoteSchema);

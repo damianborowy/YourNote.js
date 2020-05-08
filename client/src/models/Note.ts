@@ -5,6 +5,7 @@ export default class Note {
         public owner: string,
         public date: Date,
         public isPublic: boolean,
+        public files: string[],
         public title?: string,
         public content?: string,
         public tags?: string[],

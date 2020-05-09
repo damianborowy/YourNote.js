@@ -95,6 +95,11 @@ const noteController = {
                 const file = req.files.file as UploadedFile;
                 const path = `./public/attachments/${noteId}`;
 
+                if (file.size >= 10 * 1024 * 1024)
+                    return res
+                        .status(400)
+                        .send("File exceeds maximum size limit");
+
                 if (note.files.includes(file.name))
                     return res
                         .status(400)

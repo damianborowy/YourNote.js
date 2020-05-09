@@ -77,7 +77,7 @@ const AttachmentsDialog = ({
         setFileList(newFileList);
     };
 
-    const beforeUpload = (file: RcFile, FileList: RcFile[]) => {
+    const beforeUpload = (file: RcFile, FileList: RcFile[]): boolean => {
         return file.size < 10 * 1024 * 1024;
     };
 

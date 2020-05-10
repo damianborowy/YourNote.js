@@ -54,10 +54,6 @@ const AttachmentsDialog = ({
             _filesToList(note)
         );
 
-    darkMode
-        ? require("antd/dist/antd.dark.css")
-        : require("antd/dist/antd.css");
-
     const onChange = ({ file, fileList }: UploadChangeParam<UploadFile>) => {
         let newFileList = fileList.map((file) => {
             if (file.status === "done")
@@ -90,7 +86,11 @@ const AttachmentsDialog = ({
     };
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog
+            className={darkMode ? "dark" : "light"}
+            open={open}
+            onClose={handleClose}
+        >
             <DialogTitle>Attachments</DialogTitle>
             <DialogContent>
                 <Upload {...props} fileList={fileList}>

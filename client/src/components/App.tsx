@@ -5,6 +5,7 @@ import { Route, BrowserRouter } from "react-router-dom";
 import SharedNotePage from "../pages/SharedNotePage";
 import NotesPage from "../pages/NotesPage";
 import AdminPage from "../pages/AdminPage";
+import "./Antd.scss";
 
 const App = () => {
     return (

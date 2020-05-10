@@ -108,9 +108,6 @@ const noteController = {
                 await mkdirp(path);
                 file.mv(`${path}/${file.name}`);
 
-                note.files.push(file.name);
-                await noteService.update(note);
-
                 res.status(file.truncated ? 400 : 200).send({
                     status: !file.truncated,
                     data: {
@@ -133,17 +130,12 @@ const noteController = {
             return res
                 .status(404)
                 .send(
-                    "Couldn't find a note you're trying to remove attachment from"
+                    "Couldn't find a note you're trying to remove attachment from."
                 );
 
-        const fileIndex = note.files.indexOf(fileName);
-        note.files.splice(fileIndex, 1);
-
-        await fs.remove(`./public/attachments/${noteId}/${fileName}`);
-
         try {
-            const newNote = await noteService.update(note);
-            res.status(200).send(newNote);
+            await fs.remove(`./public/attachments/${noteId}/${fileName}`);
+            res.status(200).send("Attachment was removed successfully.");
         } catch (e) {
             res.status(400).send(e);
         }

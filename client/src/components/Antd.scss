@@ -1,4 +1,15 @@
 div {
+    a,
+    a:visited,
+    a:active {
+        color: inherit;
+    }
+
+    .ant-upload {
+        display: flex;
+        justify-content: center;
+    }
+
     &.dark {
         .ant-upload-list {
             -webkit-box-sizing: border-box;

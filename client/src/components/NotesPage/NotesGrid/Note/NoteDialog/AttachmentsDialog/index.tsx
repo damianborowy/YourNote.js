@@ -16,6 +16,7 @@ import {
     UploadChangeParam,
     RcFile
 } from "antd/lib/upload/interface";
+import noteApi from "../../../../../../apis/NoteAPI";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -70,6 +71,16 @@ const AttachmentsDialog = ({
             handleNoteChange(newNote);
         }
 
+        if (file.status === "removed") {
+            const newNote = { ...note };
+
+            const deletedFileIndex = newNote.files.indexOf(file.name);
+            newNote.files.splice(deletedFileIndex, 1);
+
+            noteApi.detach(newNote._id, file.name);
+            handleNoteChange(newNote);
+        }
+
         setFileList(newFileList);
     };
 
@@ -90,6 +101,7 @@ const AttachmentsDialog = ({
             className={darkMode ? "dark" : "light"}
             open={open}
             onClose={handleClose}
+            fullWidth
         >
             <DialogTitle>Attachments</DialogTitle>
             <DialogContent>

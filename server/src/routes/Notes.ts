@@ -20,7 +20,7 @@ router.use(
     })
 );
 
-router.put("/detach", noteController.detach);
+router.patch("/detach", noteController.detach);
 router.post("/attach", noteController.attach);
 
 export default router;

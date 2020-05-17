@@ -39,10 +39,10 @@ const NotesPage = () => {
             const newFilteredNotes = [...filteredNotes];
 
             const newNotes = notes.filter(
-                note => !filteredNotes.includes(note)
+                (note) => !filteredNotes.includes(note)
             );
             const deletedNotes = filteredNotes.filter(
-                note => !notes.includes(note)
+                (note) => !notes.includes(note)
             );
 
             for (let note of newNotes) newFilteredNotes.push(note);
@@ -78,7 +78,7 @@ const NotesPage = () => {
 
                 if (filterSettings.titles)
                     filteredNotes.push(
-                        ...notes.filter(note =>
+                        ...notes.filter((note) =>
                             note.title
                                 ?.toLowerCase()
                                 .includes(searchText.toLowerCase())
@@ -87,7 +87,7 @@ const NotesPage = () => {
 
                 if (filterSettings.contents)
                     filteredNotes.push(
-                        ...notes.filter(note =>
+                        ...notes.filter((note) =>
                             note.content
                                 ?.toLowerCase()
                                 .includes(searchText.toLowerCase())
@@ -96,8 +96,8 @@ const NotesPage = () => {
 
                 if (filterSettings.tags)
                     filteredNotes.push(
-                        ...notes.filter(note => {
-                            const filteredByTags = note.tags?.filter(tag =>
+                        ...notes.filter((note) => {
+                            const filteredByTags = note.tags?.filter((tag) =>
                                 tag
                                     .toLowerCase()
                                     .includes(searchText.toLowerCase())
@@ -114,7 +114,7 @@ const NotesPage = () => {
                 if (!notes) return [];
                 if (colors.length === 0) return notes;
 
-                const filteredNotes = notes.filter(note =>
+                const filteredNotes = notes.filter((note) =>
                     colors.includes(note.color.toLowerCase())
                 );
 
@@ -158,7 +158,7 @@ const NotesPage = () => {
                 return setFilteredNotes([]);
             }
 
-            const intersectedNotes = notesFilteredByText.filter(note =>
+            const intersectedNotes = notesFilteredByText.filter((note) =>
                 notesFilteredBySettings.includes(note)
             );
 
@@ -170,7 +170,7 @@ const NotesPage = () => {
     const deleteNoteFromList = (oldNote: NoteModel) => {
         if (!notes) return;
 
-        const newNotes = notes.filter(note => note._id !== oldNote._id);
+        const newNotes = notes.filter((note) => note._id !== oldNote._id);
 
         setNotes(newNotes);
     };

@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NoteModel from "../../../models/Note";
-import { Grid, Typography, useTheme } from "@material-ui/core";
+import { Typography, useTheme } from "@material-ui/core";
 import Note from "./Note";
 import styles from "./NotesGrid.module.scss";
 import {
     GridContextProvider,
     GridDropZone,
     GridItem,
-    swap,
-    move
+    swap
 } from "react-grid-dnd";
 import { getEmailFromToken } from "../../../utils/TokenHandler";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 interface INotesGridProps {
     notes: NoteModel[];
@@ -20,28 +20,42 @@ interface INotesGridProps {
 }
 
 const NotesGrid = (props: INotesGridProps) => {
-    const theme = useTheme();
+    const theme = useTheme(),
+        [boxesPerRow, setBoxesPerRow] = useState(0),
+        { width } = useWindowDimensions();
+
+    useEffect(() => {
+        let newBoxes = 1;
+
+        if (width > 350) newBoxes++;
+        if (width > 600) newBoxes++;
+        if (width > 1000) newBoxes++;
+
+        setBoxesPerRow(newBoxes);
+    }, [width]);
 
     const handleDNDGridChange = (
         sourceId: string,
         sourceIndex: number,
         targetIndex: number,
-        targetId: string | undefined
+        targetId?: string
     ) => {
         const notesCopy = [...props.notes];
         const nextState = swap(notesCopy, sourceIndex, targetIndex);
         props.dndSetter(nextState);
     };
+
     const filterNotes = (notes: NoteModel[]) => {
         if (props.name === "My notes") {
-            return notes.filter(note => note.owner === getEmailFromToken());
+            return notes.filter((note) => note.owner === getEmailFromToken());
         } else {
-            return notes.filter(note => note.owner !== getEmailFromToken());
+            return notes.filter((note) => note.owner !== getEmailFromToken());
         }
     };
+
     return (
         <>
-            {props.notes.length !== 0 && (
+            {filterNotes(props.notes).length !== 0 && (
                 <div id="note" className={styles.container}>
                     <Typography
                         variant="h6"
@@ -53,13 +67,22 @@ const NotesGrid = (props: INotesGridProps) => {
                     <GridContextProvider onChange={handleDNDGridChange}>
                         <GridDropZone
                             id="items"
-                            boxesPerRow={4}
-                            rowHeight={100}
-                            style={{ height: "400px" }}
+                            boxesPerRow={boxesPerRow}
+                            rowHeight={181}
+                            style={{
+                                height:
+                                    181 *
+                                    Math.ceil(props.notes.length / boxesPerRow)
+                            }}
                         >
-                            {filterNotes(props.notes).map(note => {
+                            {filterNotes(props.notes).map((note) => {
                                 return (
-                                    <GridItem key={note._id}>
+                                    <GridItem
+                                        key={note._id}
+                                        style={{
+                                            padding: "0 3px"
+                                        }}
+                                    >
                                         <Note
                                             model={note}
                                             deleteNoteFromList={
@@ -71,20 +94,6 @@ const NotesGrid = (props: INotesGridProps) => {
                             })}
                         </GridDropZone>
                     </GridContextProvider>
-                    {/* <Grid container spacing={1}>
-                        {props.notes.map(note => {
-                            return (
-                                <Grid item xs={6} sm={4} md={3} key={note._id}>
-                                    <Note
-                                        model={note}
-                                        deleteNoteFromList={
-                                            props.deleteNoteFromList
-                                        }
-                                    />
-                                </Grid>
-                            );
-                        })}
-                    </Grid> */}
                 </div>
             )}
         </>

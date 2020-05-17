@@ -34,6 +34,8 @@
         "react-copy-to-clipboard": "^5.0.2",
         "react-dom": "^16.13.0",
         "react-full-screen": "^0.2.4",
+        "react-gesture-responder": "^2.1.0",
+        "react-grid-dnd": "^2.1.2",
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.0",
         "typescript": "~3.7.2"

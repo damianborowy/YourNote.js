@@ -26,6 +26,7 @@ beforeAll(async () => await connect());
 beforeEach(async () => await inputDefaultData());
 
 afterEach(async () => await clearDatabase());
+afterEach(() => {});
 
 afterAll(async () => await closeDatabase());
 
@@ -58,6 +59,12 @@ describe("Environmental variables", () => {
         const password = process.env.TESTING_PASSWORD;
 
         expect(password).toBeDefined();
+    });
+
+    it("Check if TESTING_FILE is set", () => {
+        const file = process.env.TESTING_FILE;
+
+        expect(file).toBeDefined();
     });
 });
 

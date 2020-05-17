@@ -101,3 +101,12 @@ Pobieranie notatek jako PDF połączone z filtrowaniem notatek, tj. pobrane zost
 
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/save%20as%20pdf.png)
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/pdf.png)
+
+Dodawanie załączników do notatek
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/attachments%20dialog.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/attachments%20new.png)
+
+Błąd w przypadku dodania istniejącej już notatki, przekroczenia maksymalnego dopuszczalnego rozmiaru pliku lub błędu po stronie serwera. Plik nie zostaje wtedy dodany i można go usunąć z listy ręcznie, lub sam usunie się w momencie odświeżenia strony.
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/attachments%20error.png)

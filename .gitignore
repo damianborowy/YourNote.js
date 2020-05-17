@@ -109,3 +109,4 @@ dist
 .idea/
 
 server/public/attachments
+server/__tests__/files

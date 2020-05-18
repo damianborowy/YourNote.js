@@ -87,10 +87,7 @@ const noteController = {
 
         try {
             if (!req.files) {
-                res.send({
-                    status: false,
-                    message: "No file uploaded"
-                });
+                return res.status(400).send("No file uploaded");
             } else {
                 const file = req.files.file as UploadedFile;
                 const path = `./public/attachments/${noteId}`;

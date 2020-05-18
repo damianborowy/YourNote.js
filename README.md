@@ -110,3 +110,9 @@ Dodawanie załączników do notatek
 Błąd w przypadku dodania istniejącej już notatki, przekroczenia maksymalnego dopuszczalnego rozmiaru pliku lub błędu po stronie serwera. Plik nie zostaje wtedy dodany i można go usunąć z listy ręcznie, lub sam usunie się w momencie odświeżenia strony.
 
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/attachments%20error.png)
+
+Dodano możliwość przesuwania notatek metodą drag 'n drop
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/drag%20first.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/drag%20second.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/drag%20third.png)

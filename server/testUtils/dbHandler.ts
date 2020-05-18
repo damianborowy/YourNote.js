@@ -44,7 +44,8 @@ export async function inputDefaultData() {
 
     const publicNote = new Note({
         owner: process.env.TESTING_EMAIL,
-        isPublic: true
+        isPublic: true,
+        files: ["req.txt"]
     });
 
     await publicNote.save();

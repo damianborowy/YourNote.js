@@ -388,5 +388,51 @@ describe("Testing endpoints", () => {
                 return request.delete("/users/someFooMail@xd.pl").expect(401);
             });
         });
+
+        describe("Test attachments", () => {
+            it("Should fail attaching while authentication token is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request.post("/notes/attach");
+
+                expect(result.status).toBe(401);
+                done();
+            });
+
+            it("Should fail attaching while note id is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request
+                    .post("/notes/attach")
+                    .set(userHeaders);
+
+                expect(result.status).toBe(400);
+                done();
+            });
+
+            it("Should fail attaching while attachment file is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request
+                    .post("/notes/attach")
+                    .set(userHeaders)
+                    .send({ noteId: note.id });
+
+                expect(result.status).toBe(400);
+                done();
+            });
+
+            it("Should detach the attachment properly", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request
+                    .patch("/notes/detach")
+                    .set(userHeaders)
+                    .send({ noteId: note.id, fileName: "req.txt" });
+
+                expect(result.status).toBe(200);
+                done();
+            });
+        });
     });
 });

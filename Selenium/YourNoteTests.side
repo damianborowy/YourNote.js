@@ -1038,6 +1038,365 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "107cd4ce-6837-45da-8484-c8b4fb46a9f1",
+    "name": "17 DragNDrop",
+    "commands": [{
+      "id": "18fa41e3-551b-4812-a5b4-ad34e8ff1898",
+      "comment": "",
+      "command": "open",
+      "target": "https://yournote-client.herokuapp.com/notes",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "94ae963b-3d05-444f-8d0d-a2bcd08b7262",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x947",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "38fd2f28-7cf3-48f5-af2e-14551fe74b50",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=.undefined:nth-child(10) > #card",
+      "targets": [
+        ["css=.undefined:nth-child(10) > #card", "css:finder"],
+        ["xpath=(//div[@id='card'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='note']/div/div[10]/div", "xpath:idRelative"],
+        ["xpath=//div[10]/div", "xpath:position"]
+      ],
+      "value": "138.5999755859375,108.04998779296875"
+    }, {
+      "id": "4d7d21aa-22f2-412a-be3f-60abb0848c9e",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=.undefined:nth-child(10) > #card",
+      "targets": [
+        ["css=.undefined:nth-child(10) > #card", "css:finder"],
+        ["xpath=(//div[@id='card'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='note']/div/div[10]/div", "xpath:idRelative"],
+        ["xpath=//div[10]/div", "xpath:position"]
+      ],
+      "value": "138.5999755859375,108.04998779296875"
+    }, {
+      "id": "70a02b7f-83b6-4aea-8e61-845c14ef1275",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.undefined:nth-child(10) > #card",
+      "targets": [
+        ["css=.undefined:nth-child(10) > #card", "css:finder"],
+        ["xpath=(//div[@id='card'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='note']/div/div[10]/div", "xpath:idRelative"],
+        ["xpath=//div[10]/div", "xpath:position"]
+      ],
+      "value": "138.5999755859375,108.04998779296875"
+    }, {
+      "id": "edcd5d3a-53f2-4299-8f41-1616a7aa232f",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=(//div[@id='card']/div/p)[6]", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'content of the note, lorem ipsum abc abc text')]", "xpath:innerText"]
+      ],
+      "value": "110.70001220703125,46.75"
+    }, {
+      "id": "f2836ebf-2512-42b7-937c-61cd82420181",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=(//div[@id='card']/div/p)[6]", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'content of the note, lorem ipsum abc abc text')]", "xpath:innerText"]
+      ],
+      "value": "110.70001220703125,46.75"
+    }, {
+      "id": "4861aad8-73f3-44cb-aed2-c8cbb470ab0e",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.undefined:nth-child(6) > #card .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=(//div[@id='card']/div/p)[6]", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'content of the note, lorem ipsum abc abc text')]", "xpath:innerText"]
+      ],
+      "value": "110.70001220703125,46.75"
+    }, {
+      "id": "478fe706-c452-41a3-9408-17165500b458",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=.undefined:nth-child(5) .MuiCardContent-root",
+      "targets": [
+        ["css=.undefined:nth-child(5) .MuiCardContent-root", "css:finder"],
+        ["xpath=(//div[@id='card']/div)[5]", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": "124.5,66.95001220703125"
+    }, {
+      "id": "9a816e39-3d96-4ed9-92b7-c4ab5489ed84",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=.undefined:nth-child(5) .MuiCardContent-root",
+      "targets": [
+        ["css=.undefined:nth-child(5) .MuiCardContent-root", "css:finder"],
+        ["xpath=(//div[@id='card']/div)[5]", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": "124.5,66.95001220703125"
+    }, {
+      "id": "1480d18c-4cd4-4d92-9b7b-34ee1443d276",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.undefined:nth-child(5) .MuiCardContent-root",
+      "targets": [
+        ["css=.undefined:nth-child(5) .MuiCardContent-root", "css:finder"],
+        ["xpath=(//div[@id='card']/div)[5]", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div", "xpath:position"]
+      ],
+      "value": "124.5,66.95001220703125"
+    }]
+  }, {
+    "id": "325f719d-928c-4cc1-9bf5-86d29d71a3eb",
+    "name": "18 Adding new attachment",
+    "commands": [{
+      "id": "dec8efc0-ef07-465f-9bb5-f56eed24985b",
+      "comment": "",
+      "command": "open",
+      "target": "https://yournote-client.herokuapp.com/notes",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4b8acf4d-bfbd-482e-872a-ef6eb7089b18",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x947",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "61e79c36-3f9a-45c8-8f16-13dec5cd781f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.undefined:nth-child(3) > #card",
+      "targets": [
+        ["css=.undefined:nth-child(3) > #card", "css:finder"],
+        ["xpath=(//div[@id='card'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='note']/div/div[3]/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "909edfb2-e900-412b-b7b0-5da2629a8d47",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=attachments",
+      "targets": [
+        ["id=attachments", "id"],
+        ["css=#attachments", "css:finder"],
+        ["xpath=//button[@id='attachments']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2d2ac69-610a-4697-b009-6f4778bdba56",
+      "comment": "",
+      "command": "click",
+      "target": "id=attachments",
+      "targets": [
+        ["id=attachments", "id"],
+        ["css=#attachments", "css:finder"],
+        ["xpath=//button[@id='attachments']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0af0cfd7-045c-4108-8c2f-066655d2d767",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=attachments",
+      "targets": [
+        ["id=attachments", "id"],
+        ["css=#attachments", "css:finder"],
+        ["xpath=//button[@id='attachments']", "xpath:attributes"],
+        ["xpath=//button[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f95a6c05-a5f3-445c-9897-653b608db5b9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2) > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2) > .MuiButton-label", "css:finder"],
+        ["xpath=//span/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8465dc3d-5932-43a1-8350-39946406ad14",
+    "name": "19 Reading attachment",
+    "commands": [{
+      "id": "475d2545-b654-4edd-a1dd-c924ee8a20cf",
+      "comment": "",
+      "command": "open",
+      "target": "https://yournote-client.herokuapp.com/notes",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2e6fb7fe-ccbb-466e-b07d-b23ac0e56f0f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x947",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b7994588-0554-4612-9653-2777f896af85",
+      "comment": "",
+      "command": "click",
+      "target": "css=.undefined:nth-child(3) > #card .MuiTypography-root:nth-child(2)",
+      "targets": [
+        ["css=.undefined:nth-child(3) > #card .MuiTypography-root:nth-child(2)", "css:finder"],
+        ["xpath=(//div[@id='card']/div/p)[3]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'New content blablabla')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8bdbe052-1d83-4b21-98ba-b58212c4a529",
+      "comment": "",
+      "command": "click",
+      "target": "css=#attachments .MuiSvgIcon-root",
+      "targets": [
+        ["css=#attachments .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "82696fe2-03be-4d69-9ef2-3f546dbef971",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=YourNoteTests.side",
+      "targets": [
+        ["linkText=YourNoteTests.side", "linkText"],
+        ["css=.ant-upload-list-item-name", "css:finder"],
+        ["xpath=//a[contains(text(),'YourNoteTests.side')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'https://yournote-server.herokuapp.com/attachments/5eaf2ade2d52960017287b63/YourNoteTests.side')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'YourNoteTests.side')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win5951",
+      "windowTimeout": 2000
+    }, {
+      "id": "964f6376-3701-4482-80d4-85cf2aec0768",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "79b6d9c3-223f-4700-b4be-ca47c4b5e5ea",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win5951}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d3a4db46-505e-4b17-8655-57c577d6a4fb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "63bb03eb-2247-41d4-abbf-8cf6e33f673e",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "75354967-b196-4e39-9e3a-d5159b1e0d4a",
+    "name": "20 Deleting Note Attachment",
+    "commands": [{
+      "id": "894edf04-e008-490c-82e1-7cc9042e8b31",
+      "comment": "",
+      "command": "open",
+      "target": "https://yournote-client.herokuapp.com/notes",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae1e2ac4-548d-4ae4-b06c-29a8960f835e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x947",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "893a7b1d-ec8a-4f6e-8213-8e1a1d9b1d28",
+      "comment": "",
+      "command": "click",
+      "target": "css=.undefined:nth-child(3) > #card",
+      "targets": [
+        ["css=.undefined:nth-child(3) > #card", "css:finder"],
+        ["xpath=(//div[@id='card'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='note']/div/div[3]/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fcb5ef1-d11d-48b6-8c61-bc322c1b57d0",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#attachments path",
+      "targets": [
+        ["css=#attachments path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb705a92-6429-43e0-a461-d7207ca3b7b9",
+      "comment": "",
+      "command": "click",
+      "target": "css=#attachments path",
+      "targets": [
+        ["css=#attachments path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f28a625-aa64-42f8-a4df-8edfdf224de7",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#attachments path",
+      "targets": [
+        ["css=#attachments path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f23640a-c209-4f43-95b2-d69c6838e0fc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-delete > svg",
+      "targets": [
+        ["css=.anticon-delete > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "47d383ab-160a-44da-85d6-ab73f4ddc49f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(1) > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(1) > .MuiButton-label", "css:finder"],
+        ["xpath=//div[3]/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "ee8bd9a7-af16-4510-8c63-fecaacf40bb3",

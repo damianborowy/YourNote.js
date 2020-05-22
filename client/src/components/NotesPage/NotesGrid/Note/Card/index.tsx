@@ -10,7 +10,12 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import NoteModel from "../../../../../models/Note";
-import { LocalOffer as Tag, AttachFile, ZoomIn } from "@material-ui/icons";
+import {
+    LocalOffer as Tag,
+    AttachFile,
+    ZoomIn,
+    MoreVert
+} from "@material-ui/icons";
 
 interface ICardProps {
     openDialog: () => void;
@@ -44,20 +49,28 @@ const Card = ({ note, openDialog }: ICardProps) => {
             <CardActions className={styles.cardActions}>
                 {note.tags && note.tags.length > 0 && (
                     <div className={styles.action}>
-                        <Tag fontSize="small" /> {note.tags!.length}
+                        <Tag fontSize="small" />
+                        <Typography className={styles.typography}>
+                            {note.tags!.length}
+                        </Typography>
                     </div>
                 )}
                 {note.files && note.files.length > 0 && (
                     <div className={styles.action}>
-                        <AttachFile fontSize="small" /> {note.files!.length}
+                        <AttachFile fontSize="small" />
+                        <Typography className={styles.typography}>
+                            {note.files!.length}
+                        </Typography>
                     </div>
                 )}
-                <IconButton
-                    className={styles.zoomInButton}
-                    onClick={openDialog}
-                >
-                    <ZoomIn fontSize="small" />
-                </IconButton>
+                <div className={styles.rightActions}>
+                    <IconButton onClick={console.log}>
+                        <MoreVert fontSize="small" />
+                    </IconButton>
+                    <IconButton onClick={openDialog}>
+                        <ZoomIn fontSize="small" />
+                    </IconButton>
+                </div>
             </CardActions>
         </MaterialCard>
     );

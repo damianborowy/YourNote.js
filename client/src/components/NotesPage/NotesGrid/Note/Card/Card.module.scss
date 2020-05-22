@@ -17,7 +17,7 @@ div {
     }
 
     .cardActions {
-        padding-left: 20px;
+        padding-left: 12px;
     }
 
     .action {
@@ -26,7 +26,17 @@ div {
         align-items: center;
     }
 
-    .zoomInButton {
+    .rightActions {
         margin-left: auto !important;
+        display: flex;
+
+        & > button {
+            padding: 4px;
+        }
+    }
+
+    .typography {
+        font-size: 12px;
+        margin-left: 2px;
     }
 }

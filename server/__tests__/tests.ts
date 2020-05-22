@@ -26,7 +26,6 @@ beforeAll(async () => await connect());
 beforeEach(async () => await inputDefaultData());
 
 afterEach(async () => await clearDatabase());
-afterEach(() => {});
 
 afterAll(async () => await closeDatabase());
 

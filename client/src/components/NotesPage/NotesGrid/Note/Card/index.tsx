@@ -20,6 +20,7 @@ import {
 interface ICardProps {
     openDialog: () => void;
     note: NoteModel;
+    handleNoteChange: (note: NoteModel) => void;
 }
 const Card = ({ note, openDialog }: ICardProps) => {
     const theme = useTheme();

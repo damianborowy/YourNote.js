@@ -30,7 +30,11 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
 
     return (
         <>
-            <Card openDialog={openDialog} note={note} />
+            <Card
+                openDialog={openDialog}
+                note={note}
+                handleNoteChange={handleNoteChange}
+            />
             <NoteDialog
                 open={open}
                 closeDialog={closeDialog}

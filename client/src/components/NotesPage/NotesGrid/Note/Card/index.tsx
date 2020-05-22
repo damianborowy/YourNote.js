@@ -4,10 +4,13 @@ import {
     Card as MaterialCard,
     CardContent,
     Typography,
-    useTheme
+    useTheme,
+    CardActions,
+    IconButton
 } from "@material-ui/core";
 import clsx from "clsx";
 import NoteModel from "../../../../../models/Note";
+import { LocalOffer as Tag, AttachFile, ZoomIn } from "@material-ui/icons";
 
 interface ICardProps {
     openDialog: () => void;
@@ -25,7 +28,6 @@ const Card = ({ note, openDialog }: ICardProps) => {
                 note.color?.toLowerCase()
             )}
             variant="outlined"
-            onClick={openDialog}
         >
             <CardContent className={styles.cardContent}>
                 <Typography
@@ -39,6 +41,24 @@ const Card = ({ note, openDialog }: ICardProps) => {
                 </Typography>
                 <Typography>{note.content}</Typography>
             </CardContent>
+            <CardActions className={styles.cardActions}>
+                {note.tags && note.tags.length > 0 && (
+                    <div className={styles.action}>
+                        <Tag fontSize="small" /> {note.tags!.length}
+                    </div>
+                )}
+                {note.files && note.files.length > 0 && (
+                    <div className={styles.action}>
+                        <AttachFile fontSize="small" /> {note.files!.length}
+                    </div>
+                )}
+                <IconButton
+                    className={styles.zoomInButton}
+                    onClick={openDialog}
+                >
+                    <ZoomIn fontSize="small" />
+                </IconButton>
+            </CardActions>
         </MaterialCard>
     );
 };

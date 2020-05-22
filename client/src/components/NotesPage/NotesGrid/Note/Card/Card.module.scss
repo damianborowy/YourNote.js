@@ -1,7 +1,6 @@
 div {
     .card {
         cursor: pointer;
-        height: 175px;
         word-break: break-word;
 
         &:hover {
@@ -12,6 +11,22 @@ div {
 
     .cardContent,
     .cardContent:last-child {
+        overflow: hidden;
+        height: 175px;
         padding: 8px;
+    }
+
+    .cardActions {
+        padding-left: 20px;
+    }
+
+    .action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .zoomInButton {
+        margin-left: auto !important;
     }
 }

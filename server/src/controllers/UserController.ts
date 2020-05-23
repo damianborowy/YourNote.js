@@ -133,6 +133,8 @@ const userController = {
     async updateViews(req: Request, res: Response) {
         const { views } = req.body;
 
+        if (!views) return res.status(400).send("Views weren't provided");
+
         const token = jwt.decode(req.token!);
         // @ts-ignore
         const owner = token["email"];

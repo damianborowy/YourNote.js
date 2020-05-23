@@ -1,6 +1,8 @@
 import app from "../src/app";
 import supertest from "supertest";
 import Note from "../src/models/Note";
+import jwt from "jsonwebtoken";
+import User from "../src/models/User";
 
 const {
     connect,
@@ -144,31 +146,49 @@ describe("Testing endpoints", () => {
             });
         });
 
-        describe("Testing email presence validation", () => {
-            it("GET /isValidEmail endpoint with a proper email without authentication token and fail", () => {
-                return request
-                    .get(`/users/isValidEmail/${process.env.TESTING_EMAIL}`)
-                    .expect(401);
+        describe("Test attachments", () => {
+            it("Should fail attaching while authentication token is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request.post("/notes/attach");
+
+                expect(result.status).toBe(401);
+                done();
             });
 
-            it("GET /isValidEmail endpoint with a proper email with authentication token and succeed", () => {
-                return request
-                    .get(`/users/isValidEmail/${process.env.TESTING_EMAIL}`)
+            it("Should fail attaching while note id is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request
+                    .post("/notes/attach")
+                    .set(userHeaders);
+
+                expect(result.status).toBe(400);
+                done();
+            });
+
+            it("Should fail attaching while attachment file is not provided", async (done) => {
+                const note = (await Note.find({}))[0];
+
+                const result = await request
+                    .post("/notes/attach")
                     .set(userHeaders)
-                    .expect(200);
+                    .send({ noteId: note.id });
+
+                expect(result.status).toBe(400);
+                done();
             });
 
-            it("GET /isValidEmail endpoint with an improper email without authentication token and fail", () => {
-                return request
-                    .get("/users/isValidEmail/someRandomEmail")
-                    .expect(401);
-            });
+            it("Should detach the attachment properly", async (done) => {
+                const note = (await Note.find({}))[0];
 
-            it("GET /isValidEmail endpoint with an improper email with authentication token and succeed", () => {
-                return request
-                    .get("/users/isValidEmail/someRandomEmail")
+                const result = await request
+                    .patch("/notes/detach")
                     .set(userHeaders)
-                    .expect(400);
+                    .send({ noteId: note.id, fileName: "req.txt" });
+
+                expect(result.status).toBe(200);
+                done();
             });
         });
     });
@@ -388,49 +408,71 @@ describe("Testing endpoints", () => {
             });
         });
 
-        describe("Test attachments", () => {
-            it("Should fail attaching while authentication token is not provided", async (done) => {
-                const note = (await Note.find({}))[0];
-
-                const result = await request.post("/notes/attach");
-
-                expect(result.status).toBe(401);
-                done();
+        describe("Testing email presence validation", () => {
+            it("GET /isValidEmail endpoint with a proper email without authentication token and fail", () => {
+                return request
+                    .get(`/users/isValidEmail/${process.env.TESTING_EMAIL}`)
+                    .expect(401);
             });
 
-            it("Should fail attaching while note id is not provided", async (done) => {
-                const note = (await Note.find({}))[0];
-
-                const result = await request
-                    .post("/notes/attach")
-                    .set(userHeaders);
-
-                expect(result.status).toBe(400);
-                done();
-            });
-
-            it("Should fail attaching while attachment file is not provided", async (done) => {
-                const note = (await Note.find({}))[0];
-
-                const result = await request
-                    .post("/notes/attach")
+            it("GET /isValidEmail endpoint with a proper email with authentication token and succeed", () => {
+                return request
+                    .get(`/users/isValidEmail/${process.env.TESTING_EMAIL}`)
                     .set(userHeaders)
-                    .send({ noteId: note.id });
-
-                expect(result.status).toBe(400);
-                done();
+                    .expect(200);
             });
 
-            it("Should detach the attachment properly", async (done) => {
-                const note = (await Note.find({}))[0];
+            it("GET /isValidEmail endpoint with an improper email without authentication token and fail", () => {
+                return request
+                    .get("/users/isValidEmail/someRandomEmail")
+                    .expect(401);
+            });
+
+            it("GET /isValidEmail endpoint with an improper email with authentication token and succeed", () => {
+                return request
+                    .get("/users/isValidEmail/someRandomEmail")
+                    .set(userHeaders)
+                    .expect(400);
+            });
+        });
+
+        describe("Testing views", () => {
+            it("GET /views endpoint with proper token and succeed", () => {
+                return request.get("/users/views").set(userHeaders).expect(200);
+            });
+
+            it("GET /views endpoint without token and fail", () => {
+                return request.get("/users/views").expect(401);
+            });
+
+            it("POST /views endpoint with token and succeed", async (done) => {
+                const token = jwt.decode(process.env.TESTING_TOKEN!);
+                // @ts-ignore
+                const owner = token["email"];
+
+                const user = await User.findOne({ email: owner });
 
                 const result = await request
-                    .patch("/notes/detach")
+                    .post("/users/views")
                     .set(userHeaders)
-                    .send({ noteId: note.id, fileName: "req.txt" });
+                    .send({ views: user!.views });
+
+                console.log(user);
 
                 expect(result.status).toBe(200);
                 done();
+            });
+
+            it("POST /views endpoint without a token and fail", () => {
+                request.post("/users/views").send().expect(401);
+            });
+
+            it("POST /views endpoint with token but without data and fail", () => {
+                request
+                    .post("/users/views")
+                    .set(userHeaders)
+                    .send()
+                    .expect(400);
             });
         });
     });

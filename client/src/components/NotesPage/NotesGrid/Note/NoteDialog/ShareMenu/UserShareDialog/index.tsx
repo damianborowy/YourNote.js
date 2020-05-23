@@ -84,19 +84,20 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                     </Alert>
                 )}
 
-                {props.note.sharedTo!.map((email) => {
-                    return (
-                        <div className={styles.flexRow} key={email}>
-                            <Typography>{email}</Typography>
-                            <IconButton
-                                className={styles.iconButton}
-                                onClick={() => handleRemoveUser(email)}
-                            >
-                                <Delete />
-                            </IconButton>
-                        </div>
-                    );
-                })}
+                {props.note.sharedTo &&
+                    props.note.sharedTo.map((email) => {
+                        return (
+                            <div className={styles.flexRow} key={email}>
+                                <Typography>{email}</Typography>
+                                <IconButton
+                                    className={styles.iconButton}
+                                    onClick={() => handleRemoveUser(email)}
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </div>
+                        );
+                    })}
 
                 <div className={styles.flexRow}>
                     <TextField

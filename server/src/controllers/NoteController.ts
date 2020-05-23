@@ -6,6 +6,7 @@ import _ from "lodash";
 import { UploadedFile } from "express-fileupload";
 import mkdirp from "mkdirp";
 import fs from "fs-extra";
+import User from "../models/User";
 
 const noteService = new NoteService();
 
@@ -22,8 +23,16 @@ const noteController = {
             color: req.body.color
         });
 
+        const user = await User.findOne({ email: owner });
+
+        if (!user) return res.status(400).send("Invalid user");
+
         try {
             const note = await noteService.create(newNote);
+
+            user.views[0].notes.push(note.id);
+            await user.updateOne(user);
+
             res.status(200).send(note);
         } catch (e) {
             res.status(400).send(e);
@@ -54,11 +63,28 @@ const noteController = {
 
     async delete(req: Request, res: Response) {
         const noteId = req.params.noteId;
+
+        const token = jwt.decode(req.token!);
+        // @ts-ignore
+        const owner = token["email"];
+
+        const user = await User.findOne({ email: owner });
+
+        if (!user) return res.status(400).send("Invalid user");
+
         const result = await noteService.delete(noteId);
 
-        result
-            ? res.status(200).send("Successfully deleted note.")
-            : res.status(400).send("Bad request");
+        if (result) {
+            const deletedNoteIndex = user.views[0].notes.findIndex(
+                (id) => id === noteId
+            );
+            user.views[0].notes.splice(deletedNoteIndex, 1);
+
+            await user.updateOne(user);
+            res.status(200).send("Successfully deleted note.");
+        } else {
+            res.status(400).send("Bad request");
+        }
     },
 
     async guestRead(req: Request, res: Response) {

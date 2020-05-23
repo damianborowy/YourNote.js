@@ -21,7 +21,7 @@ interface INotesGridProps {
 
 const NotesGrid = (props: INotesGridProps) => {
     const theme = useTheme(),
-        [boxesPerRow, setBoxesPerRow] = useState(0),
+        [boxesPerRow, setBoxesPerRow] = useState(1),
         { width } = useWindowDimensions();
 
     useEffect(() => {

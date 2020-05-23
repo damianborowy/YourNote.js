@@ -1,9 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IView {
+    name: string;
+    notes: string[];
+}
+
 export interface IUser extends Document {
     email: string;
     password: string;
     role: string;
+    views: IView[];
 }
 
 const UserSchema = new Schema({
@@ -14,6 +20,15 @@ const UserSchema = new Schema({
         enum: ["User", "Admin"],
         required: false,
         default: "User"
+    },
+    views: {
+        type: [
+            {
+                name: String,
+                notes: [String]
+            }
+        ],
+        default: [{ name: "All notes", notes: [] }]
     }
 });
 

@@ -32,6 +32,8 @@ interface IAttachmentsDialogProps {
 }
 
 const _filesToList = (note: NoteModel): UploadFile<any>[] => {
+    if (!note.files) return [];
+
     return note.files.map((file, i) => {
         return {
             uid: i.toString(),

@@ -10,6 +10,8 @@ router.post("/login", userController.login);
 
 router.use(auth);
 
+router.get("/views", userController.getViews);
+router.post("/views", userController.updateViews);
 router.get("/isValidEmail/:email", userController.checkIfEmailExists);
 
 router.use(admin);

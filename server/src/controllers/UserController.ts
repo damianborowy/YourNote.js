@@ -116,6 +116,35 @@ const userController = {
         deletionInfo.deletedCount === 1
             ? res.status(200).send("Successfully deleted user.")
             : res.status(400).send("Bad request.");
+    },
+
+    async getViews(req: Request, res: Response) {
+        const token = jwt.decode(req.token!);
+        // @ts-ignore
+        const owner = token["email"];
+
+        const user = await User.findOne({ email: owner });
+
+        if (!user) return res.status(400).send("Invalid user");
+
+        res.status(200).send(user.views);
+    },
+
+    async updateViews(req: Request, res: Response) {
+        const { views } = req.body;
+
+        const token = jwt.decode(req.token!);
+        // @ts-ignore
+        const owner = token["email"];
+
+        const user = await User.findOne({ email: owner });
+
+        if (!user) return res.status(400).send("Invalid user");
+
+        user.views = views;
+        await user.updateOne(user);
+
+        return res.status(200).send(views);
     }
 };
 

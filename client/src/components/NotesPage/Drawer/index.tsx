@@ -48,7 +48,9 @@ const defaultPdf = (
 );
 
 const Drawer = (props: DrawerProps) => {
-    const { darkMode, setDarkMode } = useStore();
+    const { darkMode, setDarkMode } = useStore(),
+        [dialogOpen, setDialogOpen] = useState(false),
+        [clickedViewName, setClickedViewName] = useState("");
 
     const toggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -56,6 +58,16 @@ const Drawer = (props: DrawerProps) => {
         const role = getRoleFromToken();
 
         return role === "Admin";
+    };
+
+    const handleEditClicked = (name: string) => {
+        setClickedViewName(name);
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setClickedViewName("");
+        setDialogOpen(false);
     };
 
     const handleViewChange = (name: string) => {
@@ -145,7 +157,9 @@ const Drawer = (props: DrawerProps) => {
                                 {view.name}
                             </Button>
                             {view.name !== "All notes" && (
-                                <IconButton>
+                                <IconButton
+                                    onClick={() => handleEditClicked(view.name)}
+                                >
                                     <Edit fontSize="small" />
                                 </IconButton>
                             )}
@@ -157,10 +171,13 @@ const Drawer = (props: DrawerProps) => {
                     </Button>
                 </div>
                 <ViewSettings
+                    open={dialogOpen}
+                    clickedViewName={clickedViewName}
                     views={props.views}
                     setViews={props.setViews}
                     selectedView={props.selectedView}
                     setSelectedView={props.setSelectedView}
+                    handleClose={handleDialogClose}
                 />
             </div>
             <div className={styles.drawerBottom}>

@@ -66,8 +66,8 @@ const Drawer = (props: DrawerProps) => {
     };
 
     const handleDialogClose = () => {
-        setClickedViewName("");
         setDialogOpen(false);
+        setClickedViewName("");
     };
 
     const handleViewChange = (name: string) => {
@@ -138,14 +138,14 @@ const Drawer = (props: DrawerProps) => {
             onOpen={props.onDrawerOpen}
         >
             <div>
+                <Typography variant="h6">Views</Typography>
                 {props.views &&
                     props.selectedView &&
                     props.views.map((view) => (
-                        <div className={styles.viewContainer}>
+                        <div className={styles.viewContainer} key={view.name}>
                             <Button
                                 className={styles.viewButton}
                                 onClick={() => handleViewChange(view.name)}
-                                key={view.name}
                                 color={
                                     props.selectedView &&
                                     props.selectedView.name === view.name

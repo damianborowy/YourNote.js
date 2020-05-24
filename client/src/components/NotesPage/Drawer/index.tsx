@@ -156,7 +156,12 @@ const Drawer = (props: DrawerProps) => {
                         Add new view
                     </Button>
                 </div>
-                <ViewSettings />
+                <ViewSettings
+                    views={props.views}
+                    setViews={props.setViews}
+                    selectedView={props.selectedView}
+                    setSelectedView={props.setSelectedView}
+                />
             </div>
             <div className={styles.drawerBottom}>
                 <FormControlLabel

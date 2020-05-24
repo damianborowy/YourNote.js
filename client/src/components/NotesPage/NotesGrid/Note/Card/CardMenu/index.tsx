@@ -98,10 +98,9 @@ const CardMenu = (props: ICardMenuProps) => {
                 onClose={handleMenuClose}
             >
                 {props.views &&
-                    props.views.map((view) => (
+                    props.views.slice(1).map((view) => (
                         <MenuItem
                             key={view.name}
-                            disabled={view.name === "All notes"}
                             onClick={() => handleAddToView(view.name)}
                         >
                             {view.name}

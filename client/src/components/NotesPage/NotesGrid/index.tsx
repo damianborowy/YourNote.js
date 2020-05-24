@@ -63,9 +63,13 @@ const NotesGrid = (props: INotesGridProps) => {
 
     const filterNotes = (notes: NoteModel[]) => {
         if (props.name === "My notes") {
-            return notes.filter((note) => note.owner === getEmailFromToken());
+            return notes
+                .filter((note) => note !== undefined)
+                .filter((note) => note.owner === getEmailFromToken());
         } else {
-            return notes.filter((note) => note.owner !== getEmailFromToken());
+            return notes
+                .filter((note) => note !== undefined)
+                .filter((note) => note.owner !== getEmailFromToken());
         }
     };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ViewSettings.module.scss";
 import ViewModel from "../../../../models/View";
 import {
@@ -20,6 +20,8 @@ interface IViewSettingsProps {
 }
 
 const ViewSettings = (props: IViewSettingsProps) => {
+    const [newName, setNewName] = useState("");
+
     const handleViewDelete = () => {};
 
     const handleViewUpdate = () => {};
@@ -27,7 +29,7 @@ const ViewSettings = (props: IViewSettingsProps) => {
     return (
         <Dialog open={props.open} onClose={props.handleClose} fullWidth>
             <DialogTitle>Editing view {props.clickedViewName}</DialogTitle>
-            <DialogContent></DialogContent>
+            <DialogContent className={styles.dialogContent}></DialogContent>
             <DialogActions>
                 <Button color="secondary" onClick={handleViewDelete}>
                     Delete

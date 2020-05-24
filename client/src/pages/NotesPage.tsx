@@ -43,15 +43,11 @@ const NotesPage = () => {
             if (views && !_.isEqual(views, prevViews.current)) {
                 if (!selectedView || !notes) return;
 
-                const newFilteredNotes = selectedView.notes.map((noteId) => {
-                    const note = notes.find((note) => note._id === noteId);
+                const newFilteredNotes = selectedView.notes.map((noteId) =>
+                    notes.find((note) => note._id === noteId)
+                );
 
-                    if (!note) throw new Error("Couldn't find note");
-
-                    return note;
-                });
-
-                setFilteredNotes(newFilteredNotes);
+                setFilteredNotes(newFilteredNotes as NoteModel[]);
 
                 const result = await viewApi.updateViews(views);
 
@@ -236,11 +232,12 @@ const NotesPage = () => {
     const onFabClick = async () => {
         const result = await noteApi.create();
 
-        if (!result) return;
+        if (!result || !views) return;
 
         const newNote = result.payload;
         newNote.wasJustCreated = true;
 
+        setSelectedView(views[0]);
         setNotes([...notes, newNote]);
     };
 

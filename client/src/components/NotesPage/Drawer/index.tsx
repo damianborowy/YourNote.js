@@ -138,7 +138,6 @@ const Drawer = (props: DrawerProps) => {
             onOpen={props.onDrawerOpen}
         >
             <div>
-                <Typography>Views</Typography>
                 {props.views &&
                     props.selectedView &&
                     props.views.map((view) => (

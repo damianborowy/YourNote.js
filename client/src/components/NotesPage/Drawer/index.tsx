@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
     SwipeableDrawer,
     FormControlLabel,
     Switch,
     Divider,
     Typography,
-    Button
+    Button,
+    IconButton
 } from "@material-ui/core";
-import { GetApp as Download } from "@material-ui/icons";
+import { GetApp as Download, Edit } from "@material-ui/icons";
 import styles from "./Drawer.module.scss";
 import { useStore } from "../../DarkModeProvider";
 import { getRoleFromToken } from "../../../utils/TokenHandler";
@@ -20,6 +21,8 @@ import {
     PDFDownloadLink
 } from "@react-pdf/renderer";
 import NoteModel from "../../../models/Note";
+import ViewModel from "../../../models/View";
+import ViewSettings from "./ViewSettings";
 
 interface DrawerProps {
     notes: NoteModel[] | null;
@@ -28,7 +31,21 @@ interface DrawerProps {
     onDrawerOpen: () => void;
     handleLogOutButtonClick: () => void;
     getEmailFromToken: () => void;
+    views: ViewModel[] | null;
+    setViews: (views: ViewModel[]) => void;
+    selectedView: ViewModel | null;
+    setSelectedView: (view: ViewModel) => void;
 }
+
+const defaultPdf = (
+    <Document>
+        <Page>
+            <View>
+                <Text>Couldn't find any notes to export.</Text>
+            </View>
+        </Page>
+    </Document>
+);
 
 const Drawer = (props: DrawerProps) => {
     const { darkMode, setDarkMode } = useStore();
@@ -41,19 +58,30 @@ const Drawer = (props: DrawerProps) => {
         return role === "Admin";
     };
 
+    const handleViewChange = (name: string) => {
+        if (!props.views) return;
+
+        const view = props.views.find((view) => view.name === name);
+
+        if (!view) return;
+
+        props.setSelectedView(view);
+    };
+
+    const addNewView = () => {
+        if (!props.views) return;
+
+        const newViews = [...props.views];
+        const newView = new ViewModel(`View ${newViews.length}`, []);
+
+        newViews.push(newView);
+        props.setViews(newViews);
+    };
+
     const _generateDoc = () => {
         const { notes } = props;
 
-        if (!notes)
-            return (
-                <Document>
-                    <Page>
-                        <View>
-                            <Text>Couldn't find any notes to export.</Text>
-                        </View>
-                    </Page>
-                </Document>
-            );
+        if (!notes) return defaultPdf;
 
         return (
             <Document title="My notes">
@@ -97,6 +125,39 @@ const Drawer = (props: DrawerProps) => {
             onClose={props.onDrawerClose}
             onOpen={props.onDrawerOpen}
         >
+            <div>
+                <Typography>Views</Typography>
+                {props.views &&
+                    props.selectedView &&
+                    props.views.map((view) => (
+                        <div className={styles.viewContainer}>
+                            <Button
+                                className={styles.viewButton}
+                                onClick={() => handleViewChange(view.name)}
+                                key={view.name}
+                                color={
+                                    props.selectedView &&
+                                    props.selectedView.name === view.name
+                                        ? "primary"
+                                        : "default"
+                                }
+                            >
+                                {view.name}
+                            </Button>
+                            {view.name !== "All notes" && (
+                                <IconButton>
+                                    <Edit fontSize="small" />
+                                </IconButton>
+                            )}
+                        </div>
+                    ))}
+                <div className={styles.viewContainer}>
+                    <Button className={styles.viewButton} onClick={addNewView}>
+                        Add new view
+                    </Button>
+                </div>
+                <ViewSettings />
+            </div>
             <div className={styles.drawerBottom}>
                 <FormControlLabel
                     classes={{
@@ -112,7 +173,7 @@ const Drawer = (props: DrawerProps) => {
                     label="Toggle dark mode"
                     labelPlacement="start"
                 />
-                <PDFDownloadLink document={_generateDoc()} fileName="notes.pdf">
+                <PDFDownloadLink document={defaultPdf} fileName="notes.pdf">
                     {({ loading }) =>
                         loading ? (
                             <Button

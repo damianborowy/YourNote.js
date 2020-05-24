@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Card.module.scss";
 import {
     Card as MaterialCard,
@@ -16,14 +16,28 @@ import {
     ZoomIn,
     MoreVert
 } from "@material-ui/icons";
+import ViewModel from "../../../../../models/View";
+import CardMenu from "./CardMenu";
 
 interface ICardProps {
     openDialog: () => void;
     note: NoteModel;
     handleNoteChange: (note: NoteModel) => void;
+    views: ViewModel[] | null;
+    setViews: (views: ViewModel[]) => void;
+    selectedView: ViewModel | null;
+    setSelectedView: (selectedView: ViewModel) => void;
 }
-const Card = ({ note, openDialog }: ICardProps) => {
-    const theme = useTheme();
+const Card = (props: ICardProps) => {
+    const theme = useTheme(),
+        [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const handleMenuClose = () => setAnchorEl(null);
+
+    const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+        setAnchorEl(event.currentTarget);
+
+    const { note } = props;
 
     return (
         <MaterialCard
@@ -65,14 +79,23 @@ const Card = ({ note, openDialog }: ICardProps) => {
                     </div>
                 )}
                 <div className={styles.rightActions}>
-                    <IconButton onClick={console.log}>
+                    <IconButton onClick={handleMenuClick}>
                         <MoreVert fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={openDialog}>
+                    <IconButton onClick={props.openDialog}>
                         <ZoomIn fontSize="small" />
                     </IconButton>
                 </div>
             </CardActions>
+            <CardMenu
+                note={props.note}
+                views={props.views}
+                setViews={props.setViews}
+                selectedView={props.selectedView}
+                setSelectedView={props.setSelectedView}
+                anchorEl={anchorEl}
+                handleClose={handleMenuClose}
+            />
         </MaterialCard>
     );
 };

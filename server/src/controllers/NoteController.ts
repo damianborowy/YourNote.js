@@ -75,10 +75,12 @@ const noteController = {
         const result = await noteService.delete(noteId);
 
         if (result) {
-            const deletedNoteIndex = user.views[0].notes.findIndex(
-                (id) => id === noteId
-            );
-            user.views[0].notes.splice(deletedNoteIndex, 1);
+            for (let view of user.views) {
+                const deletedNoteIndex = view.notes.findIndex(
+                    (id) => id === noteId
+                );
+                view.notes.splice(deletedNoteIndex, 1);
+            }
 
             await user.updateOne(user);
             res.status(200).send("Successfully deleted note.");

@@ -4,14 +4,19 @@ import noteApi from "../../../../apis/NoteAPI";
 import Card from "./Card";
 import NoteDialog from "./NoteDialog";
 import "./Note.scss";
+import ViewModel from "../../../../models/View";
 
 interface INoteProps {
     model: NoteModel;
     deleteNoteFromList: (note: NoteModel) => void;
+    views: ViewModel[] | null;
+    setViews: (views: ViewModel[]) => void;
+    selectedView: ViewModel | null;
+    setSelectedView: (selectedView: ViewModel) => void;
 }
 
-const Note = ({ model, deleteNoteFromList }: INoteProps) => {
-    const [note, setNote] = React.useState<NoteModel>(model),
+const Note = (props: INoteProps) => {
+    const [note, setNote] = React.useState<NoteModel>(props.model),
         [open, setOpen] = React.useState(note.wasJustCreated || false);
 
     const openDialog = () => setOpen(true);
@@ -34,12 +39,16 @@ const Note = ({ model, deleteNoteFromList }: INoteProps) => {
                 openDialog={openDialog}
                 note={note}
                 handleNoteChange={handleNoteChange}
+                views={props.views}
+                setViews={props.setViews}
+                selectedView={props.selectedView}
+                setSelectedView={props.setSelectedView}
             />
             <NoteDialog
                 open={open}
                 closeDialog={closeDialog}
                 note={note}
-                deleteNoteFromList={deleteNoteFromList}
+                deleteNoteFromList={props.deleteNoteFromList}
                 handleNoteChange={handleNoteChange}
             />
         </>

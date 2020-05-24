@@ -11,12 +11,17 @@ import {
 } from "react-grid-dnd";
 import { getEmailFromToken } from "../../../utils/TokenHandler";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import ViewModel from "../../../models/View";
 
 interface INotesGridProps {
     notes: NoteModel[];
     deleteNoteFromList: (note: NoteModel) => void;
     name: string;
     dndSetter: (notes: NoteModel[]) => void;
+    views: ViewModel[] | null;
+    setViews: (views: ViewModel[]) => void;
+    selectedView: ViewModel | null;
+    setSelectedView: (selectedView: ViewModel) => void;
 }
 
 const NotesGrid = (props: INotesGridProps) => {
@@ -40,9 +45,20 @@ const NotesGrid = (props: INotesGridProps) => {
         targetIndex: number,
         targetId?: string
     ) => {
-        const notesCopy = [...props.notes];
-        const nextState = swap(notesCopy, sourceIndex, targetIndex);
-        props.dndSetter(nextState);
+        if (!props.views || !props.selectedView) return;
+
+        const viewCopy = { ...props.selectedView };
+        const viewsCopy = [...props.views];
+
+        const nextState = swap(viewCopy.notes, sourceIndex, targetIndex);
+        const viewIndex = props.views.findIndex(
+            (view) => view.name === props.selectedView!.name
+        );
+        viewCopy.notes = nextState;
+        viewsCopy[viewIndex].notes = nextState;
+
+        props.setSelectedView(viewCopy);
+        props.setViews(viewsCopy);
     };
 
     const filterNotes = (notes: NoteModel[]) => {
@@ -87,6 +103,12 @@ const NotesGrid = (props: INotesGridProps) => {
                                             model={note}
                                             deleteNoteFromList={
                                                 props.deleteNoteFromList
+                                            }
+                                            views={props.views}
+                                            setViews={props.setViews}
+                                            selectedView={props.selectedView}
+                                            setSelectedView={
+                                                props.setSelectedView
                                             }
                                         />
                                     </GridItem>

@@ -453,7 +453,7 @@ describe("Testing endpoints", () => {
                 const user = await User.findOne({ email: owner });
 
                 const result = await request
-                    .post("/users/views")
+                    .put("/users/views")
                     .set(userHeaders)
                     .send({ views: user!.views });
 
@@ -464,12 +464,12 @@ describe("Testing endpoints", () => {
             });
 
             it("POST /views endpoint without a token and fail", () => {
-                request.post("/users/views").send().expect(401);
+                request.put("/users/views").send().expect(401);
             });
 
             it("POST /views endpoint with token but without data and fail", () => {
                 request
-                    .post("/users/views")
+                    .put("/users/views")
                     .set(userHeaders)
                     .send()
                     .expect(400);

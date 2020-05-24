@@ -7,12 +7,15 @@ import { Add } from "@material-ui/icons/";
 import NoteModel from "../models/Note";
 import Container from "@material-ui/core/Container";
 import noteApi from "../apis/NoteAPI";
+import viewApi from "../apis/ViewAPI";
 import { withThemeProvider } from "../components/DarkModeProvider";
 import NotesGrid from "../components/NotesPage/NotesGrid";
 import Drawer from "../components/NotesPage/Drawer";
 import { getEmailFromToken } from "../utils/TokenHandler";
 import AppBar from "../components/NotesPage/AppBar";
 import FilterSettings from "../models/FilterSettings";
+import View from "../models/View";
+import _ from "lodash";
 
 const NotesPage = () => {
     const theme = useTheme(),
@@ -20,39 +23,81 @@ const NotesPage = () => {
         [notes, setNotes] = useState<NoteModel[] | null>(null),
         [filteredNotes, setFilteredNotes] = useState<NoteModel[] | null>(null),
         [drawerOpen, setDrawerOpen] = useState(false),
-        prevNotesLength = useRef(-1);
+        [views, setViews] = useState<View[] | null>(null),
+        [selectedView, setSelectedView] = useState<View | null>(null),
+        prevNotesLength = useRef(-1),
+        prevViews = useRef<View[] | null>(null);
 
     useEffect(() => {
-        const fetchNotes = async () => {
-            const result = await noteApi.read();
-            setNotes(result.payload);
-            setFilteredNotes(result.payload);
-        };
+        (async () => {
+            const notes = await noteApi.read();
+            setNotes(notes.payload);
 
-        fetchNotes();
+            const views = await viewApi.getViews();
+            setViews(views.payload);
+        })();
     }, []);
+
+    useEffect(() => {
+        (async () => {
+            if (views && !_.isEqual(views, prevViews.current)) {
+                if (!selectedView || !notes) return;
+
+                const newFilteredNotes = selectedView.notes.map((noteId) => {
+                    const note = notes.find((note) => note._id === noteId);
+
+                    if (!note) throw new Error("Couldn't find note");
+
+                    return note;
+                });
+
+                setFilteredNotes(newFilteredNotes);
+
+                const result = await viewApi.updateViews(views);
+
+                prevViews.current = views;
+                setViews(result.payload);
+            }
+        })();
+    }, [views, selectedView, notes]);
+
+    useEffect(() => {
+        if (!selectedView && views) setSelectedView(views[0]);
+    }, [views, selectedView]);
+
+    useEffect(() => {
+        if (!selectedView || !notes) return;
+
+        const newFilteredNotes = selectedView.notes.map((noteId) =>
+            notes.find((note) => note._id === noteId)
+        );
+
+        setFilteredNotes(newFilteredNotes as NoteModel[]);
+    }, [selectedView, notes]);
 
     useEffect(() => {
         if (!notes || !filteredNotes) return;
 
         if (notes.length !== prevNotesLength.current) {
-            const newFilteredNotes = [...filteredNotes];
+            if (prevViews.current !== null) {
+                const newFilteredNotes = [...filteredNotes];
 
-            const newNotes = notes.filter(
-                (note) => !filteredNotes.includes(note)
-            );
-            const deletedNotes = filteredNotes.filter(
-                (note) => !notes.includes(note)
-            );
+                const newNotes = notes.filter(
+                    (note) => !filteredNotes.includes(note)
+                );
+                const deletedNotes = filteredNotes.filter(
+                    (note) => !notes.includes(note)
+                );
 
-            for (let note of newNotes) newFilteredNotes.push(note);
+                for (let note of newNotes) newFilteredNotes.push(note);
 
-            for (let note of deletedNotes) {
-                const deletedNoteIndex = filteredNotes.indexOf(note);
-                newFilteredNotes.splice(deletedNoteIndex, 1);
+                for (let note of deletedNotes) {
+                    const deletedNoteIndex = filteredNotes.indexOf(note);
+                    newFilteredNotes.splice(deletedNoteIndex, 1);
+                }
+
+                setFilteredNotes(newFilteredNotes);
             }
-
-            setFilteredNotes(newFilteredNotes);
 
             prevNotesLength.current = notes.length;
         }
@@ -209,6 +254,10 @@ const NotesPage = () => {
                 onDrawerOpen={onDrawerOpen}
                 handleLogOutButtonClick={handleLogOutButtonClick}
                 getEmailFromToken={getEmailFromToken}
+                views={views}
+                setViews={setViews}
+                selectedView={selectedView}
+                setSelectedView={setSelectedView}
             />
             <div
                 id="div2"
@@ -217,19 +266,27 @@ const NotesPage = () => {
             >
                 <Container id="container">
                     {renderLogOut()}
-                    {filteredNotes ? (
+                    {views && filteredNotes ? (
                         <>
                             <NotesGrid
                                 notes={filteredNotes}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="My notes"
                                 dndSetter={setFilteredNotes}
+                                views={views}
+                                setViews={setViews}
+                                selectedView={selectedView}
+                                setSelectedView={setSelectedView}
                             />
                             <NotesGrid
                                 notes={filteredNotes}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="Notes shared to me"
                                 dndSetter={setFilteredNotes}
+                                views={views}
+                                setViews={setViews}
+                                selectedView={selectedView}
+                                setSelectedView={setSelectedView}
                             />
                         </>
                     ) : (

@@ -44,7 +44,7 @@ const PaletteMenu = (props: IPaletteMenuProps) => {
                 open={Boolean(props.anchorEl)}
                 onClose={props.handleClose}
             >
-                {colorTab.map(color => {
+                {colorTab.map((color) => {
                     return (
                         <MenuItem
                             onClick={() => handlePickColor(color)}

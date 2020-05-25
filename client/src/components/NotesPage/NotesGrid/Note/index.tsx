@@ -21,16 +21,17 @@ const Note = (props: INoteProps) => {
 
     const openDialog = () => setOpen(true);
 
-    const closeDialog = () => setOpen(false);
+    const closeDialog = () => {
+        if (note.wasJustCreated) note.wasJustCreated = false;
+        setOpen(false);
+    };
 
     const handleNoteChange = (note: NoteModel) => setNote(note);
 
     useEffect(() => {
-        const updateNoteHelper = async () => {
+        (async () => {
             await noteApi.update(note);
-        };
-
-        updateNoteHelper();
+        })();
     }, [note]);
 
     return (

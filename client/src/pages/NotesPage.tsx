@@ -212,8 +212,20 @@ const NotesPage = () => {
         if (!notes) return;
 
         const newNotes = notes.filter((note) => note._id !== oldNote._id);
+        const newViews = [...views];
+
+        newViews.forEach((view) => {
+            if (view.notes.includes(oldNote._id)) {
+                const targetNoteIndex = view.notes.findIndex(
+                    (noteId) => noteId === oldNote._id
+                );
+                view.notes.splice(targetNoteIndex, 1);
+            }
+        });
 
         setNotes(newNotes);
+        setViews(newViews);
+        setSelectedView(newViews[0]);
     };
 
     const handleLogOutButtonClick = () => {
@@ -232,12 +244,18 @@ const NotesPage = () => {
     const onFabClick = async () => {
         const result = await noteApi.create();
 
-        if (!result || !views) return;
-
-        const newNote = result.payload;
-        newNote.wasJustCreated = true;
+        if (!result.success || !views) return;
 
         setSelectedView(views[0]);
+
+        const newNote = result.payload as NoteModel;
+        newNote.wasJustCreated = true;
+
+        const newViews = [...views];
+
+        newViews[0].notes.push(newNote._id);
+
+        setViews(newViews);
         setNotes([...notes, newNote]);
     };
 

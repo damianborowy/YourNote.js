@@ -21,7 +21,6 @@ interface IViewSettingsProps {
 }
 
 const ViewSettings = (props: IViewSettingsProps) => {
-    console.log("");
     const [newName, setNewName] = useState("");
 
     useEffect(() => {

@@ -88,10 +88,10 @@ const NotesGrid = (props: INotesGridProps) => {
                         <GridDropZone
                             id="items"
                             boxesPerRow={boxesPerRow}
-                            rowHeight={243}
+                            rowHeight={228}
                             style={{
                                 height:
-                                    243 *
+                                    228 *
                                     Math.ceil(props.notes.length / boxesPerRow)
                             }}
                         >

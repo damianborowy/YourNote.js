@@ -6,8 +6,12 @@ import NoteDialog from "./NoteDialog";
 import "./Note.scss";
 import ViewModel from "../../../../models/View";
 
+const WAIT_INTERVAL = 1000;
+
 interface INoteProps {
     model: NoteModel;
+    originalNotes: NoteModel[];
+    setOriginalNotes: (note: NoteModel[]) => void;
     deleteNoteFromList: (note: NoteModel) => void;
     views: ViewModel[] | null;
     setViews: (views: ViewModel[]) => void;
@@ -23,10 +27,20 @@ const Note = (props: INoteProps) => {
 
     const closeDialog = () => {
         if (note.wasJustCreated) note.wasJustCreated = false;
+
         setOpen(false);
+
+        const originalNoteIndex = props.originalNotes.findIndex(
+            (originalNote) => originalNote._id === note._id
+        );
+
+        const originalNotesCopy = [...props.originalNotes];
+        originalNotesCopy[originalNoteIndex] = note;
+
+        props.setOriginalNotes(originalNotesCopy);
     };
 
-    const handleNoteChange = (note: NoteModel) => setNote(note);
+    const handleNoteChange = (changedNote: NoteModel) => setNote(changedNote);
 
     useEffect(() => {
         (async () => {

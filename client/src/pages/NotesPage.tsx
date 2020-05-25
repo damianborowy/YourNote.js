@@ -283,10 +283,12 @@ const NotesPage = () => {
             >
                 <Container id="container">
                     {renderLogOut()}
-                    {views && filteredNotes ? (
+                    {views && filteredNotes && notes ? (
                         <>
                             <NotesGrid
                                 notes={filteredNotes}
+                                originalNotes={notes}
+                                setOriginalNotes={setNotes}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="My notes"
                                 dndSetter={setFilteredNotes}
@@ -297,6 +299,8 @@ const NotesPage = () => {
                             />
                             <NotesGrid
                                 notes={filteredNotes}
+                                originalNotes={notes}
+                                setOriginalNotes={setNotes}
                                 deleteNoteFromList={deleteNoteFromList}
                                 name="Notes shared to me"
                                 dndSetter={setFilteredNotes}

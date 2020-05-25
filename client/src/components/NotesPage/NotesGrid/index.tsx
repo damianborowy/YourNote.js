@@ -15,6 +15,8 @@ import ViewModel from "../../../models/View";
 
 interface INotesGridProps {
     notes: NoteModel[];
+    originalNotes: NoteModel[];
+    setOriginalNotes: (notes: NoteModel[]) => void;
     deleteNoteFromList: (note: NoteModel) => void;
     name: string;
     dndSetter: (notes: NoteModel[]) => void;
@@ -105,6 +107,10 @@ const NotesGrid = (props: INotesGridProps) => {
                                     >
                                         <Note
                                             model={note}
+                                            originalNotes={props.originalNotes}
+                                            setOriginalNotes={
+                                                props.setOriginalNotes
+                                            }
                                             deleteNoteFromList={
                                                 props.deleteNoteFromList
                                             }

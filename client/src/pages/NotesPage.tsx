@@ -216,9 +216,7 @@ const NotesPage = () => {
 
         newViews.forEach((view) => {
             if (view.notes.includes(oldNote._id)) {
-                const targetNoteIndex = view.notes.findIndex(
-                    (noteId) => noteId === oldNote._id
-                );
+                const targetNoteIndex = view.notes.indexOf(oldNote._id);
                 view.notes.splice(targetNoteIndex, 1);
             }
         });

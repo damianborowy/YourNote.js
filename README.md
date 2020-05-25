@@ -118,13 +118,17 @@ Dodano możliwość przesuwania notatek metodą drag 'n drop
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/drag%20third.png)
 
 Zaktualizowany został widok notatki, uwzględnia on teraz ilość załączników i tagów
+
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/new%20note.png)
 
 Zaimplementowana została funkcjonalność pozwalająca na zmianę kolejności notatek i kategoryzowanie ich we własnych widokach
+
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/views.png)
 
 Notatkę możemy dodać do innego widoku lub ukryć ją w danym widoku przez nowe menu
+
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/note%20view%20menu.png)
 
 Możliwa jest również zmiana nazwy widoku lub usunięcie go
+
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/view%20settings.png)

@@ -223,9 +223,13 @@ const NotesPage = () => {
             }
         });
 
+        const currentViewIndex = newViews.findIndex(
+            (view) => view.name === selectedView?.name
+        );
+
         setNotes(newNotes);
         setViews(newViews);
-        setSelectedView(newViews[0]);
+        setSelectedView(newViews[currentViewIndex]);
     };
 
     const handleLogOutButtonClick = () => {

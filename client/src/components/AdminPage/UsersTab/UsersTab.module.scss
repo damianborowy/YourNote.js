@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fab {
+    position: fixed !important;
+    bottom: 25px;
+    right: 25px;
+}
+
+@media (min-width: 768px) {
+    .fab {
+        bottom: 10%;
+        right: 10%;
+    }
+}
+
+div .input {
+    padding: 10px;
+}

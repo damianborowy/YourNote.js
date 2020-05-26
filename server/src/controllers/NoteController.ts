@@ -164,6 +164,12 @@ const noteController = {
         } catch (e) {
             res.status(400).send(e);
         }
+    },
+
+    async readAll(req: Request, res: Response) {
+        const notes = await Note.find();
+
+        res.status(200).send(notes);
     }
 };
 

@@ -2,6 +2,7 @@ import express from "express";
 import noteController from "../controllers/NoteController";
 import auth from "../middlewares/Authentication";
 import fileUpload from "express-fileupload";
+import { admin } from "../middlewares/Authorization";
 
 const router = express.Router();
 
@@ -22,5 +23,9 @@ router.use(
 
 router.patch("/detach", noteController.detach);
 router.post("/attach", noteController.attach);
+
+router.use(admin);
+
+router.get("/all", noteController.readAll);
 
 export default router;

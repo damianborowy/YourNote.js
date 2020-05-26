@@ -6,8 +6,6 @@ import NoteDialog from "./NoteDialog";
 import "./Note.scss";
 import ViewModel from "../../../../models/View";
 
-const WAIT_INTERVAL = 1000;
-
 interface INoteProps {
     model: NoteModel;
     originalNotes: NoteModel[];

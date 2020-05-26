@@ -15,10 +15,10 @@ import {
     Select,
     MenuItem
 } from "@material-ui/core";
-import UserModel from "../../../models/User";
+import UserModel from "../../../../models/User";
 import styles from "./User.module.scss";
 import { Edit, Delete } from "@material-ui/icons";
-import adminApi from "../../../apis/AdminAPI";
+import adminApi from "../../../../apis/AdminAPI";
 
 interface IUserProps {
     user: UserModel;

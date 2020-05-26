@@ -9,7 +9,7 @@ const serverUrl =
         : "https://yournote-server.herokuapp.com";
 
 const adminApi = {
-    async readAll() {
+    async readAllUsers() {
         const result = await fetch(`${serverUrl}/users`, {
             headers: insertTokenAndHeaders()
         }).then((res) => res.json());
@@ -48,6 +48,16 @@ const adminApi = {
             method: "DELETE",
             headers: insertTokenAndHeaders()
         }).then((res) => res.text());
+
+        if (!result) return new ApiResponse(400);
+
+        return new ApiResponse(200, result);
+    },
+
+    async readAllNotes() {
+        const result = await fetch(`${serverUrl}/notes/all`, {
+            headers: insertTokenAndHeaders()
+        }).then((res) => res.json());
 
         if (!result) return new ApiResponse(400);
 

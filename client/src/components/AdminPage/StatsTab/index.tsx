@@ -3,31 +3,19 @@ import styles from "./StatsTab.module.scss";
 import Note from "../../../models/Note";
 import adminApi from "../../../apis/AdminAPI";
 import _ from "lodash";
+import { BarChart, XAxis, YAxis, Bar } from "recharts";
+import { Button, Typography } from "@material-ui/core";
 
-const colorTab = [
-    "Transparent",
-    "Red",
-    "Green",
-    "Blue",
-    "Gray",
-    "Yellow",
-    "Orange"
-];
-
-type TagInfo = {
-    tag: string;
-    count: number;
-};
-
-type ColorInfo = {
-    color: string;
+type DataPoint = {
+    name: string;
     count: number;
 };
 
 const StatsTab = () => {
     const [notes, setNotes] = useState<Note[] | null>(null),
         [selectedType, setSelectedType] = useState("Colors"),
-        [topTags, setTopTags] = useState(null);
+        [colors, setColors] = useState<DataPoint[] | null>(null),
+        [topTags, setTopTags] = useState<DataPoint[] | null>(null);
 
     useEffect(() => {
         (async () => {
@@ -35,15 +23,16 @@ const StatsTab = () => {
 
             const notes = result.payload as Note[];
             setNotes(notes);
-
-            console.log(calculateColors(notes));
+            setColors(calculateColors(notes));
+            setTopTags(calculateTopTags(notes));
         })();
     }, []);
 
-    const calculateTopTags = (notes: Note[]): TagInfo[] => {
+    const calculateTopTags = (notes: Note[]): DataPoint[] => {
         const allTags = notes.map((note) => note.tags).flat() as string[];
         const tagOccurences = _.countBy(allTags);
-        const sortedTopTags: TagInfo[] = _.chain(tagOccurences)
+
+        return _.chain(tagOccurences)
             .map((value, key) => {
                 return { tag: key, count: value };
             })
@@ -54,35 +43,68 @@ const StatsTab = () => {
             .toPairs()
             .value()
             .map((pair) => {
-                return { tag: pair[0], count: pair[1] };
+                return { name: pair[0], count: pair[1] };
             })
             .slice(0, 10);
-
-        return sortedTopTags;
     };
 
-    const calculateColors = (notes: Note[]): ColorInfo[] => {
+    const calculateColors = (notes: Note[]): DataPoint[] => {
         const allColors = notes.map((note) => note.color);
         const colorOccurences = _.countBy(allColors);
-        const sortedColors: ColorInfo[] = _.chain(colorOccurences)
+
+        return _.chain(colorOccurences)
             .map((value, key) => {
                 return { color: key, count: value };
             })
             .sortBy("count")
             .reverse()
-            .keyBy("tag")
+            .keyBy("color")
             .mapValues("count")
             .toPairs()
             .value()
             .map((pair) => {
-                return { color: pair[0], count: pair[1] };
-            })
-            .slice(0, 10);
-
-        return sortedColors;
+                return {
+                    name: pair[0].charAt(0) + pair[0].slice(1).toLowerCase(),
+                    count: pair[1]
+                };
+            });
     };
 
-    return <div className={styles.content}></div>;
+    const getData = () => {
+        if (!colors || !topTags) return [];
+
+        return selectedType === "Colors" ? colors : topTags;
+    };
+
+    return (
+        <div className={styles.content}>
+            <div>
+                <h4 className={styles.chartHeader}>{selectedType}</h4>
+                <BarChart width={750} height={350} data={getData()}>
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Bar dataKey="count" fill="#2196f3" />
+                </BarChart>
+            </div>
+            <div className={styles.toggles}>
+                <Typography>Toggle display type:</Typography>
+                <Button
+                    variant="outlined"
+                    color={selectedType === "Colors" ? "primary" : "default"}
+                    onClick={() => setSelectedType("Colors")}
+                >
+                    Colors
+                </Button>
+                <Button
+                    variant="outlined"
+                    color={selectedType === "Tags" ? "primary" : "default"}
+                    onClick={() => setSelectedType("Tags")}
+                >
+                    Tags
+                </Button>
+            </div>
+        </div>
+    );
 };
 
 export default StatsTab;

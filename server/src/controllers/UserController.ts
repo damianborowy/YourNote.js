@@ -2,6 +2,11 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../models/User";
+import Note from "../models/Note";
+import Faker from "faker";
+import NoteService from "../services/NoteService";
+
+const noteService = new NoteService();
 
 const userController = {
     async register(req: Request, res: Response) {
@@ -147,6 +152,68 @@ const userController = {
         await user.updateOne(user);
 
         return res.status(200).send(views);
+    },
+
+    async generateUsers(req: Request, res: Response) {
+        const colors = [
+            "TRANSPARENT",
+            "BLUE",
+            "GREEN",
+            "RED",
+            "GRAY",
+            "YELLOW",
+            "ORANGE"
+        ];
+
+        for (let i = 0; i < 100; i++) {
+            const email = Faker.internet.email();
+            const password = Faker.lorem.words(3);
+            const randomContent = Math.ceil(Math.random() * 10);
+
+            const tags = new Array<string>();
+
+            for (let i = 0; i < 10; i++) tags.push(Faker.lorem.word());
+
+            const user = new User({
+                email,
+                password: await bcryptjs.hash(password, 10)
+            });
+
+            try {
+                await user.save();
+            } catch (e) {
+                res.status(400).send("Unable to register a new user.");
+            }
+
+            for (let j = 0; j < 10; j++) {
+                const title = Faker.company.companyName();
+                const content = Faker.lorem.sentences(randomContent);
+                const randomColor = ~~(Math.random() * 7);
+                const color = colors[randomColor];
+
+                const newNote = new Note({
+                    owner: email,
+                    title,
+                    content,
+                    color,
+                    tags: tags.slice(
+                        ~~(Math.random() * 5),
+                        ~~(Math.random() * 5) + 6
+                    )
+                });
+
+                const note = await noteService.create(newNote);
+                user.views[0].notes.push(note.id);
+            }
+
+            try {
+                await user.updateOne(user);
+            } catch (e) {
+                res.status(400).send(e);
+            }
+        }
+
+        res.status(200).send("Finished adding random data");
     }
 };
 

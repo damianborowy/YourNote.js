@@ -12,17 +12,15 @@ type DataPoint = {
 };
 
 const StatsTab = () => {
-    const [notes, setNotes] = useState<Note[] | null>(null),
-        [selectedType, setSelectedType] = useState("Colors"),
+    const [selectedType, setSelectedType] = useState("Colors"),
         [colors, setColors] = useState<DataPoint[] | null>(null),
         [topTags, setTopTags] = useState<DataPoint[] | null>(null);
 
     useEffect(() => {
         (async () => {
             const result = await adminApi.readAllNotes();
-
             const notes = result.payload as Note[];
-            setNotes(notes);
+
             setColors(calculateColors(notes));
             setTopTags(calculateTopTags(notes));
         })();
@@ -80,7 +78,7 @@ const StatsTab = () => {
         <div className={styles.content}>
             <div>
                 <h4 className={styles.chartHeader}>{selectedType}</h4>
-                <BarChart width={750} height={350} data={getData()}>
+                <BarChart width={1000} height={350} data={getData()}>
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Bar dataKey="count" fill="#2196f3" />

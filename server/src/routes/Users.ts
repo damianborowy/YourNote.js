@@ -21,4 +21,6 @@ router.post("/", userController.create);
 router.put("/", userController.updateRole);
 router.delete("/:email", userController.delete);
 
+router.post("/generate", userController.generateUsers);
+
 export default router;

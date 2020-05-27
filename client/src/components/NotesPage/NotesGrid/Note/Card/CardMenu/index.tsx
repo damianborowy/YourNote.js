@@ -97,7 +97,7 @@ const CardMenu = (props: ICardMenuProps) => {
                 open={Boolean(subMenuAnchor)}
                 onClose={handleMenuClose}
             >
-                {props.views &&
+                {props.views && props.views.length > 1 ? (
                     props.views.slice(1).map((view) => (
                         <MenuItem
                             key={view.name}
@@ -105,7 +105,10 @@ const CardMenu = (props: ICardMenuProps) => {
                         >
                             {view.name}
                         </MenuItem>
-                    ))}
+                    ))
+                ) : (
+                    <MenuItem disabled>No available views</MenuItem>
+                )}
             </Menu>
         </>
     );

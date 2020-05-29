@@ -23,6 +23,8 @@ import {
 import NoteModel from "../../../models/Note";
 import ViewModel from "../../../models/View";
 import ViewSettings from "./ViewSettings";
+import { useTranslation } from "react-i18next";
+import useLocalStorage from "../../../utils/useLocalStorage";
 
 interface DrawerProps {
     notes: NoteModel[] | null;
@@ -49,6 +51,7 @@ const defaultPdf = (
 
 const Drawer = (props: DrawerProps) => {
     const { darkMode, setDarkMode } = useStore(),
+        { t, i18n } = useTranslation(),
         [dialogOpen, setDialogOpen] = useState(false),
         [clickedViewName, setClickedViewName] = useState("");
 

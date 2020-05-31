@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     SwipeableDrawer,
     FormControlLabel,
@@ -53,7 +53,12 @@ const Drawer = (props: DrawerProps) => {
     const { darkMode, setDarkMode } = useStore(),
         { t, i18n } = useTranslation(),
         [dialogOpen, setDialogOpen] = useState(false),
-        [clickedViewName, setClickedViewName] = useState("");
+        [clickedViewName, setClickedViewName] = useState(""),
+        notesRef = useRef<NoteModel[] | null>(null);
+
+    useEffect(() => {
+        if (!notesRef.current) notesRef.current = props.notes;
+    }, [props.notes]);
 
     const toggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -83,6 +88,8 @@ const Drawer = (props: DrawerProps) => {
         props.setSelectedView(view);
     };
 
+    // const handleLanguageChange = (event: React.Event<HTMLInputElement>) => {};
+
     const addNewView = () => {
         if (!props.views) return;
 
@@ -94,14 +101,12 @@ const Drawer = (props: DrawerProps) => {
     };
 
     const _generateDoc = () => {
-        const { notes } = props;
-
-        if (!notes) return defaultPdf;
+        if (!notesRef.current) return defaultPdf;
 
         return (
             <Document title="My notes">
                 <Page size="A4" style={{ margin: "0 30px", maxWidth: 535 }}>
-                    {notes.map((note) => (
+                    {notesRef.current.map((note) => (
                         <View
                             style={{
                                 margin: "30px 0 0px"
@@ -197,7 +202,7 @@ const Drawer = (props: DrawerProps) => {
                     label="Toggle dark mode"
                     labelPlacement="start"
                 />
-                <PDFDownloadLink document={defaultPdf} fileName="notes.pdf">
+                <PDFDownloadLink document={_generateDoc()} fileName="notes.pdf">
                     {({ loading }) =>
                         loading ? (
                             <Button

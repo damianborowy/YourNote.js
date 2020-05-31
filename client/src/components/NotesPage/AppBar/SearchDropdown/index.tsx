@@ -5,6 +5,7 @@ import { useStore } from "../../../DarkModeProvider";
 import { Check } from "@material-ui/icons";
 import clsx from "clsx";
 import FilterSettings from "../../../../models/FilterSettings";
+import { useTranslation } from "react-i18next";
 
 interface ISearchDropdownProps {
     filterSettings: FilterSettings;
@@ -26,7 +27,8 @@ const SearchDropdown = ({
     setFilterSettings
 }: ISearchDropdownProps) => {
     const { darkMode } = useStore(),
-        { selectedColors, titles, contents, tags } = filterSettings;
+        { selectedColors, titles, contents, tags } = filterSettings,
+        { t } = useTranslation();
 
     const onColorClicked = (color: string) => {
         const newSettings = filterSettings.copy();
@@ -67,7 +69,7 @@ const SearchDropdown = ({
             style={{ backgroundColor: darkMode ? "#595959" : "#59b0f6" }}
         >
             <div className={styles.colors}>
-                {colors.map(color => (
+                {colors.map((color) => (
                     <div
                         className={clsx(
                             styles.color,
@@ -84,7 +86,7 @@ const SearchDropdown = ({
                 ))}
             </div>
             <div className={styles.filter}>
-                <Typography>Search in titles</Typography>
+                <Typography>{t("notes.appbar.titles")}</Typography>
                 <Switch
                     checked={titles}
                     color={darkMode ? "primary" : "secondary"}
@@ -92,7 +94,7 @@ const SearchDropdown = ({
                 />
             </div>
             <div className={styles.filter}>
-                <Typography>Search in contents</Typography>
+                <Typography>{t("notes.appbar.contents")}</Typography>
                 <Switch
                     checked={contents}
                     color={darkMode ? "primary" : "secondary"}
@@ -100,7 +102,7 @@ const SearchDropdown = ({
                 />
             </div>
             <div className={styles.filter}>
-                <Typography>Search in tags</Typography>
+                <Typography>{t("notes.appbar.tags")}</Typography>
                 <Switch
                     checked={tags}
                     color={darkMode ? "primary" : "secondary"}

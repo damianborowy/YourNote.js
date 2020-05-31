@@ -11,6 +11,7 @@ import styles from "./AppBar.module.scss";
 import SearchDropdown from "./SearchDropdown";
 import { useStore } from "../../DarkModeProvider";
 import FilterSettings from "../../../models/FilterSettings";
+import { useTranslation } from "react-i18next";
 
 interface IAppBarProps {
     onDrawerOpen: () => void;
@@ -23,7 +24,8 @@ const AppBar = ({ onDrawerOpen, applyFilters }: IAppBarProps) => {
         [dropdownOpen, setDropdownOpen] = useState(false),
         [filterSettings, setFilterSettings] = useState<FilterSettings>(
             new FilterSettings([], true, true, true)
-        );
+        ),
+        { t } = useTranslation();
 
     useEffect(() => {
         applyFilters(filterSettings, search);
@@ -66,7 +68,7 @@ const AppBar = ({ onDrawerOpen, applyFilters }: IAppBarProps) => {
                             <Search />
                         </div>
                         <InputBase
-                            placeholder="Search…"
+                            placeholder={t("notes.appbar.search")}
                             className={styles.input}
                             classes={{
                                 root: styles.inputRoot,

@@ -13,6 +13,7 @@ import UsersTab from "../components/AdminPage/UsersTab";
 import { Link } from "react-router-dom";
 import { ArrowBack } from "@material-ui/icons";
 import StatsTab from "../components/AdminPage/StatsTab";
+import { useTranslation } from "react-i18next";
 
 interface ITabPanelProps {
     children: React.ReactNode;
@@ -30,7 +31,8 @@ const TabPanel = ({ children, index, value }: ITabPanelProps) => {
 
 const AdminPage = () => {
     const theme = useTheme(),
-        [value, setValue] = useState(0);
+        [value, setValue] = useState(0),
+        { t } = useTranslation();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) =>
         setValue(newValue);
@@ -51,8 +53,8 @@ const AdminPage = () => {
                     textColor="primary"
                     centered
                 >
-                    <Tab label="Users" />
-                    <Tab label="Statistics" />
+                    <Tab label={t("admin.users")} />
+                    <Tab label={t("admin.statistics")} />
                 </Tabs>
             </AppBar>
             <div className={styles.header}>
@@ -70,7 +72,7 @@ const AdminPage = () => {
                         <ArrowBack />
                     </IconButton>
                     <Typography variant="h6" component="h6">
-                        Back
+                        {t("admin.back")}
                     </Typography>
                 </Link>
             </div>

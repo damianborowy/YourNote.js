@@ -5,6 +5,7 @@ import adminApi from "../../../apis/AdminAPI";
 import _ from "lodash";
 import { BarChart, XAxis, YAxis, Bar } from "recharts";
 import { Button, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 type DataPoint = {
     name: string;
@@ -14,7 +15,8 @@ type DataPoint = {
 const StatsTab = () => {
     const [selectedType, setSelectedType] = useState("Colors"),
         [colors, setColors] = useState<DataPoint[] | null>(null),
-        [topTags, setTopTags] = useState<DataPoint[] | null>(null);
+        [topTags, setTopTags] = useState<DataPoint[] | null>(null),
+        { t } = useTranslation();
 
     useEffect(() => {
         (async () => {
@@ -85,20 +87,20 @@ const StatsTab = () => {
                 </BarChart>
             </div>
             <div className={styles.toggles}>
-                <Typography>Toggle display type:</Typography>
+                <Typography>{t("admin.toggleType")}</Typography>
                 <Button
                     variant="outlined"
                     color={selectedType === "Colors" ? "primary" : "default"}
                     onClick={() => setSelectedType("Colors")}
                 >
-                    Colors
+                    {t("admin.colors")}
                 </Button>
                 <Button
                     variant="outlined"
                     color={selectedType === "Tags" ? "primary" : "default"}
                     onClick={() => setSelectedType("Tags")}
                 >
-                    Tags
+                    {t("admin.tags")}
                 </Button>
             </div>
         </div>

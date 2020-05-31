@@ -4,6 +4,7 @@ import ViewModel from "../../../../../../models/View";
 import NoteModel from "../../../../../../models/Note";
 import { Menu, MenuItem, Typography } from "@material-ui/core";
 import { Add, VisibilityOff } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
 interface ICardMenuProps {
     note: NoteModel;
@@ -17,8 +18,9 @@ interface ICardMenuProps {
 
 const CardMenu = (props: ICardMenuProps) => {
     const [subMenuAnchor, setSubMenuAnchor] = useState<null | HTMLElement>(
-        null
-    );
+            null
+        ),
+        { t } = useTranslation();
 
     const handleMenuClose = () => setSubMenuAnchor(null);
 
@@ -62,6 +64,17 @@ const CardMenu = (props: ICardMenuProps) => {
         handleMenuClose();
     };
 
+    const translateViewName = (viewName: string): string => {
+        if (viewName === "All notes") return t("notes.drawer.allNotes");
+
+        if (/(View)\s\d/.test(viewName)) {
+            const number = viewName.split(" ")[1];
+            return `${t("notes.drawer.view")} ${number}`;
+        }
+
+        return viewName;
+    };
+
     return (
         <>
             <Menu
@@ -73,7 +86,7 @@ const CardMenu = (props: ICardMenuProps) => {
                 <MenuItem onClick={handleAddMenuOpen}>
                     <Add />
                     <Typography className={styles.typography}>
-                        Add to another view
+                        {t("notes.menu.add")}
                     </Typography>
                 </MenuItem>
                 <MenuItem
@@ -87,7 +100,7 @@ const CardMenu = (props: ICardMenuProps) => {
                 >
                     <VisibilityOff />
                     <Typography className={styles.typography}>
-                        Hide from this view
+                        {t("notes.menu.hide")}
                     </Typography>
                 </MenuItem>
             </Menu>
@@ -103,11 +116,11 @@ const CardMenu = (props: ICardMenuProps) => {
                             key={view.name}
                             onClick={() => handleAddToView(view.name)}
                         >
-                            {view.name}
+                            {translateViewName(view.name)}
                         </MenuItem>
                     ))
                 ) : (
-                    <MenuItem disabled>No available views</MenuItem>
+                    <MenuItem disabled>{t("notes.menu.noViews")}</MenuItem>
                 )}
             </Menu>
         </>

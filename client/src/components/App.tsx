@@ -7,8 +7,8 @@ import NotesPage from "../pages/NotesPage";
 import AdminPage from "../pages/AdminPage";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../locales/i18n";
-import "./Antd.scss";
 import LanguageWrapper from "./LanguageWrapper";
+import "./Antd.scss";
 
 const App = () => {
     return (

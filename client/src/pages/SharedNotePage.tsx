@@ -14,10 +14,12 @@ import {
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import _ from "lodash";
+import { useTranslation } from "react-i18next";
 
 const SharedNotesPage = () => {
     const { noteId } = useParams();
-    const [note, setNote] = useState<null | NoteModel>(null);
+    const [note, setNote] = useState<null | NoteModel>(null),
+        { t } = useTranslation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,19 +48,16 @@ const SharedNotesPage = () => {
                         </DialogContent>
                         <DialogActions>
                             <Link to={"/"} style={{ textDecoration: "none" }}>
-                                <Button>Go back to site</Button>
+                                <Button>{t("sharedNote.back")}</Button>
                             </Link>
                         </DialogActions>
                     </div>
                 ) : (
                     <Alert className={styles.alert} severity="error">
-                        <AlertTitle>Error</AlertTitle>
-                        <Typography>
-                            You're trying to view a non-public or non-existing
-                            note
-                        </Typography>
+                        <AlertTitle>{t("sharedNote.error")}</AlertTitle>
+                        <Typography>{t("sharedNote.errorText")}</Typography>
                         <Link to={"/"}>
-                            <Typography>Go back to site</Typography>
+                            <Typography>{t("sharedNote.back")}</Typography>
                         </Link>
                     </Alert>
                 )}

@@ -9,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import ApiResponse from "../apis/ApiResponse";
 import { isTokenPresent } from "../utils/TokenHandler";
+import { Translation } from "react-i18next";
 
 interface ILoginPageState {
     email: string;
@@ -70,8 +71,14 @@ class LoginPage extends Component<{}, ILoginPageState> {
         } else if (this.state.res) {
             return (
                 <Alert severity="error">
-                    <AlertTitle>Incorrect credentials</AlertTitle>
-                    {this.state.res.payload}
+                    <AlertTitle>
+                        <Translation>
+                            {(t) => t("login.incorrectCredentials")}
+                        </Translation>
+                    </AlertTitle>
+                    <Translation>
+                        {(t) => t("login.userDoesntExist")}
+                    </Translation>
                 </Alert>
             );
         }
@@ -79,57 +86,65 @@ class LoginPage extends Component<{}, ILoginPageState> {
 
     render() {
         return (
-            <div className={styles.containerParent}>
-                <Grid container spacing={2} className={styles.container}>
-                    <Grid item xs={12}>
-                        {this.renderLoggedCorectly()}
-                        <h1 className={styles.headers}>Your Note</h1>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            className={styles.textField}
-                            type="email"
-                            id="emailLog"
-                            required
-                            label="e-mail"
-                            variant="filled"
-                            onChange={this.handleEmailChange}
-                        ></TextField>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            className={styles.textField}
-                            required
-                            id="PassLogIn"
-                            type="password"
-                            label="Password"
-                            variant="filled"
-                            onChange={this.handlePasswordChange}
-                        ></TextField>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            variant="contained"
-                            id="LogInButton"
-                            className={styles.button}
-                            onClick={this.handleLoginButtonClick}
+            <Translation>
+                {(t) => (
+                    <div className={styles.containerParent}>
+                        <Grid
+                            container
+                            spacing={2}
+                            className={styles.container}
                         >
-                            Login
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {this.renderRedirect()}
-                        <Button
-                            variant="contained"
-                            id="RegisterButt2"
-                            onClick={this.handleRegisterButtonClick}
-                            className={styles.button}
-                        >
-                            Register
-                        </Button>
-                    </Grid>
-                </Grid>
-            </div>
+                            <Grid item xs={12}>
+                                {this.renderLoggedCorectly()}
+                                <h1 className={styles.headers}>Your Note</h1>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    className={styles.textField}
+                                    type="email"
+                                    id="emailLog"
+                                    required
+                                    label={t("login.email")}
+                                    variant="filled"
+                                    onChange={this.handleEmailChange}
+                                ></TextField>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    className={styles.textField}
+                                    required
+                                    id="PassLogIn"
+                                    type="password"
+                                    label={t("login.password")}
+                                    variant="filled"
+                                    onChange={this.handlePasswordChange}
+                                ></TextField>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button
+                                    variant="contained"
+                                    id="LogInButton"
+                                    className={styles.button}
+                                    onClick={this.handleLoginButtonClick}
+                                >
+                                    {t("login.login")}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {this.renderRedirect()}
+                                <Button
+                                    variant="contained"
+                                    id="RegisterButt2"
+                                    onClick={this.handleRegisterButtonClick}
+                                    className={styles.button}
+                                >
+                                    {t("login.register")}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+                )}
+            </Translation>
         );
     }
 }

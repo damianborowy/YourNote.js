@@ -1,7 +1,14 @@
 {
     "translations": {
-        "login": {},
-        "register": {},
+        "admin": {},
+        "login": {
+            "login": "Zaloguj się",
+            "register": "Zarejestruj się",
+            "email": "e-mail",
+            "password": "hasło",
+            "incorrectCredentials": "Niepoprawne dane",
+            "userDoesntExist": "Użytkownik o takim adresie e-mail nie istnieje."
+        },
         "notes": {
             "drawer": {
                 "views": "Widoki",
@@ -16,6 +23,17 @@
                 "adminPanel": "Panel administracyjny"
             }
         },
-        "admin": {}
+        "register": {
+            "email": "e-mail",
+            "password": "hasło",
+            "confirmPassword": "potwierdź hasło",
+            "register": "Zarejestruj się",
+            "signIn": "Zaloguj się",
+            "error": "Błąd",
+            "userExists": "Użytkownik o podanym adresie e-mail już istnieje",
+            "emailError": "Adres e-mail jest niepoprawny",
+            "passwordsNoMatch": "Hasła nie są identyczne"
+        },
+        "sharedNote": {}
     }
 }

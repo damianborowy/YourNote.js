@@ -1,8 +1,51 @@
 {
     "translations": {
-        "admin": {},
-        "login": {},
+        "admin": {
+            "back": "Back",
+            "users": "Users",
+            "statistics": "Statistics",
+            "admins": "Admins",
+            "toggleType": "Toggle display type:",
+            "colors": "Colors",
+            "tags": "Tags",
+            "newUser": "Add new user",
+            "close": "Close",
+            "add": "Add",
+            "save": "Save",
+            "changeRole": "Change user's role",
+            "role": "Role",
+            "admin": "Admin",
+            "user": "User",
+            "deleteUser": "Delete user",
+            "areYouSure": "Are you sure you'd like to delete user",
+            "keepInMind": "Keep in mind that this is a destructive operation and it cannot be undone.",
+            "delete": "Delete"
+        },
+        "login": {
+            "login": "Login",
+            "register": "Register",
+            "email": "e-mail",
+            "password": "password",
+            "incorrectCredentials": "Incorrect credentials",
+            "userDoesntExist": "User with this e-mail address doesn't exist."
+        },
         "notes": {
+            "myNotes": "My notes",
+            "sharedToMe": "Notes shared to me",
+            "menu": {
+                "add": "Add to another view",
+                "hide": "Hide from this view",
+                "noViews": "No available views"
+            },
+            "colors": {
+                "transparent": "Transparent",
+                "red": "Red",
+                "green": "Green",
+                "blue": "Blue",
+                "gray": "Gray",
+                "yellow": "Yellow",
+                "orange": "Orange"
+            },
             "drawer": {
                 "views": "Views",
                 "view": "View",
@@ -13,10 +56,51 @@
                 "language": "Language",
                 "loggedIn": "Logged in as",
                 "logout": "Log out",
-                "adminPanel": "Admin Panel"
+                "adminPanel": "Admin Panel",
+                "viewSettings": {
+                    "editing": "Editing view",
+                    "viewName": "View name",
+                    "delete": "Delete",
+                    "update": "Update",
+                    "close": "Close"
+                }
+            },
+            "appbar": {
+                "search": "Search...",
+                "titles": "Search in titles",
+                "contents": "Search in contents",
+                "tags": "Search in tags"
+            },
+            "card": {
+                "newTag": "Add new tag",
+                "close": "Close",
+                "add": "Add",
+                "tag": "Tag",
+                "attachments": "Attachments",
+                "newAttachment": "Add new attachment",
+                "shareByLink": "By link",
+                "shareToUser": "To specified user",
+                "newUser": "Share note to other users",
+                "invalidEmail": "Provided e-mail is not valid",
+                "byLink": "Sharing by link",
+                "publicAccess": "Allow public access"
             }
         },
-        "register": {},
-        "sharedNote": {}
+        "register": {
+            "email": "e-mail",
+            "password": "password",
+            "confirmPassword": "confirm password",
+            "register": "Register",
+            "signIn": "Sign in instead",
+            "error": "Error",
+            "userExists": "User with this e-mail address already exists.",
+            "emailError": "Email address is invalid",
+            "passwordsNoMatch": "Passwords don't match"
+        },
+        "sharedNote": {
+            "back": "Go back to site",
+            "error": "Error",
+            "errorText": "You're trying to view a non-public or non-existing note"
+        }
     }
 }

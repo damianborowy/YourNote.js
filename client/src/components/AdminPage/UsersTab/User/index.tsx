@@ -19,6 +19,7 @@ import UserModel from "../../../../models/User";
 import styles from "./User.module.scss";
 import { Edit, Delete } from "@material-ui/icons";
 import adminApi from "../../../../apis/AdminAPI";
+import { useTranslation } from "react-i18next";
 
 interface IUserProps {
     user: UserModel;
@@ -29,7 +30,8 @@ interface IUserProps {
 const User = (props: IUserProps) => {
     const [editOpen, setEditOpen] = useState(false),
         [deleteOpen, setDeleteOpen] = useState(false),
-        [role, setRole] = useState(props.user.role);
+        [role, setRole] = useState(props.user.role),
+        { t } = useTranslation();
 
     const closeDialogs = () => {
         setEditOpen(false);
@@ -48,7 +50,7 @@ const User = (props: IUserProps) => {
         if (!result.success) return;
 
         const userIndex = props.users.findIndex(
-            user => user.email === props.user.email
+            (user) => user.email === props.user.email
         );
 
         const newUsers = [...props.users];
@@ -66,7 +68,7 @@ const User = (props: IUserProps) => {
         if (!result.success) return;
 
         const userIndex = props.users.findIndex(
-            user => user.email === props.user.email
+            (user) => user.email === props.user.email
         );
 
         const newUsers = [...props.users];
@@ -97,7 +99,7 @@ const User = (props: IUserProps) => {
                 maxWidth="xs"
                 fullWidth
             >
-                <DialogTitle>Change user's role</DialogTitle>
+                <DialogTitle>{t("admin.changeRole")}</DialogTitle>
                 <DialogContent>
                     <Box padding={1} className={styles.box}>
                         <Typography variant="body1" component="span">
@@ -107,36 +109,41 @@ const User = (props: IUserProps) => {
                             variant="filled"
                             className={styles.formControl}
                         >
-                            <InputLabel id="role-label">Role</InputLabel>
+                            <InputLabel id="role-label">
+                                {t("admin.role")}
+                            </InputLabel>
                             <Select
                                 labelId="role-label"
                                 value={role}
                                 onChange={handleRoleChange}
                             >
-                                <MenuItem value="User">User</MenuItem>
-                                <MenuItem value="Admin">Admin</MenuItem>
+                                <MenuItem value="User">
+                                    {t("admin.user")}
+                                </MenuItem>
+                                <MenuItem value="Admin">
+                                    {t("admin.admin")}
+                                </MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialogs}>Close</Button>
+                    <Button onClick={closeDialogs}>{t("admin.close")}</Button>
                     <Button color="primary" onClick={editUsersRole}>
-                        Save
+                        {t("admin.save")}
                     </Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={deleteOpen} onClose={closeDialogs}>
-                <DialogTitle>Delete user</DialogTitle>
+                <DialogTitle>{t("admin.deleteUser")}</DialogTitle>
                 <DialogContent>
-                    Are you sure you'd like to delete user{" "}
-                    <b>{props.user.email}</b>? Keep in mind that this is a
-                    destructive operation and it cannot be undone.
+                    {t("admin.areYouSure")}
+                    <b>{props.user.email}</b>? {t("admin.keepInMind")}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDialogs}>Close</Button>
                     <Button color="secondary" onClick={deleteUser}>
-                        Delete
+                        {t("admin.delete")}
                     </Button>
                 </DialogActions>
             </Dialog>

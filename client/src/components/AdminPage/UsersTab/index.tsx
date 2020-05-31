@@ -17,6 +17,7 @@ import UserModel from "../../../models/User";
 import adminApi from "../../../apis/AdminAPI";
 import _ from "lodash";
 import User from "./User";
+import { useTranslation } from "react-i18next";
 
 const sortUsers = (users: UserModel[]) => {
     users.sort((a: UserModel, b: UserModel) => {
@@ -31,7 +32,8 @@ const UsersTab = () => {
         [open, setOpen] = useState(false),
         [email, setEmail] = useState(""),
         [password, setPassword] = useState(""),
-        [confirmedPassword, setConfirmedPassword] = useState("");
+        [confirmedPassword, setConfirmedPassword] = useState(""),
+        { t } = useTranslation();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -94,7 +96,7 @@ const UsersTab = () => {
                         variant="h6"
                         component="h6"
                     >
-                        Admins
+                        {t("admin.admins")}
                     </Typography>
                     {users &&
                         users
@@ -112,7 +114,7 @@ const UsersTab = () => {
                         variant="h6"
                         component="h6"
                     >
-                        Users
+                        {t("admin.users")}
                     </Typography>
                     {users &&
                         users
@@ -131,20 +133,20 @@ const UsersTab = () => {
                 <Add />
             </Fab>
             <Dialog open={open} onClose={closeDialog}>
-                <DialogTitle>Add new user</DialogTitle>
+                <DialogTitle>{t("admin.newUser")}</DialogTitle>
                 <DialogContent>
                     <Box padding={2}>
                         <div className={styles.input}>
                             <TextField
                                 id="adminMail"
-                                label="e-mail"
+                                label={t("register.email")}
                                 variant="filled"
                                 onChange={handleEmailChange}
                                 type="email"
                                 error={!validateMail() && email.length !== 0}
                                 helperText={
                                     !validateMail() && email.length !== 0
-                                        ? "Email address is invalid."
+                                        ? t("register.emailError")
                                         : ""
                                 }
                                 required
@@ -154,7 +156,7 @@ const UsersTab = () => {
                             <TextField
                                 id="AdminPass1"
                                 type="password"
-                                label="Password"
+                                label={t("register.password")}
                                 variant="filled"
                                 onChange={handlePasswordChange}
                                 required
@@ -165,10 +167,10 @@ const UsersTab = () => {
                                 type="password"
                                 error={!validatePassword()}
                                 id="passwordAdmin"
-                                label="Confirm password"
+                                label={t("register.confirmPassword")}
                                 helperText={
                                     !validatePassword()
-                                        ? "Passwords don't match."
+                                        ? t("register.passwordsNoMatch")
                                         : ""
                                 }
                                 required
@@ -179,7 +181,7 @@ const UsersTab = () => {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialog}>Close</Button>
+                    <Button onClick={closeDialog}>{t("admin.close")}</Button>
                     <Button
                         color="primary"
                         onClick={addNewUser}
@@ -191,7 +193,7 @@ const UsersTab = () => {
                             (!validateMail() && email.length !== 0)
                         }
                     >
-                        Add
+                        {t("admin.add")}
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -12,6 +12,7 @@ import {
 import { getEmailFromToken } from "../../../utils/TokenHandler";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ViewModel from "../../../models/View";
+import { useTranslation } from "react-i18next";
 
 interface INotesGridProps {
     notes: NoteModel[];
@@ -29,7 +30,8 @@ interface INotesGridProps {
 const NotesGrid = (props: INotesGridProps) => {
     const theme = useTheme(),
         [boxesPerRow, setBoxesPerRow] = useState(1),
-        { width } = useWindowDimensions();
+        { width } = useWindowDimensions(),
+        { t } = useTranslation();
 
     useEffect(() => {
         let newBoxes = 1;
@@ -75,6 +77,13 @@ const NotesGrid = (props: INotesGridProps) => {
         }
     };
 
+    const translateGridName = (name: string) => {
+        if (name === "My notes") return t("notes.myNotes");
+        if (name === "Notes shared to me") return t("notes.sharedToMe");
+
+        return name;
+    };
+
     return (
         <>
             {filterNotes(props.notes).length !== 0 && (
@@ -84,7 +93,7 @@ const NotesGrid = (props: INotesGridProps) => {
                         style={{ color: theme.palette.text.primary }}
                         className={styles.typography}
                     >
-                        {props.name}
+                        {translateGridName(props.name)}
                     </Typography>
                     <GridContextProvider onChange={handleDNDGridChange}>
                         <GridDropZone

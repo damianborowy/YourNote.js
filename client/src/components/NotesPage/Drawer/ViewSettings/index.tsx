@@ -9,6 +9,7 @@ import {
     Button,
     TextField
 } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 interface IViewSettingsProps {
     open: boolean;
@@ -21,7 +22,8 @@ interface IViewSettingsProps {
 }
 
 const ViewSettings = (props: IViewSettingsProps) => {
-    const [newName, setNewName] = useState("");
+    const [newName, setNewName] = useState(""),
+        { t } = useTranslation();
 
     useEffect(() => {
         setNewName(props.clickedViewName);
@@ -63,10 +65,13 @@ const ViewSettings = (props: IViewSettingsProps) => {
 
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
-            <DialogTitle>Editing view '{props.clickedViewName}'</DialogTitle>
+            <DialogTitle>
+                {t("notes.drawer.viewSettings.editing")} '
+                {props.clickedViewName}'
+            </DialogTitle>
             <DialogContent className={styles.dialogContent}>
                 <TextField
-                    label="View name"
+                    label={t("notes.drawer.viewSettings.viewName")}
                     value={newName}
                     variant="filled"
                     onChange={handleNameChange}
@@ -74,12 +79,14 @@ const ViewSettings = (props: IViewSettingsProps) => {
             </DialogContent>
             <DialogActions>
                 <Button color="secondary" onClick={handleViewDelete}>
-                    Delete
+                    {t("notes.drawer.viewSettings.delete")}
                 </Button>
                 <Button color="primary" onClick={handleViewUpdate}>
-                    Update
+                    {t("notes.drawer.viewSettings.update")}
                 </Button>
-                <Button onClick={props.handleClose}>Close</Button>
+                <Button onClick={props.handleClose}>
+                    {t("notes.drawer.viewSettings.close")}
+                </Button>
             </DialogActions>
         </Dialog>
     );

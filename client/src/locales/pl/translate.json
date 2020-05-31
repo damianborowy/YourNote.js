@@ -1,5 +1,21 @@
 {
     "translations": {
-        "test": "foo"
+        "login": {},
+        "register": {},
+        "notes": {
+            "drawer": {
+                "views": "Widoki",
+                "view": "Widok",
+                "allNotes": "Wszystkie notatki",
+                "newView": "Dodaj nowy widok",
+                "darkModeToggler": "Ciemny motyw",
+                "saveAsPdf": "Zapisz jako .pdf",
+                "language": "Język",
+                "loggedIn": "Zalogowano jako",
+                "logout": "Wyloguj",
+                "adminPanel": "Panel administracyjny"
+            }
+        },
+        "admin": {}
     }
 }

@@ -6,9 +6,13 @@ import {
     Divider,
     Typography,
     Button,
-    IconButton
+    IconButton,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem
 } from "@material-ui/core";
-import { GetApp as Download, Edit } from "@material-ui/icons";
+import { GetApp as Download, Edit, Translate } from "@material-ui/icons";
 import styles from "./Drawer.module.scss";
 import { useStore } from "../../DarkModeProvider";
 import { getRoleFromToken } from "../../../utils/TokenHandler";
@@ -54,7 +58,8 @@ const Drawer = (props: DrawerProps) => {
         { t, i18n } = useTranslation(),
         [dialogOpen, setDialogOpen] = useState(false),
         [clickedViewName, setClickedViewName] = useState(""),
-        notesRef = useRef<NoteModel[] | null>(null);
+        notesRef = useRef<NoteModel[] | null>(null),
+        [lang, setLang] = useLocalStorage("lang", "en");
 
     useEffect(() => {
         if (!notesRef.current) notesRef.current = props.notes;
@@ -88,7 +93,13 @@ const Drawer = (props: DrawerProps) => {
         props.setSelectedView(view);
     };
 
-    // const handleLanguageChange = (event: React.Event<HTMLInputElement>) => {};
+    const handleLanguageChange = (
+        event: React.ChangeEvent<{ value: unknown }>
+    ) => {
+        const newLang = event.target.value as string;
+        setLang(newLang);
+        i18n.changeLanguage(newLang);
+    };
 
     const addNewView = () => {
         if (!props.views) return;
@@ -98,6 +109,17 @@ const Drawer = (props: DrawerProps) => {
 
         newViews.push(newView);
         props.setViews(newViews);
+    };
+
+    const translateViewName = (viewName: string): string => {
+        if (viewName === "All notes") return t("notes.drawer.allNotes");
+
+        if (/(View)\s\d/.test(viewName)) {
+            const number = viewName.split(" ")[1];
+            return `${t("notes.drawer.view")} ${number}`;
+        }
+
+        return viewName;
     };
 
     const _generateDoc = () => {
@@ -146,7 +168,7 @@ const Drawer = (props: DrawerProps) => {
             onOpen={props.onDrawerOpen}
         >
             <div>
-                <Typography variant="h6">Views</Typography>
+                <Typography variant="h6">{t("notes.drawer.views")}</Typography>
                 {props.views &&
                     props.selectedView &&
                     props.views.map((view) => (
@@ -161,7 +183,7 @@ const Drawer = (props: DrawerProps) => {
                                         : "default"
                                 }
                             >
-                                {view.name}
+                                {translateViewName(view.name)}
                             </Button>
                             {view.name !== "All notes" && (
                                 <IconButton
@@ -174,7 +196,7 @@ const Drawer = (props: DrawerProps) => {
                     ))}
                 <div className={styles.viewContainer}>
                     <Button className={styles.viewButton} onClick={addNewView}>
-                        Add new view
+                        {t("notes.drawer.newView")}
                     </Button>
                 </div>
                 <ViewSettings
@@ -199,7 +221,7 @@ const Drawer = (props: DrawerProps) => {
                             onChange={toggleDarkMode}
                         />
                     }
-                    label="Toggle dark mode"
+                    label={t("notes.drawer.darkModeToggler")}
                     labelPlacement="start"
                 />
                 <PDFDownloadLink document={_generateDoc()} fileName="notes.pdf">
@@ -217,14 +239,24 @@ const Drawer = (props: DrawerProps) => {
                                 className={styles.pdfButton}
                                 startIcon={<Download />}
                             >
-                                Save as .pdf
+                                {t("notes.drawer.saveAsPdf")}
                             </Button>
                         )
                     }
                 </PDFDownloadLink>
+                <div className={styles.language}>
+                    <Translate />
+                    <FormControl className={styles.form} variant="filled">
+                        <InputLabel>{t("notes.drawer.language")}</InputLabel>
+                        <Select value={lang} onChange={handleLanguageChange}>
+                            <MenuItem value="en">English</MenuItem>
+                            <MenuItem value="pl">Polski</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
                 <Divider className={styles.divider} />
                 <Typography>
-                    Logged in as: <br />
+                    {t("notes.drawer.loggedIn")}: <br />
                     {props.getEmailFromToken()}
                 </Typography>
                 <Button
@@ -233,7 +265,7 @@ const Drawer = (props: DrawerProps) => {
                     onClick={props.handleLogOutButtonClick}
                     className={styles.drawerButton}
                 >
-                    Log out
+                    {t("notes.drawer.logout")}
                 </Button>
                 {isAdmin() && (
                     <Link to="/admin">
@@ -242,7 +274,7 @@ const Drawer = (props: DrawerProps) => {
                             color="primary"
                             className={styles.drawerButton}
                         >
-                            Admin panel
+                            {t("notes.drawer.adminPanel")}
                         </Button>
                     </Link>
                 )}

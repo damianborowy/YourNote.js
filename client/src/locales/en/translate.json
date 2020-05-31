@@ -1,5 +1,22 @@
 {
     "translations": {
-        "test": "fooEn"
+        "admin": {},
+        "login": {},
+        "notes": {
+            "drawer": {
+                "views": "Views",
+                "view": "View",
+                "allNotes": "All notes",
+                "newView": "Add new view",
+                "darkModeToggler": "Dark mode",
+                "saveAsPdf": "Save as .pdf",
+                "language": "Language",
+                "loggedIn": "Logged in as",
+                "logout": "Log out",
+                "adminPanel": "Admin Panel"
+            }
+        },
+        "register": {},
+        "sharedNote": {}
     }
 }

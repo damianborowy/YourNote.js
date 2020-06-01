@@ -9,6 +9,7 @@ import {
 import styles from "./PaletteMenu.module.scss";
 import NoteModel from "../../../../../../models/Note";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 interface IPaletteMenuProps {
     handleClose: () => void;
@@ -28,7 +29,8 @@ const colorTab = [
 ];
 
 const PaletteMenu = (props: IPaletteMenuProps) => {
-    const theme = useTheme();
+    const theme = useTheme(),
+        { t } = useTranslation();
 
     const handlePickColor = (newColor: string) => {
         const newNote = { ...props.note };
@@ -57,7 +59,9 @@ const PaletteMenu = (props: IPaletteMenuProps) => {
                                     color.toLowerCase()
                                 )}
                             ></Box>
-                            <Typography>{color}</Typography>
+                            <Typography>
+                                {t(`notes.colors.${color.toLowerCase()}`)}
+                            </Typography>
                         </MenuItem>
                     );
                 })}

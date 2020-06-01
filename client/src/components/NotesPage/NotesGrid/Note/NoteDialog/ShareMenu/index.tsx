@@ -5,6 +5,7 @@ import styles from "./Menu.module.scss";
 import LinkShareDialog from "./LinkShareDialog";
 import UserShareDialog from "./UserShareDialog";
 import NoteModel from "../../../../../../models/Note";
+import { useTranslation } from "react-i18next";
 
 interface IMenuProps {
     handleClose: () => void;
@@ -15,7 +16,8 @@ interface IMenuProps {
 
 const ShareMenu = (props: IMenuProps) => {
     const [dialogOpen, setDialogOpen] = React.useState(false),
-        [toUserDialogOpen, setToUserDialogOpen] = React.useState(false);
+        [toUserDialogOpen, setToUserDialogOpen] = React.useState(false),
+        { t } = useTranslation();
 
     const shareDialogOpen = () => {
         props.handleClose();
@@ -45,11 +47,11 @@ const ShareMenu = (props: IMenuProps) => {
             >
                 <MenuItem id="byLink" onClick={shareDialogOpen}>
                     <Share className={styles.share} />
-                    By link
+                    {t("notes.card.shareByLink")}
                 </MenuItem>
                 <MenuItem id="shareToOtherUser" onClick={shareToUserDialogOpen}>
                     <Share className={styles.share} />
-                    To specified user
+                    {t("notes.card.shareToUser")}
                 </MenuItem>
             </MaterialMenu>
             <LinkShareDialog

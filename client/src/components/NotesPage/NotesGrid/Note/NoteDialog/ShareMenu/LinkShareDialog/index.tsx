@@ -16,6 +16,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { FileCopy } from "@material-ui/icons";
 import styles from "./LinkShareDialog.module.scss";
 import NoteModel from "../../../../../../../models/Note";
+import { useTranslation } from "react-i18next";
 
 const env = process.env.NODE_ENV || "development";
 const clientUrl =
@@ -32,8 +33,9 @@ interface ILinkShareDialogProps {
 
 const LinkShareDialog = (props: ILinkShareDialogProps) => {
     const [checkedB, setCheckedB] = React.useState(
-        props.note.isPublic || false
-    );
+            props.note.isPublic || false
+        ),
+        { t } = useTranslation();
 
     const handleChange = () => {
         setCheckedB(!checkedB);
@@ -50,7 +52,7 @@ const LinkShareDialog = (props: ILinkShareDialogProps) => {
             open={props.subDialogOpen}
             onClose={props.subShareDialogClose}
         >
-            <DialogTitle>Sharing by link</DialogTitle>
+            <DialogTitle>{t("notes.card.byLink")}</DialogTitle>
             <DialogContent>
                 <FormControlLabel
                     control={
@@ -60,7 +62,7 @@ const LinkShareDialog = (props: ILinkShareDialogProps) => {
                             color="primary"
                         />
                     }
-                    label="Allow public access"
+                    label={t("notes.card.publicAccess")}
                 />
                 {checkedB && (
                     <Box
@@ -90,7 +92,7 @@ const LinkShareDialog = (props: ILinkShareDialogProps) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.subShareDialogClose} color="primary">
-                    Close
+                    {t("notes.card.close")}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -1,6 +1,26 @@
 {
     "translations": {
-        "admin": {},
+        "admin": {
+            "back": "Wstecz",
+            "users": "Użytkownicy",
+            "statistics": "Statystyki",
+            "admins": "Administratorzy",
+            "toggleType": "Zmień typ wykresu:",
+            "colors": "Kolory",
+            "tags": "Tagi",
+            "newUser": "Dodaj nowego użytkownika",
+            "close": "Zamknij",
+            "add": "Dodaj",
+            "save": "Zapisz",
+            "changeRole": "Zmień rolę użytkownika",
+            "role": "Rola",
+            "admin": "Administrator",
+            "user": "Użytkownik",
+            "deleteUser": "Usuń użytkownika",
+            "areYouSure": "Czy jesteś pewny, że chcesz usunąć użytkownika",
+            "keepInMind": "Pamiętaj, że jest to destruktywna operacja i nie jest ona odwracalna.",
+            "delete": "Usuń"
+        },
         "login": {
             "login": "Zaloguj się",
             "register": "Zarejestruj się",
@@ -10,6 +30,22 @@
             "userDoesntExist": "Użytkownik o takim adresie e-mail nie istnieje."
         },
         "notes": {
+            "myNotes": "Moje notatki",
+            "sharedToMe": "Notatki mi udostępnione",
+            "menu": {
+                "add": "Dodaj do innego widoku",
+                "hide": "Ukryj z tego widoku",
+                "noViews": "Brak dostępnych widoków"
+            },
+            "colors": {
+                "transparent": "Przezroczysty",
+                "red": "Czerwony",
+                "green": "Zielony",
+                "blue": "Niebieski",
+                "gray": "Szary",
+                "yellow": "Żółty",
+                "orange": "Pomarańczowy"
+            },
             "drawer": {
                 "views": "Widoki",
                 "view": "Widok",
@@ -20,7 +56,37 @@
                 "language": "Język",
                 "loggedIn": "Zalogowano jako",
                 "logout": "Wyloguj",
-                "adminPanel": "Panel administracyjny"
+                "adminPanel": "Panel administracyjny",
+                "viewSettings": {
+                    "editing": "Edytujesz widok",
+                    "viewName": "Nazwa widoku",
+                    "delete": "Usuń",
+                    "update": "Zaktualizuj",
+                    "close": "Zamknij"
+                }
+            },
+            "appbar": {
+                "search": "Szukaj...",
+                "titles": "Szukaj w tytułach",
+                "contents": "Szukaj w treściach",
+                "tags": "Szukaj w tagach"
+            },
+            "card": {
+                "title": "Tytuł",
+                "content": "Treść",
+                "newTag": "Dodaj nowy tag",
+                "close": "Zamknij",
+                "add": "Dodaj",
+                "tag": "Tag",
+                "tagExists": "Tag już istnieje",
+                "attachments": "Załączniki",
+                "newAttachment": "Dodaj nowy załącznik",
+                "shareByLink": "Przez link",
+                "shareToUser": "Do konkretnego użytkownika",
+                "newUser": "Udostępnianie notatki innym użytkownikom",
+                "invalidEmail": "Podany adres e-mail jest niepoprawny",
+                "byLink": "Udostępnianie przez link",
+                "publicAccess": "Zezwól na publiczny dostęp"
             }
         },
         "register": {
@@ -34,6 +100,10 @@
             "emailError": "Adres e-mail jest niepoprawny",
             "passwordsNoMatch": "Hasła nie są identyczne"
         },
-        "sharedNote": {}
+        "sharedNote": {
+            "back": "Powrót do strony",
+            "error": "Błąd",
+            "errorText": "Próbujesz wyświetlić niepubliczną lub nieistniejącą notatkę"
+        }
     }
 }

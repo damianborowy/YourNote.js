@@ -72,10 +72,13 @@
                 "tags": "Search in tags"
             },
             "card": {
+                "title": "Title",
+                "content": "Content",
                 "newTag": "Add new tag",
                 "close": "Close",
                 "add": "Add",
                 "tag": "Tag",
+                "tagExists": "Tag already exists",
                 "attachments": "Attachments",
                 "newAttachment": "Add new attachment",
                 "shareByLink": "By link",

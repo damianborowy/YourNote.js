@@ -15,6 +15,7 @@ import NoteModel from "../../../../../../../models/Note";
 import userApi from "../../../../../../../apis/UserAPI";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
+import { useTranslation } from "react-i18next";
 
 interface IUserShareDialogProps {
     subShareToUserDialogClose: () => void;
@@ -24,8 +25,9 @@ interface IUserShareDialogProps {
 }
 
 const UserShareDialog = (props: IUserShareDialogProps) => {
-    const [email, setEmail] = React.useState("");
-    const [errorMess, setErrorMess] = React.useState("");
+    const [email, setEmail] = React.useState(""),
+        [errorMess, setErrorMess] = React.useState(""),
+        { t } = useTranslation();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -72,7 +74,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
             open={props.subToUserDialogOpen}
             onClose={props.subShareToUserDialogClose}
         >
-            <DialogTitle>Share note to other users</DialogTitle>
+            <DialogTitle>{t("notes.card.newUser")}</DialogTitle>
             <DialogContent>
                 {errorMess !== "" && (
                     <Alert
@@ -80,7 +82,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                         severity="error"
                         className={styles.alert}
                     >
-                        <AlertTitle>{errorMess}</AlertTitle>
+                        <AlertTitle>{t("notes.card.invalidEmail")}</AlertTitle>
                     </Alert>
                 )}
 
@@ -101,7 +103,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
 
                 <div className={styles.flexRow}>
                     <TextField
-                        label="e-mail"
+                        label={t("register.email")}
                         variant="filled"
                         onChange={handleEmailChange}
                         value={email}
@@ -109,7 +111,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                         error={!validateMail() && email !== ""}
                         helperText={
                             !validateMail() && email !== ""
-                                ? "Email address is invalid."
+                                ? t("register.emailError")
                                 : ""
                         }
                     />
@@ -127,7 +129,7 @@ const UserShareDialog = (props: IUserShareDialogProps) => {
                     onClick={props.subShareToUserDialogClose}
                     color="primary"
                 >
-                    Close
+                    {t("notes.card.close")}
                 </Button>
             </DialogActions>
         </Dialog>

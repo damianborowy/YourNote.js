@@ -17,6 +17,7 @@ import {
     RcFile
 } from "antd/lib/upload/interface";
 import noteApi from "../../../../../../apis/NoteAPI";
+import { useTranslation } from "react-i18next";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -55,7 +56,8 @@ const AttachmentsDialog = ({
     const { darkMode } = useStore(),
         [fileList, setFileList] = useState<UploadFile<any>[]>(
             _filesToList(note)
-        );
+        ),
+        { t } = useTranslation();
 
     const onChange = ({ file, fileList }: UploadChangeParam<UploadFile>) => {
         let newFileList = fileList.map((file) => {
@@ -105,14 +107,16 @@ const AttachmentsDialog = ({
             onClose={handleClose}
             fullWidth
         >
-            <DialogTitle>Attachments</DialogTitle>
+            <DialogTitle>{t("notes.card.attachments")}</DialogTitle>
             <DialogContent>
                 <Upload {...props} fileList={fileList}>
-                    <Button startIcon={<Publish />}>Add new</Button>
+                    <Button startIcon={<Publish />}>
+                        {t("notes.card.newAttachment")}
+                    </Button>
                 </Upload>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Close</Button>
+                <Button onClick={handleClose}>{t("notes.card.close")}</Button>
             </DialogActions>
         </Dialog>
     );

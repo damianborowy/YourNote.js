@@ -30,6 +30,7 @@ import noteApi from "../../../../../apis/NoteAPI";
 import PaletteMenu from "./PaletteMenu";
 import { getEmailFromToken } from "../../../../../utils/TokenHandler";
 import AttachmentsDialog from "./AttachmentsDialog";
+import { useTranslation } from "react-i18next";
 
 interface INoteDialogProps {
     open: boolean;
@@ -50,7 +51,8 @@ const NoteDialog = (props: INoteDialogProps) => {
         ),
         [tagOpen, setTagOpen] = React.useState(false),
         [attachOpen, setAttachOpen] = React.useState(false),
-        [newTag, setNewTag] = React.useState("");
+        [newTag, setNewTag] = React.useState(""),
+        { t } = useTranslation();
 
     const deleteNote = async () => {
         const { note } = props;
@@ -64,7 +66,7 @@ const NoteDialog = (props: INoteDialogProps) => {
         } else {
             const newNote = { ...note };
             const index = newNote.sharedTo?.findIndex(
-                email => email === userEmail
+                (email) => email === userEmail
             );
             newNote.sharedTo?.splice(index!, 1);
             const result = await noteApi.update(newNote);
@@ -133,7 +135,7 @@ const NoteDialog = (props: INoteDialogProps) => {
     const deleteTag = (deletedTag: string) => {
         if (props.note.tags && props.note.tags.length > 0) {
             const tagIndex = props.note.tags.findIndex(
-                tag => tag === deletedTag
+                (tag) => tag === deletedTag
             );
 
             const newNote = { ...props.note };
@@ -191,7 +193,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                 <div style={{ display: "flex" }}>
                     <Input
                         value={props.note.title}
-                        placeholder="Title"
+                        placeholder={t("notes.card.title")}
                         className={styles.dialogTitleText}
                         onChange={handleTitleChange}
                         classes={{
@@ -261,7 +263,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     multiline
                     rowsMax={20}
                     value={props.note.content}
-                    placeholder="Content"
+                    placeholder={t("notes.card.content")}
                     onChange={handleContentChange}
                 />
             </DialogContent>
@@ -274,7 +276,7 @@ const NoteDialog = (props: INoteDialogProps) => {
                     )}
                 >
                     <div className={styles.dialogActionsRow}>
-                        {props.note.tags.map(tag => (
+                        {props.note.tags.map((tag) => (
                             <Chip
                                 variant="outlined"
                                 label={`#${tag}`}
@@ -292,25 +294,29 @@ const NoteDialog = (props: INoteDialogProps) => {
                 note={props.note}
             />
             <Dialog open={tagOpen} onClose={closeTagDialog}>
-                <DialogTitle>Add new tag</DialogTitle>
+                <DialogTitle>{t("notes.card.newTag")}</DialogTitle>
                 <DialogContent>
                     <TextField
                         value={newTag}
                         variant="filled"
-                        label="Tag"
+                        label={t("notes.card.tag")}
                         onChange={handleNewTagChange}
                         error={!checkTag()}
-                        helperText={!checkTag() ? "Tag already exists." : ""}
+                        helperText={
+                            !checkTag() ? t("notes.card.tagExists") : ""
+                        }
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeTagDialog}>Close</Button>
+                    <Button onClick={closeTagDialog}>
+                        {t("notes.card.close")}
+                    </Button>
                     <Button
                         color="primary"
                         onClick={addTag}
                         disabled={newTag.length === 0 || !checkTag()}
                     >
-                        Add
+                        {t("notes.card.add")}
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -5,6 +5,91 @@
   "url": "https://yournote-client.herokuapp.com/",
   "tests": [{
     "id": "c8badca7-2e46-4598-b532-1a1884a05f99",
+    "name": "25 Change language",
+    "commands": [{
+      "id": "77b480d0-cd60-442f-a451-7245147abb46",
+      "comment": "",
+      "command": "open",
+      "target": "https://yournote-client.herokuapp.com/notes",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "af89bfd9-b59f-4506-880f-bfc549a1948c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1140",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6282c0b9-38ae-416b-9c4d-fe836f08939d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiFab-label",
+      "targets": [
+        ["css=.MuiFab-label", "css:finder"],
+        ["xpath=//div[@id='root']/div/button/span", "xpath:idRelative"],
+        ["xpath=//body/div/div/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3366ab80-3e50-40d7-b955-6d856e329f16",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiBox-root",
+      "targets": [
+        ["css=.MuiBox-root", "css:finder"],
+        ["xpath=//div[3]/div/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ac19565-22d8-49e9-bd72-4f92940e4678",
+      "comment": "",
+      "command": "type",
+      "target": "id=adminMail",
+      "targets": [
+        ["id=adminMail", "id"],
+        ["css=#adminMail", "css:finder"],
+        ["xpath=//input[@id='adminMail']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "amazingNewUser@gmail.com"
+    }, {
+      "id": "d9b0b3a5-467e-4b8c-b36a-757d485b6039",
+      "comment": "",
+      "command": "type",
+      "target": "id=AdminPass1",
+      "targets": [
+        ["id=AdminPass1", "id"],
+        ["css=#AdminPass1", "css:finder"],
+        ["xpath=//input[@id='AdminPass1']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "pass"
+    }, {
+      "id": "72dc1a50-2983-41c7-9001-f2db70abef27",
+      "comment": "",
+      "command": "type",
+      "target": "id=passwordAdmin",
+      "targets": [
+        ["id=passwordAdmin", "id"],
+        ["css=#passwordAdmin", "css:finder"],
+        ["xpath=//input[@id='passwordAdmin']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/input", "xpath:position"]
+      ],
+      "value": "pass"
+    }, {
+      "id": "3b9b56db-496a-46d5-bf31-6890bacb6807",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-textPrimary > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButton-textPrimary > .MuiButton-label", "css:finder"],
+        ["xpath=//div[3]/button[2]/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c8badca7-2e46-4598-b532-1a1884a05f99",
     "name": "13 AddUser",
     "commands": [{
       "id": "77b480d0-cd60-442f-a451-7245147abb46",

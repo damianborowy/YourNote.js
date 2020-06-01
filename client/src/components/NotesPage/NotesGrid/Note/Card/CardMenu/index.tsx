@@ -64,17 +64,6 @@ const CardMenu = (props: ICardMenuProps) => {
         handleMenuClose();
     };
 
-    const translateViewName = (viewName: string): string => {
-        if (viewName === "All notes") return t("notes.drawer.allNotes");
-
-        if (/(View)\s\d/.test(viewName)) {
-            const number = viewName.split(" ")[1];
-            return `${t("notes.drawer.view")} ${number}`;
-        }
-
-        return viewName;
-    };
-
     return (
         <>
             <Menu
@@ -116,7 +105,7 @@ const CardMenu = (props: ICardMenuProps) => {
                             key={view.name}
                             onClick={() => handleAddToView(view.name)}
                         >
-                            {translateViewName(view.name)}
+                            {view.name}
                         </MenuItem>
                     ))
                 ) : (

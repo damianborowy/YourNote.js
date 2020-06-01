@@ -105,21 +105,13 @@ const Drawer = (props: DrawerProps) => {
         if (!props.views) return;
 
         const newViews = [...props.views];
-        const newView = new ViewModel(`View ${newViews.length}`, []);
+        const newView = new ViewModel(
+            `${t("notes.drawer.view")} ${newViews.length}`,
+            []
+        );
 
         newViews.push(newView);
         props.setViews(newViews);
-    };
-
-    const translateViewName = (viewName: string): string => {
-        if (viewName === "All notes") return t("notes.drawer.allNotes");
-
-        if (/(View)\s\d/.test(viewName)) {
-            const number = viewName.split(" ")[1];
-            return `${t("notes.drawer.view")} ${number}`;
-        }
-
-        return viewName;
     };
 
     const _generateDoc = () => {
@@ -183,7 +175,7 @@ const Drawer = (props: DrawerProps) => {
                                         : "default"
                                 }
                             >
-                                {translateViewName(view.name)}
+                                {view.name === "All notes" ? t("notes.drawer.allNotes") : view.name}
                             </Button>
                             {view.name !== "All notes" && (
                                 <IconButton

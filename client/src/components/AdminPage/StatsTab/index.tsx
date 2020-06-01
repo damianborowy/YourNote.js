@@ -6,6 +6,7 @@ import _ from "lodash";
 import { BarChart, XAxis, YAxis, Bar } from "recharts";
 import { Button, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import useLocalStorage from "../../../utils/useLocalStorage";
 
 type DataPoint = {
     name: string;
@@ -16,17 +17,35 @@ const StatsTab = () => {
     const [selectedType, setSelectedType] = useState("Colors"),
         [colors, setColors] = useState<DataPoint[] | null>(null),
         [topTags, setTopTags] = useState<DataPoint[] | null>(null),
-        { t } = useTranslation();
+        { t } = useTranslation(),
+        [lang] = useLocalStorage("lang", "en");
 
     useEffect(() => {
         (async () => {
             const result = await adminApi.readAllNotes();
             const notes = result.payload as Note[];
 
-            setColors(calculateColors(notes));
+            setColors(translateColors(calculateColors(notes)));
             setTopTags(calculateTopTags(notes));
         })();
     }, []);
+
+    useEffect(() => {
+        if (!colors) return;
+
+        setColors(translateColors(colors));
+    }, [lang]);
+
+    const translateColors = (colors: DataPoint[]): DataPoint[] => {
+        const colorsCopy = [...colors];
+
+        colorsCopy.forEach(
+            (point) =>
+                (point.name = t(`notes.colors.${point.name.toLowerCase()}`))
+        );
+
+        return colorsCopy;
+    };
 
     const calculateTopTags = (notes: Note[]): DataPoint[] => {
         const allTags = notes.map((note) => note.tags).flat() as string[];
@@ -79,7 +98,11 @@ const StatsTab = () => {
     return (
         <div className={styles.content}>
             <div>
-                <h4 className={styles.chartHeader}>{selectedType}</h4>
+                <h4 className={styles.chartHeader}>
+                    {selectedType === "Colors"
+                        ? t("admin.colors")
+                        : t("admin.tags")}
+                </h4>
                 <BarChart width={1000} height={350} data={getData()}>
                     <XAxis dataKey="name" />
                     <YAxis />

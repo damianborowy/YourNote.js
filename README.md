@@ -132,3 +132,18 @@ Notatkę możemy dodać do innego widoku lub ukryć ją w danym widoku przez now
 Możliwa jest również zmiana nazwy widoku lub usunięcie go
 
 ![](https://github.com/damianborowy/e-Otis/blob/master/images/view%20settings.png)
+
+Podzielono panel administracyjny na dwie sekcje, wcześniej istniejącą sekcję użytkowników i nową sekcję zawierającą statystyki
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/admin%20tabs.png)
+
+Statystyki dzielą się na takie dotyczące użycia przez wszystkich użytkowników konkretnych kolorów dla notatek oraz dotyczące dziesięciu najpopularniejszych tagów używanych przez użytkowników
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/stats%20colors.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/stats%20tags.png)
+
+Dodano wsparcie dla wielu języków
+
+![](https://github.com/damianborowy/e-Otis/blob/master/images/lang%20change.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/lang%20list.png)
+![](https://github.com/damianborowy/e-Otis/blob/master/images/lang%20new.png)

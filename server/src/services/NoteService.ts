@@ -1,6 +1,9 @@
 import Note, { INote } from "../models/Note";
 import fs from "fs-extra";
 import ICrudRepository from "./interfaces/ICrudRepository";
+import _ from "lodash";
+import mongoose from "mongoose";
+import User from "../models/User";
 
 export default class NoteService implements ICrudRepository<INote> {
     async read(email?: string | undefined): Promise<INote[]> {
@@ -46,6 +49,8 @@ export default class NoteService implements ICrudRepository<INote> {
     }
 
     private async updateNote(note: INote): Promise<INote> {
+        await this.handleSharedToChange(note);
+
         const result = await Note.findOneAndUpdate({ _id: note._id }, note, {
             new: true
         });
@@ -66,5 +71,52 @@ export default class NoteService implements ICrudRepository<INote> {
         await fs.remove(`./public/attachments/${id}`);
 
         return result;
+    }
+
+    private async handleSharedToChange(note: INote): Promise<void> {
+        const id = mongoose.Types.ObjectId(note._id);
+        const oldNote = await Note.findById(id);
+
+        if (!oldNote)
+            throw new Error("Couldn't find note with the given noteId");
+
+        if (!_.isEqual(_.sortBy(oldNote.sharedTo), _.sortBy(note.sharedTo))) {
+            const deletedUserEmail = _.difference(
+                oldNote.sharedTo,
+                note.sharedTo
+            )[0];
+            const newUserEmail = _.difference(
+                note.sharedTo,
+                oldNote.sharedTo
+            )[0];
+
+            if (deletedUserEmail) {
+                const oldUser = await User.findOne({
+                    email: deletedUserEmail
+                });
+
+                if (!oldUser)
+                    throw new Error("Couldn't find user with the given email");
+
+                oldUser.views.forEach((view) => {
+                    const deletedNoteIndex = view.notes.indexOf(note._id);
+
+                    view.notes.splice(deletedNoteIndex, 1);
+                });
+
+                await oldUser.update(oldUser);
+            }
+
+            if (newUserEmail) {
+                const newUser = await User.findOne({ email: newUserEmail });
+
+                if (!newUser)
+                    throw new Error("Couldn't find user with the given email");
+
+                newUser.views[0].notes.push(note._id);
+
+                await newUser.update(newUser);
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
-# e-Otis
+# YourNote.js
 
-e-Otis to aplikacja oparta o Node.js umożliwiająca zarządzanie notatkami
+Aplikacja oparta o Node.js umożliwiająca zarządzanie notatkami
 
 ## Instalacja
 

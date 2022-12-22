@@ -33,7 +33,7 @@
         "express-fileupload": "^1.1.7-alpha.3",
         "faker": "^4.1.0",
         "fs-extra": "^9.0.0",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "lodash": "^4.17.15",
         "mkdirp": "^1.0.4",
         "mongoose": "^5.9.2",
